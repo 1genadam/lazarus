@@ -3,95 +3,151 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Lazarus Home Remodeling</title>
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-<link
-  rel="stylesheet"
-  as="style"
-  onload="this.rel='stylesheet'"
-  href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .star {
+            color: #FFD700;
+        }
+        .trinity-dots-container {
+            position: relative;
+            width: 100px;height: 50px;}
+        .trinity-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .trinity-dot-1 {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .trinity-dot-2 {
+            bottom: 0;
+            left: 0;
+        }
+        .trinity-dot-3 {
+            bottom: 0;
+            right: 0;
+        }
+        .trinity-line {
+            position: absolute;
+            background-color: white;
+            height: 1px;
+            transform-origin: left;
+        }
+    </style>
 </head>
-<body class="bg-white" style='font-family: Newsreader, "Noto Sans", sans-serif;'>
-<div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
-<div class="layout-container flex h-full grow flex-col">
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f2f2f2] px-10 py-3">
-<div class="flex items-center gap-4 text-[#141414]">
-<div class="size-4">
-<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path
-  fill-rule="evenodd"
-  clip-rule="evenodd"
-  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-  fill="currentColor"
-></path>
-</svg>
+<body class="bg-gray-100">
+<header class="bg-red-800 text-white shadow-md">
+<div class="bg-red-900/50 text-yellow-400 py-1">
+<div class="container mx-auto px-4 flex justify-center md:justify-end items-center space-x-6 text-sm">
+<a class="flex items-center hover:text-white transition-colors duration-300" href="tel:(586) 248-8888">
+<i class="fas fa-phone-alt mr-2"></i>
+<span class="hidden sm:inline">(586) 248-8888</span>
+</a>
+<a class="flex items-center hover:text-white transition-colors duration-300" href="mailto:contact@lazarusremodeling.com">
+<i class="fas fa-envelope mr-2"></i>
+<span class="hidden sm:inline">contact@lazarusremodeling.com</span>
+</a>
 </div>
-<h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em]">Lazarus Home Remodeling</h2>
 </div>
-<div class="flex flex-1 justify-end gap-8">
-<div class="flex items-center gap-9">
-<a class="text-[#141414] text-sm font-medium leading-normal" href="index.html">Home</a>
-<a class="text-[#141414] text-sm font-medium leading-normal" href="services.html">Services</a>
-<a class="text-[#141414] text-sm font-medium leading-normal" href="#">About</a>
-<a class="text-[#141414] text-sm font-medium leading-normal" href="#">Gallery</a>
-<a class="text-[#141414] text-sm font-medium leading-normal" href="contact.html">Contact</a>
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-center py-4">
+<a class="flex flex-col items-center" href="#">
+<div class="flex justify-center items-center mb-1">
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+<span class="w-16 h-px bg-yellow-400"></span>
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+<span class="w-16 h-px bg-yellow-400"></span>
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
 </div>
-<button
-  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-black text-white text-sm font-bold leading-normal tracking-[0.015em]"
->
-<span class="truncate">Get a Quote</span>
+<span class="text-3xl font-bold tracking-widest">LAZARUS</span>
+<span class="text-lg tracking-widest">HOME REMODELING</span>
+</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="services.html">Services</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="about.html">About</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="blog.html">Blog</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="gallery.html">Gallery</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="contact.html">Contact</a>
+</nav>
+<div class="md:hidden">
+<button class="text-white focus:outline-none" id="menu-btn">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 </button>
+</div>
+</div>
+</div>
+<div class="hidden md:hidden bg-red-900" id="mobile-menu">
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="/">Home</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="services.html">Services</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="about.html">About</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="blog.html">Blog</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="gallery.html">Gallery</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="contact.html">Contact</a>
 </div>
 </header>
-<div class="px-40 flex flex-1 justify-center py-5">
-<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-<div class="@container">
-<div class="@[480px]:p-4">
-<div
-  class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-start justify-end px-4 pb-10 @[480px]:px-10"
-  style='background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuB4bzzJcxb3hOPjLR9R94ggF1EqyafnkLX3GzLpbWsIhGW58eRVpt4-pehCZ3yoQM0o3WpXOsj4n2rOve09rL7QPGJHWxzeS97lirNn3bNQEQbva836ZfmcGlP6goLSWKE9OFmEreJUOZIx5uco6W4Zbq4JIgFOMu8RlRAAMu8_4ZOjYPuGnzUfemKdYdrgGBU0iT-pPnkCfu_iONlosm7rOM7nUSTvHs4N_8SSiY3D8m6MrAZbOaR22Ubtb24qUehLWmbfvWGQhxCy");'
->
-<div class="flex flex-col gap-2 text-left">
-<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
-  Transform Your Home
-</h1>
-<h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-  Expert remodeling services that bring your vision to life. From kitchens to bathrooms, we create spaces that inspire.
-</h2>
-</div>
-<div class="flex-wrap gap-3 flex">
-<button
-  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e8b931] text-[#141414] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
->
-<span class="truncate">Get Started</span>
-</button>
-<button
-  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#ffffff33] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
->
-<span class="truncate">View Gallery</span>
-</button>
+<section class="bg-red-800 text-white py-12 md:py-20 relative">
+<div class="absolute top-4 right-4">
+<div class="relative w-10 h-10">
+<span class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rounded-full"></span>
+<span class="absolute bottom-0 left-0 w-2 h-2 bg-white rounded-full"></span>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-white rounded-full"></span>
+<svg class="absolute w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<line class="stroke-current text-white" stroke-width="2" x1="50" x2="10" y1="10" y2="90"></line>
+<line class="stroke-current text-white" stroke-width="2" x1="50" x2="90" y1="10" y2="90"></line>
+<line class="stroke-current text-white" stroke-width="2" x1="10" x2="90" y1="90" y2="90"></line>
+</svg>
 </div>
 </div>
+<div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+<div class="text-center md:text-left">
+<h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Revive Your Home, <br/>Restore Your Life.</h1>
+<p class="text-lg md:text-xl text-red-200 mb-8">Experience a resurrection in your living space with our expert remodeling services. Quality craftsmanship, inspired design.</p>
+<div class="mt-8">
+<a class="inline-block bg-yellow-400 text-red-800 font-bold py-4 px-10 rounded-lg text-lg hover:bg-yellow-500 transition-colors duration-300" href="#get-quote">Get a Free Quote</a>
 </div>
 </div>
+<div class="bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl p-8" id="get-quote">
+<h2 class="text-3xl font-bold text-white mb-6 text-center">Get a Free Estimate</h2>
+<form class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-name">Name</label>
+<input autocomplete="name" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-name" name="name" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-email">Email</label>
+<input autocomplete="email" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-email" name="email" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-phone">Phone Number</label>
+<input autocomplete="tel" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-phone" name="phone" type="tel"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-message">How can we help?</label>
+<textarea class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-message" name="message" rows="3"></textarea>
+</div>
+<div class="text-center pt-2">
+<button class="w-full inline-flex justify-center rounded-md border border-transparent bg-yellow-400 py-3 px-8 text-lg font-medium text-red-800 shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-red-800" type="submit">Request Consultation</button>
+</div>
+</form>
+</div>
+</div>
+</section>
 <main class="container mx-auto mt-8 px-4">
 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-<div class="grid grid-cols-1 md:grid-cols-2">
-<div class="relative group">
-<img alt="Before kitchen remodeling" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWL0cuyM8Yx2Kr_68zZJGhs-iT-VuUHYNg2C0p1YILZTCgCuijvfYTaR73vEN5OgCEjQfw7Dk3_v8EmDR6TDd2xDHdlmG0fbv0qBIpGohsOTmbb5DyChX3s25Wd6wBIE8VC80haYgRDfTyDQiZ9xpOxlpBl3xFl5KPqcYU3NlKT-DCbAyBSJOvpY4ZZCgcKmfI_s_5-ob1f0nXqxokR_7k8Jy0IzFtiye5ivrQ_SCCQRdMeuIe8HtMsxo3NqVW9SfKh4WGeD2GaeQt"/>
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-<h3 class="text-white text-3xl font-bold">BEFORE</h3>
+<div class="bg-gradient-to-r from-red-800 to-red-900 text-white p-6">
+<h2 class="text-3xl font-bold text-center">Kitchen Design</h2>
 </div>
-</div>
-<div class="relative group">
-<img alt="After kitchen remodeling" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU_oz7FjC16X6wq57zSiO2DdWGb3TGY8JCubhq71DI6fvGc2zGgXVS7djYy6pOcZ-MHoUwRC_fZc0pAZ0eopgnPWOz8B9goy8FkIN1SKjhox1NLuyac8WN9WZeWkOwyjfaMryLCzx7QaBk8Dr43c9-gPt2hNvE0DYKwkeXHZD9QIw_aHdGnXZ3xGz_4neSkPuROVc-elVgvs8hwW-oQmbgB-SUcz9sj3nBqaYC2l47Y1lAHVwVFpwBTjVhq8IXe8ihMCRdcRnQ-fsW"/>
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-<h3 class="text-white text-3xl font-bold">AFTER</h3>
-</div>
-</div>
-</div>
+<img id="kitchen-showcase" alt="Beautiful kitchen remodeling showcase" class="w-full h-auto transition-opacity duration-1000" src="kitchen_assets/Kitchen_Angle_2025_02_13.webp"/>
 <div class="p-8">
 <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Our Services</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -149,20 +205,19 @@
 </div>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2">
-<div class="relative group order-last md:order-first">
-<img alt="After bathroom remodeling" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGPrD-kaOa9SGH_6uwGE0IZK4AUCX-dGhu7i-Uh9sNamuc5dix01EUOjQZpQ7cMf8CkhRcYICYrrXt57hYcXD_JrRiwuxTR70jJkT8bpw9VhfEiEmFIBqvEKlLGZ1be9cSHCt9YzATzzWnawvte1WRoWXhxGPtERHQ2scPLX3vBV0fujjutNUGX86H-Mvb0bo6kkkDj4Z_BKQsR9Chutw82LFkIvwSDJym7MvDumLcIV97kvxYZHs-Tyf3pctHRCTgJ-5KN1bx-7so"/>
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-<h3 class="text-white text-3xl font-bold">AFTER</h3>
+
+<!-- Bathroom Showcase Section -->
+<div class="bg-white rounded-lg shadow-lg overflow-hidden mt-8">
+<div class="bg-gradient-to-r from-red-800 to-red-900 text-white p-6">
+<h2 class="text-3xl font-bold text-center">Bathroom Design</h2>
+</div>
+<img id="bathroom-showcase" alt="Beautiful bathroom remodeling showcase" class="w-full h-auto transition-opacity duration-1000" src="bathroom_assets/Master+bath+with+blue+barn+door.jpeg"/>
+<div class="p-8">
+<h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Bathroom Transformations</h2>
+<p class="text-lg text-gray-600 text-center">From spa-like retreats to functional family bathrooms, see how we create stunning bathroom spaces tailored to your lifestyle.</p>
 </div>
 </div>
-<div class="relative group">
-<img alt="Before bathroom remodeling" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjA7v7UcVkhXdW2ZiLgC6tJM2mHu9MU7twXB2qNvjV_pnNbtfpiuqrZBfLMR1q2-_SboC_9Qh9b8u4_gh1DsNKcfRot0Q-tgno5ENXnat4Xe8xWkuOBteb-JdvVVXHVW5CIjiNCxoLJMFwjlqumpyUW25_JMhslZmTAioFeHdRwp0Un9rwYaiPUabdGZtulTlr-ERbZdhOJZRU9iF9-b7TgTFsYgmymFqm74AHo39YyvxLncEDEFUaLDZFqISVIlguM8Js7-KIUrMp"/>
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-<h3 class="text-white text-3xl font-bold">BEFORE</h3>
-</div>
-</div>
-</div>
+
 <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
 <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">What Our Clients Say</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -263,8 +318,8 @@
 </div>
 </footer>
 <div class="fixed bottom-4 right-4 z-50">
-<button class="bg-white text-red-800 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-200 transition-colors duration-300" id="chat-widget-button">
-<i class="fas fa-headset text-2xl"></i>
+<button class="bg-red-800 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-red-700 transition-colors duration-300" id="chat-widget-button">
+<i class="fas fa-comments text-2xl"></i>
 </button>
 <div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
 <div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
@@ -305,10 +360,69 @@
     closeChatWidget.addEventListener('click', () => {
         chatWidget.classList.add('hidden');
     });
-    // Automatically open chat widget after 2 seconds
-    setTimeout(() => {
-        chatWidget.classList.remove('hidden');
-    }, 2000);
-</script>
 
+    // Kitchen Image Rotation
+    const kitchenImages = [
+        'kitchen_assets/Kitchen_Angle_2025_02_13.webp',
+        'kitchen_assets/Modern-Kitchen-Remodel-Monastery-NOLI-6.jpg',
+        'kitchen_assets/Custom-Kitchen-Remodel-Island-Designs-For-Your-Home-1080x675.jpg',
+        'kitchen_assets/kitchen-remodel-101-guide-1080x675.jpg',
+        'kitchen_assets/modern-kitchen-remodel-design.jpg',
+        'kitchen_assets/Sleek-kitchen-trends-2025-by-DECORILLA-1024x683-1.jpg',
+        'kitchen_assets/transitional-style-kitchen.webp',
+        'kitchen_assets/kitchen-island-installation.webp',
+        'kitchen_assets/11561_new-kitchen-1-2-1.webp',
+        'kitchen_assets/quailrun_09.webp'
+    ];
+    
+    let currentImageIndex = 0;
+    const kitchenShowcase = document.getElementById('kitchen-showcase');
+    
+    function rotateKitchenImage() {
+        if (kitchenShowcase) {
+            kitchenShowcase.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentImageIndex = (currentImageIndex + 1) % kitchenImages.length;
+                kitchenShowcase.src = kitchenImages[currentImageIndex];
+                kitchenShowcase.style.opacity = '1';
+            }, 500);
+        }
+    }
+    
+    // Start image rotation every 5 seconds
+    setInterval(rotateKitchenImage, 5000);
+
+    // Bathroom Image Rotation
+    const bathroomImages = [
+        'bathroom_assets/Master+bath+with+blue+barn+door.jpeg',
+        'bathroom_assets/bathroom-remodel-ideas.jpg',
+        'bathroom_assets/master-bathroom-remodel-ideas.jpg',
+        'bathroom_assets/How-to-plan-a-bathroom-remodel-scaled.jpg',
+        'bathroom_assets/Efficiency-Meets-Style-Modern-Bathroom-Products-for-Contemporary-Homes-scaled.jpeg',
+        'bathroom_assets/bathroom-remodeling-lisle-3.jpg',
+        'bathroom_assets/glass-doors-shower.jpg',
+        'bathroom_assets/sunsoaked-tower-lakes-haven-bathroom-remodel16-advance-design-studio-1.jpeg',
+        'bathroom_assets/top-bathroom-remodeling-trends-01.webp',
+        'bathroom_assets/mt-airy-bathroom-remodel-bath-10-1.webp'
+    ];
+    
+    let currentBathroomIndex = 0;
+    const bathroomShowcase = document.getElementById('bathroom-showcase');
+    
+    function rotateBathroomImage() {
+        if (bathroomShowcase) {
+            bathroomShowcase.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentBathroomIndex = (currentBathroomIndex + 1) % bathroomImages.length;
+                bathroomShowcase.src = bathroomImages[currentBathroomIndex];
+                bathroomShowcase.style.opacity = '1';
+            }, 500);
+        }
+    }
+    
+    // Start bathroom image rotation every 6 seconds (offset from kitchen)
+    setInterval(rotateBathroomImage, 6000);
+</script>
 </body></html>

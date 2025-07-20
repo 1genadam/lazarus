@@ -1,51 +1,70 @@
-<html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
-
-    <title>Stitch Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Newsreader, "Noto Sans", sans-serif;'>
-      <div class="layout-container flex h-full grow flex-col">
-        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f2f2f2] px-10 py-3">
-          <div class="flex items-center gap-4 text-[#141414]">
-            <div class="size-4">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </div>
-            <h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em]">Lazarus Home Remodeling</h2>
-          </div>
-          <div class="flex flex-1 justify-end gap-8">
-            <div class="flex items-center gap-9">
-              <a class="text-[#141414] text-sm font-medium leading-normal" href="#">Services</a>
-              <a class="text-[#141414] text-sm font-medium leading-normal" href="#">Projects</a>
-              <a class="text-[#141414] text-sm font-medium leading-normal" href="#">About Us</a>
-              <a class="text-[#141414] text-sm font-medium leading-normal" href="#">Contact</a>
-            </div>
-            <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-black text-white text-sm font-bold leading-normal tracking-[0.015em]"
-            >
-              <span class="truncate">Get a Quote</span>
-            </button>
-          </div>
-        </header>
-        <div class="px-40 flex flex-1 justify-center py-5">
-          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us - Lazarus Home Remodeling</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+</style>
+</head>
+<body class="bg-gray-100">
+<header class="bg-red-800 text-white shadow-md">
+<div class="bg-red-900/50 text-yellow-400 py-1">
+<div class="container mx-auto px-4 flex justify-center md:justify-end items-center space-x-6 text-sm">
+<a class="flex items-center hover:text-white transition-colors duration-300" href="tel:(586) 248-8888">
+<i class="fas fa-phone-alt mr-2"></i>
+<span class="hidden sm:inline">(586) 248-8888</span>
+</a>
+<a class="flex items-center hover:text-white transition-colors duration-300" href="mailto:contact@lazarusremodeling.com">
+<i class="fas fa-envelope mr-2"></i>
+<span class="hidden sm:inline">contact@lazarusremodeling.com</span>
+</a>
+</div>
+</div>
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-center py-4">
+<a class="flex flex-col items-center" href="/">
+<div class="flex justify-center items-center mb-1">
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+<span class="w-16 h-px bg-yellow-400"></span>
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+<span class="w-16 h-px bg-yellow-400"></span>
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+</div>
+<span class="text-3xl font-bold tracking-widest">LAZARUS</span>
+<span class="text-lg tracking-widest">HOME REMODELING</span>
+</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="services.html">Services</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="about.html">About</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="blog.html">Blog</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="gallery.html">Gallery</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="contact.html">Contact</a>
+</nav>
+<div class="md:hidden">
+<button class="text-white focus:outline-none" id="menu-btn">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="hidden md:hidden bg-red-900" id="mobile-menu">
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="/">Home</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="services.html">Services</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="about.html">About</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="blog.html">Blog</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="gallery.html">Gallery</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="contact.html">Contact</a>
+</div>
+</header>
+<main class="container mx-auto mt-8 px-4">
+<div class="bg-white rounded-lg shadow-lg overflow-hidden p-8">
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <div class="flex min-w-72 flex-col gap-3">
                 <p class="text-[#141414] tracking-light text-[32px] font-bold leading-tight">About Us</p>
@@ -137,22 +156,43 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <footer class="flex justify-center">
-          <div class="flex max-w-[960px] flex-1 flex-col">
-            <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
-              <div class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
-                <a class="text-[#757575] text-base font-normal leading-normal min-w-40" href="#">Services</a>
-                <a class="text-[#757575] text-base font-normal leading-normal min-w-40" href="#">Projects</a>
-                <a class="text-[#757575] text-base font-normal leading-normal min-w-40" href="#">About Us</a>
-                <a class="text-[#757575] text-base font-normal leading-normal min-w-40" href="#">Contact</a>
-              </div>
-              <p class="text-[#757575] text-base font-normal leading-normal">@2024 Lazarus Home Remodeling. All rights reserved.</p>
-            </footer>
-          </div>
-        </footer>
-      </div>
-    </div>
-  </body>
-</html>
+</div>
+</main>
+<footer class="bg-gray-800 text-white mt-10">
+<div class="container mx-auto py-8 px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+<div>
+<h3 class="text-lg font-bold mb-4">LAZARUS HOME REMODELING</h3>
+<p class="text-gray-400">Revive. Restore. Remarkable.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Contact Us</h3>
+<ul class="text-gray-400 space-y-2">
+<li><i class="fas fa-phone-alt mr-2 text-red-500"></i> (586) 248-8888</li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Follow Us</h3>
+<div class="flex justify-center md:justify-start space-x-4">
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f text-xl"></i></a>
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram text-xl"></i></a>
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter text-xl"></i></a>
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-houzz text-xl"></i></a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+<p>© 2023 Lazarus Home Remodeling. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+</script>
+</body></html>

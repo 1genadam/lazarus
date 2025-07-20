@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gallery - Lazarus Home Remodeling</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+</style>
+</head>
+<body class="bg-gray-100">
+<header class="bg-red-800 text-white shadow-md">
+<div class="bg-red-900/50 text-yellow-400 py-1">
+<div class="container mx-auto px-4 flex justify-center md:justify-end items-center space-x-6 text-sm">
+<a class="flex items-center hover:text-white transition-colors duration-300" href="tel:(586) 248-8888">
+<i class="fas fa-phone-alt mr-2"></i>
+<span class="hidden sm:inline">(586) 248-8888</span>
+</a>
+<a class="flex items-center hover:text-white transition-colors duration-300" href="mailto:contact@lazarusremodeling.com">
+<i class="fas fa-envelope mr-2"></i>
+<span class="hidden sm:inline">contact@lazarusremodeling.com</span>
+</a>
+</div>
+</div>
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-center py-4">
+<a class="flex flex-col items-center" href="/">
+<div class="flex justify-center items-center mb-1">
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+<span class="w-16 h-px bg-yellow-400"></span>
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+<span class="w-16 h-px bg-yellow-400"></span>
+<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+</div>
+<span class="text-3xl font-bold tracking-widest">LAZARUS</span>
+<span class="text-lg tracking-widest">HOME REMODELING</span>
+</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="services.html">Services</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="about.html">About</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="blog.html">Blog</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="gallery.html">Gallery</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="contact.html">Contact</a>
+</nav>
+<div class="md:hidden">
+<button class="text-white focus:outline-none" id="menu-btn">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="hidden md:hidden bg-red-900" id="mobile-menu">
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="/">Home</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="services.html">Services</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="about.html">About</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="blog.html">Blog</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="gallery.html">Gallery</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="contact.html">Contact</a>
+</div>
+</header>
+<main class="container mx-auto mt-8 px-4">
+<div class="bg-white rounded-lg shadow-lg overflow-hidden p-8">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <div class="flex min-w-72 flex-col gap-3">
+                <p class="text-[#141414] tracking-light text-[32px] font-bold leading-tight">Project Gallery &amp; Portfolio</p>
+                <p class="text-[#757575] text-sm font-normal leading-normal">
+                  Explore our completed projects, showcasing our expertise in home remodeling. Each project includes detailed descriptions and high-quality images, categorized by
+                  service type for easy navigation.
+                </p>
+              </div>
+            </div>
+            <div class="pb-3">
+              <div class="flex border-b border-[#e0e0e0] px-4 gap-8">
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-[#141414] text-[#141414] pb-[13px] pt-4" href="#">
+                  <p class="text-[#141414] text-sm font-bold leading-normal tracking-[0.015em]">Kitchen Remodeling</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#757575] pb-[13px] pt-4" href="#">
+                  <p class="text-[#757575] text-sm font-bold leading-normal tracking-[0.015em]">Bathroom Remodeling</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#757575] pb-[13px] pt-4" href="#">
+                  <p class="text-[#757575] text-sm font-bold leading-normal tracking-[0.015em]">Full Home Renovations</p>
+                </a>
+              </div>
+            </div>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC59_dTtDCgfuAooBzO-_bu9S_x0AwBrHN3J3HARnP_GhGliQ5o_x5awAEkP-QgRAyJ2_PGY4t1sU95ZynUh01j_thSGfdz1xpl372uoptQkXgry0D28jgne1_fTl39bT9cfz_QkfaSm3A74SOwF3zYyFYcgjZWb-C5Sgw8QuVroydGOBUxrRGQGZ_2Ar6qB9zFWi530K-4PVR89EK9Gp8HNB2oZAzHDvnJ3aBzH-qfLlmYHiy1_dUp29xNyqZRSIVFkLNuMhIPnbcs");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Modern Kitchen Renovation</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A sleek, modern kitchen with stainless steel appliances and custom cabinetry.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIyZt_8IFZPwG_DWA5vIBbRtKBHnzpnlcOWPvkhPrkX7_AertFvsv1wNV_nvtJ_sT5f5Rfx5WOhJbmJDfXIdldIF_WBBBKOo8WAk1xMcT_z1--aeZiOUGt3lEVxfNRSH6CZ7QdaZxlTRR8GQAQS8yIEr_0PRUFw5b-N2wcEDcAUedVerfnEXOSnJWrzNP7J0TnCj4ChruB9rWwg8YHqCM0Kb-WkFvXyp69Jcni9JwwfWr-aE4-XXxtzrPuHeZc4XG-QarWDHVZf4hP");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Contemporary Kitchen Upgrade</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">An updated kitchen with a focus on natural light and minimalist design.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBV9dajbCj6p0WLQFMEYAjtylPr3MMPgBuDHBB2Siz0Zq9Xa2Gthflr1rJXV51nLdcT1oqeg2hmQqY9z5TwX0qS-jqX80d1IcBlJBYYv1qzAQ2IfBSBxS40ed0RKfg2lq5zdFnC7VVJx420KAN9fWveQd0tx7ZTil3_zrJ0TQtVx6p1jWLGOo26w1Ed9Q-yCCPjxW1vODAw-_Ab0wBmqIoF6PGMZonF1aFhi-axR9RSAYbLXzaa8ehiZ_nazMVWXnH_sMsBrsyipDF9");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Classic Kitchen Transformation</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A traditional kitchen remodel with a warm, inviting atmosphere.</p>
+                </div>
+              </div>
+            </div>
+            <div class="pb-3">
+              <div class="flex border-b border-[#e0e0e0] px-4 gap-8">
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#757575] pb-[13px] pt-4" href="#">
+                  <p class="text-[#757575] text-sm font-bold leading-normal tracking-[0.015em]">Kitchen Remodeling</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-[#141414] text-[#141414] pb-[13px] pt-4" href="#">
+                  <p class="text-[#141414] text-sm font-bold leading-normal tracking-[0.015em]">Bathroom Remodeling</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#757575] pb-[13px] pt-4" href="#">
+                  <p class="text-[#757575] text-sm font-bold leading-normal tracking-[0.015em]">Full Home Renovations</p>
+                </a>
+              </div>
+            </div>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBH-Z8B6QEf_zgIqk2-ohG_QBhIzyjRK2nAWZlZx-G_y7r6E7adQ5-37X45Af5Kvrc17KnOnsCQUDTgO45Mmg4K_6BKuZ7KFTC_5ebkvV1yfowKVmPCs3hANVUuT9jD872k1tGxf4w-rC2a-A_8giClHYo6Yh92E-iwbeUxi247AG-C8g-fxywYIPjLhESK0fxfRRis6GTRR1TJsiOvxxCbW7kH4ZId-LIv5yocuuJ74u3wsZjF5a5qAgS-0m5HZlmY8enfpVkNQvsR");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Spa-Like Bathroom Retreat</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A luxurious bathroom with a soaking tub and high-end finishes.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC1twaCorHbAg5Zv0brsFwL38z3JbvhXiDBy53PdmzAjl6s81u3ozha3OkVx3FUwgqnkz963QKvQR1f8xH2M-cdst12DsPznvRl3TRRsIfWahPvHbPF53w3NpO27zbrOor-YVsyH5wuGpBaCQXBs8IuwXbXVD-RbL4ddOvq1-U9pmm6b9ih6fhQ-tKRg0no4mNBT8TzI9HiFgfZsnF6c-w1RvJu85mIE8dELl6SbFLr8y-tefaegTHS2FcZ3TxZsJzz0UJnsGANcPVy");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Modern Bathroom Makeover</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A contemporary bathroom featuring a walk-in shower and sleek fixtures.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdBu-e96e-3k7mh4kY8gYyhBPt570LgPa1biq8c6zRBXf-0z7b7eR9Sy72zWV5Zc-R2hmksc4MoPeM3nqFP_rPhT5Okd_EFbL5cd0TlXzY-G5PRCHCVpiwib9AyVKHjb5qfd8bc-uDuwfcEmcbIohZL-vy_woXs3kW6LY40-YBShuBUnxnwyERCvd01LliXhX1wsH_nGkbhyGDHkHa9HDtAoBXWsdJPsMLVCi4f8pA6EMohEhwIzpl1Yx6A36rNm6ZjUsRATTqEdcj");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Compact Bathroom Redesign</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A functional and stylish bathroom remodel for smaller spaces.</p>
+                </div>
+              </div>
+            </div>
+            <div class="pb-3">
+              <div class="flex border-b border-[#e0e0e0] px-4 gap-8">
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#757575] pb-[13px] pt-4" href="#">
+                  <p class="text-[#757575] text-sm font-bold leading-normal tracking-[0.015em]">Kitchen Remodeling</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#757575] pb-[13px] pt-4" href="#">
+                  <p class="text-[#757575] text-sm font-bold leading-normal tracking-[0.015em]">Bathroom Remodeling</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-[#141414] text-[#141414] pb-[13px] pt-4" href="#">
+                  <p class="text-[#141414] text-sm font-bold leading-normal tracking-[0.015em]">Full Home Renovations</p>
+                </a>
+              </div>
+            </div>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLtVpFJNz1NE2eN2nBZGGncppry4EA-zDHM3Gu9m3EeGjoHD80KdZNarL-so0Gc5CfNAvSTvLV--NMt16lqISL_vQllqLzRLhQh6aJBoUSr7FUcVplht3NgOG3M5zXKUHlOLFPz2AoIEzZzuIYBUo9noJnomZCHQOHg4AJSt4FzXt-EPyED5N5nXXSKywfisJvretZ4NZI0yY-rvYLPPjsOAYUgSXiH6Cb8gpCO-E7HFz4gthLUwWdUjhuo3_vtkIKg-_yrydM9gKh");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Whole House Transformation</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A comprehensive renovation of a home, including kitchen, bathrooms, and living areas.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDr9DnKBLr1UCweo2IHEZubh-WvevBNClN7xzJkIXruILiu1tQJRY_n-UcT7LbN-Qzar5J6UIA-FQQa6GAvnOPJ-83GMc7fjJ3nc6yG7NUBXb4PKXilS09UWbww_6SrzagotbgZakj0yH_zXTLORWIV3uEFIwZcYk3Spu261AKRikawoJw2ZJM8g0EwqPz3Hc7SQO4w8qfKJWVeojMcjCBiC6oWGGSq5D1C-u24FgE9CQyIb57V-gAq1VpaW6OvTeSbHCF_YAaNIvvC");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Complete Home Remodel</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A full remodel of a house, focusing on modernizing the entire space.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDajJckJLAftQrgmmf3V6E9WL7UWmhaufV6GTq8uYC0yqhj7UHBhHp9jepqtRSzsWIvIR_kcF1fnftC8tkNZ2r0sLZZSq-AEvF1pr4MQZ-P0C8D6VMgtA8F3wv8SjD26YgaZhx90LiRCcz1sd0_uzXC_pOLDQkq2S6PXXZbpeu3EpNp4AMzhT01eUQaJBiIm2b150Ky_BgRa_WIsn-GQ5o-Z-t_MIfm6uM_v1dzsEzluIRg4HC_b_7MPipVe9qr8DJcXU_n61G8sXgJ");'
+                ></div>
+                <div>
+                  <p class="text-[#141414] text-base font-medium leading-normal">Interior and Exterior Renovation</p>
+                  <p class="text-[#757575] text-sm font-normal leading-normal">A renovation project that enhances both the interior and exterior of a home.</p>
+                </div>
+              </div>
+            </div>
+</div>
+</main>
+<footer class="bg-gray-800 text-white mt-10">
+<div class="container mx-auto py-8 px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+<div>
+<h3 class="text-lg font-bold mb-4">LAZARUS HOME REMODELING</h3>
+<p class="text-gray-400">Revive. Restore. Remarkable.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Contact Us</h3>
+<ul class="text-gray-400 space-y-2">
+<li><i class="fas fa-phone-alt mr-2 text-red-500"></i> (586) 248-8888</li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Follow Us</h3>
+<div class="flex justify-center md:justify-start space-x-4">
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f text-xl"></i></a>
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram text-xl"></i></a>
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter text-xl"></i></a>
+<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-houzz text-xl"></i></a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+<p>© 2023 Lazarus Home Remodeling. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+</script>
+</body></html>
