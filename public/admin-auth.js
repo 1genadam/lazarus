@@ -153,7 +153,7 @@ async function adminAccess() {
     const result = await window.adminAuth.authenticate(password);
     
     if (result.success) {
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'admin-dashboard-enhanced.html';
     } else {
         showErrorModal(result.message || 'Access denied');
     }

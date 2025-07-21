@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Admin Dashboard - Lazarus Home Remodeling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="admin-auth.js"></script>
+    <!-- Hotjar Heatmap Integration (Free) -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:3751234,hjsv:6}; // Demo ID - replace with actual Hotjar ID
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Login Screen -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-2xl font-bold text-center mb-6">Enhanced Admin Access</h2>
+            <div class="mb-4">
+                <input type="password" id="admin-password" placeholder="Enter admin password" 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+            </div>
+            <button onclick="checkPassword()" class="w-full bg-yellow-400 text-red-800 py-2 rounded-lg font-medium hover:bg-yellow-500">
+                Access Enhanced Dashboard
+            </button>
+            <p id="error-message" class="text-red-500 text-sm mt-2 hidden">Incorrect password</p>
+        </div>
+    </div>
+
+    <!-- Enhanced Dashboard Content -->
+    <div id="dashboard-content" class="hidden">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Header -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-chart-bar text-yellow-400 mr-3"></i>
+                        Enhanced Analytics Dashboard
+                    </h1>
+                    <div class="flex space-x-4">
+                        <button onclick="refreshData()" class="bg-yellow-400 text-red-800 px-4 py-2 rounded-lg font-medium hover:bg-yellow-500">
+                            <i class="fas fa-sync-alt mr-2"></i>Refresh
+                        </button>
+                        <button onclick="exportAllData()" class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600">
+                            <i class="fas fa-download mr-2"></i>Export All
+                        </button>
+                        <button onclick="logout()" class="bg-gray-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-600">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Real-time Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-100">Active Sessions</p>
+                                <p class="text-3xl font-bold" id="total-sessions">0</p>
+                            </div>
+                            <i class="fas fa-users text-4xl text-blue-200"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-green-100">Form Submissions</p>
+                                <p class="text-3xl font-bold" id="total-forms">0</p>
+                            </div>
+                            <i class="fas fa-file-alt text-4xl text-green-200"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-yellow-100">Chat Conversations</p>
+                                <p class="text-3xl font-bold" id="total-chats">0</p>
+                            </div>
+                            <i class="fas fa-comments text-4xl text-yellow-200"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-purple-100">Page Views</p>
+                                <p class="text-3xl font-bold" id="total-pageviews">0</p>
+                            </div>
+                            <i class="fas fa-eye text-4xl text-purple-200"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-red-100">Avg. Session Time</p>
+                                <p class="text-3xl font-bold" id="avg-session-time">0m</p>
+                            </div>
+                            <i class="fas fa-clock text-4xl text-red-200"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="bg-white rounded-lg shadow-lg mb-8">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8 px-6">
+                        <button onclick="showTab('sessions')" id="tab-sessions" class="tab-button active py-4 px-2 border-b-2 border-yellow-400 font-medium text-sm text-yellow-600">
+                            <i class="fas fa-users mr-2"></i>User Sessions
+                        </button>
+                        <button onclick="showTab('forms')" id="tab-forms" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-file-alt mr-2"></i>Form Submissions
+                        </button>
+                        <button onclick="showTab('chats')" id="tab-chats" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-comments mr-2"></i>Chat History
+                        </button>
+                        <button onclick="showTab('navigation')" id="tab-navigation" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-route mr-2"></i>Page Navigation
+                        </button>
+                        <button onclick="showTab('heatmap')" id="tab-heatmap" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-fire mr-2"></i>Heatmap
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- User Sessions Tab -->
+                <div id="content-sessions" class="tab-content p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">User Sessions</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Session ID</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Duration</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pages</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sessions-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Sessions will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Form Submissions Tab -->
+                <div id="content-forms" class="tab-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Form Submissions</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Form Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Service</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                                </tr>
+                            </thead>
+                            <tbody id="forms-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Form submissions will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Chat History Tab -->
+                <div id="content-chats" class="tab-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Chat Conversations</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Session</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">User Message</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bot Response</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Step</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                                </tr>
+                            </thead>
+                            <tbody id="chats-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Chat history will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Page Navigation Tab -->
+                <div id="content-navigation" class="tab-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Page Navigation & Time Tracking</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Session</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Page</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Entry Time</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Time Spent</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Referrer</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Screen Size</th>
+                                </tr>
+                            </thead>
+                            <tbody id="navigation-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Page navigation will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Heatmap Tab -->
+                <div id="content-heatmap" class="tab-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Website Heatmap & User Behavior</h3>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-blue-400 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-medium text-blue-800">Hotjar Integration</h4>
+                                <p class="text-sm text-blue-600 mt-1">
+                                    Free heatmap tracking is enabled. Visit <a href="https://www.hotjar.com" target="_blank" class="underline">Hotjar.com</a> 
+                                    to create a free account and replace the demo ID in the code with your actual Hotjar site ID.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h4 class="font-medium text-gray-800 mb-4">
+                                <i class="fas fa-mouse-pointer text-blue-500 mr-2"></i>
+                                Click Tracking
+                            </h4>
+                            <div id="click-heatmap-data">
+                                <!-- Click data will be displayed here -->
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h4 class="font-medium text-gray-800 mb-4">
+                                <i class="fas fa-scroll text-green-500 mr-2"></i>
+                                Scroll Behavior
+                            </h4>
+                            <div id="scroll-heatmap-data">
+                                <!-- Scroll data will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced dashboard functionality
+        let dashboardData = {
+            sessions: [],
+            forms: [],
+            chats: [],
+            pageViews: [],
+            interactions: []
+        };
+
+        async function checkPassword() {
+            const password = document.getElementById('admin-password').value;
+            const errorMsg = document.getElementById('error-message');
+            
+            if (!password) {
+                errorMsg.textContent = 'Please enter password';
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            
+            if (typeof window.adminAuth !== 'undefined') {
+                const result = await window.adminAuth.authenticate(password);
+                
+                if (result.success) {
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('dashboard-content').classList.remove('hidden');
+                    loadEnhancedDashboardData();
+                } else {
+                    errorMsg.textContent = result.message || 'Access denied';
+                    errorMsg.classList.remove('hidden');
+                    setTimeout(() => errorMsg.classList.add('hidden'), 3000);
+                }
+            } else {
+                errorMsg.textContent = 'Authentication system not loaded';
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            document.getElementById('dashboard-content').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('admin-password').value = '';
+        }
+
+        // Load comprehensive analytics data
+        function loadEnhancedDashboardData() {
+            // Get all analytics data
+            if (typeof AnalyticsTracker !== 'undefined') {
+                dashboardData = AnalyticsTracker.getAllAnalytics();
+            }
+            
+            // Also get legacy chat data for backward compatibility
+            const legacyChats = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+            const legacyBookings = JSON.parse(localStorage.getItem('chatBookings') || '[]');
+            
+            // Merge legacy data
+            dashboardData.chats = [...dashboardData.chats, ...legacyChats];
+            
+            updateEnhancedStats();
+            updateAllTables();
+        }
+
+        function updateEnhancedStats() {
+            document.getElementById('total-sessions').textContent = dashboardData.sessions.length;
+            document.getElementById('total-forms').textContent = dashboardData.formSubmissions?.length || 0;
+            document.getElementById('total-chats').textContent = dashboardData.chatHistory?.length || 0;
+            document.getElementById('total-pageviews').textContent = dashboardData.pageViews.length;
+            
+            // Calculate average session time
+            let totalTime = 0;
+            let sessionCount = 0;
+            dashboardData.pageViews.forEach(pv => {
+                if (pv.timeSpent) {
+                    totalTime += pv.timeSpent;
+                    sessionCount++;
+                }
+            });
+            const avgMinutes = sessionCount > 0 ? Math.round(totalTime / sessionCount / 1000 / 60) : 0;
+            document.getElementById('avg-session-time').textContent = avgMinutes + 'm';
+        }
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'border-yellow-400', 'text-yellow-600');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            
+            // Add active class to selected tab
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.add('active', 'border-yellow-400', 'text-yellow-600');
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            
+            // Load specific data for the tab
+            switch(tabName) {
+                case 'sessions':
+                    updateSessionsTable();
+                    break;
+                case 'forms':
+                    updateFormsTable();
+                    break;
+                case 'chats':
+                    updateChatsTable();
+                    break;
+                case 'navigation':
+                    updateNavigationTable();
+                    break;
+                case 'heatmap':
+                    updateHeatmapData();
+                    break;
+            }
+        }
+
+        function updateAllTables() {
+            updateSessionsTable();
+            updateFormsTable();
+            updateChatsTable();
+            updateNavigationTable();
+            updateHeatmapData();
+        }
+
+        function updateSessionsTable() {
+            const table = document.getElementById('sessions-table');
+            table.innerHTML = '';
+            
+            if (dashboardData.sessions.length === 0) {
+                table.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">No session data yet</td></tr>';
+                return;
+            }
+            
+            dashboardData.sessions.slice(-20).reverse().forEach(session => {
+                const duration = session.lastActive ? 
+                    Math.round((new Date(session.lastActive) - session.startTime) / 1000 / 60) + 'm' : 'Active';
+                
+                const pageCount = dashboardData.pageViews.filter(pv => pv.sessionId === session.sessionId).length;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-4 text-sm text-gray-900 font-mono">${session.sessionId.substring(0, 12)}...</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${session.ipAddress || 'unknown'}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">
+                        ${session.location?.city || 'unknown'}, ${session.location?.country || 'unknown'}
+                    </td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${new Date(session.startTime).toLocaleString()}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${duration}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${pageCount}</td>
+                    <td class="px-4 py-4 text-sm">
+                        <button onclick="viewSessionDetails('${session.sessionId}')" 
+                                class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        function updateFormsTable() {
+            const table = document.getElementById('forms-table');
+            table.innerHTML = '';
+            
+            const forms = dashboardData.formSubmissions || [];
+            
+            if (forms.length === 0) {
+                table.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-gray-500">No form submissions yet</td></tr>';
+                return;
+            }
+            
+            forms.slice(-20).reverse().forEach(form => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-4 text-sm text-gray-900">${new Date(form.timestamp).toLocaleString()}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${form.formId || 'Contact Form'}</td>
+                    <td class="px-4 py-4 text-sm font-medium text-gray-900">${form.data.name || 'N/A'}</td>
+                    <td class="px-4 py-4 text-sm text-blue-600">
+                        <a href="tel:${form.data.phone || ''}" class="hover:underline">${form.data.phone || 'N/A'}</a>
+                    </td>
+                    <td class="px-4 py-4 text-sm text-blue-600">
+                        <a href="mailto:${form.data.email || ''}" class="hover:underline">${form.data.email || 'N/A'}</a>
+                    </td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${form.data.service || form.data.projectType || 'N/A'}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${form.ipAddress || 'unknown'}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">
+                        ${form.location?.city || 'unknown'}, ${form.location?.country || 'unknown'}
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        function updateChatsTable() {
+            const table = document.getElementById('chats-table');
+            table.innerHTML = '';
+            
+            const chats = dashboardData.chatHistory || [];
+            
+            if (chats.length === 0) {
+                table.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No chat conversations yet</td></tr>';
+                return;
+            }
+            
+            chats.slice(-50).reverse().forEach(chat => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-4 text-sm text-gray-900">${new Date(chat.timestamp).toLocaleString()}</td>
+                    <td class="px-4 py-4 text-sm font-mono text-gray-600">${(chat.sessionId || '').substring(0, 8)}...</td>
+                    <td class="px-4 py-4 text-sm text-gray-900 max-w-xs truncate" title="${chat.userMessage || chat.message || 'N/A'}">
+                        ${chat.userMessage || chat.message || 'N/A'}
+                    </td>
+                    <td class="px-4 py-4 text-sm text-gray-900 max-w-xs truncate" title="${chat.botResponse || 'N/A'}">
+                        ${chat.botResponse || 'N/A'}
+                    </td>
+                    <td class="px-4 py-4 text-sm text-gray-900">
+                        <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                            ${chat.step || 'conversation'}
+                        </span>
+                    </td>
+                    <td class="px-4 py-4 text-sm text-gray-900">
+                        ${chat.location?.city || 'unknown'}
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        function updateNavigationTable() {
+            const table = document.getElementById('navigation-table');
+            table.innerHTML = '';
+            
+            if (dashboardData.pageViews.length === 0) {
+                table.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No page navigation data yet</td></tr>';
+                return;
+            }
+            
+            dashboardData.pageViews.slice(-50).reverse().forEach(pv => {
+                const timeSpent = pv.timeSpent ? Math.round(pv.timeSpent / 1000) + 's' : 'Active';
+                const sessionShort = (pv.sessionId || '').substring(0, 8);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-4 text-sm font-mono text-gray-600">${sessionShort}...</td>
+                    <td class="px-4 py-4 text-sm font-medium text-gray-900">${pv.pathname || pv.url}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900">${new Date(pv.timestamp || pv.startTime).toLocaleString()}</td>
+                    <td class="px-4 py-4 text-sm text-gray-900 font-medium">${timeSpent}</td>
+                    <td class="px-4 py-4 text-sm text-gray-600">${pv.referrer || 'Direct'}</td>
+                    <td class="px-4 py-4 text-sm text-gray-600">${pv.screenSize || pv.windowSize || 'N/A'}</td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        function updateHeatmapData() {
+            // Display click tracking data
+            const clickData = document.getElementById('click-heatmap-data');
+            const scrollData = document.getElementById('scroll-heatmap-data');
+            
+            const clicks = (dashboardData.interactions || []).filter(i => i.type === 'click');
+            const scrolls = (dashboardData.interactions || []).filter(i => i.type === 'scroll');
+            
+            // Click heatmap data
+            if (clicks.length > 0) {
+                const clickSummary = clicks.slice(-10).map(click => `
+                    <div class="border-b border-gray-200 py-2">
+                        <div class="text-sm font-medium">${click.elementTag} - ${click.elementText.substring(0, 30)}</div>
+                        <div class="text-xs text-gray-500">
+                            ${new Date(click.timestamp).toLocaleString()} | 
+                            Position: (${click.coordinates?.x || 0}, ${click.coordinates?.y || 0})
+                        </div>
+                    </div>
+                `).join('');
+                clickData.innerHTML = clickSummary;
+            } else {
+                clickData.innerHTML = '<p class="text-gray-500 text-sm">No click data available yet</p>';
+            }
+            
+            // Scroll heatmap data
+            if (scrolls.length > 0) {
+                const scrollSummary = scrolls.slice(-10).map(scroll => `
+                    <div class="border-b border-gray-200 py-2">
+                        <div class="text-sm font-medium">Scroll: ${scroll.scrollPercent}% of page</div>
+                        <div class="text-xs text-gray-500">
+                            ${new Date(scroll.timestamp).toLocaleString()} | 
+                            Position: ${scroll.scrollY}px
+                        </div>
+                    </div>
+                `).join('');
+                scrollData.innerHTML = scrollSummary;
+            } else {
+                scrollData.innerHTML = '<p class="text-gray-500 text-sm">No scroll data available yet</p>';
+            }
+        }
+
+        function viewSessionDetails(sessionId) {
+            // Show detailed view of a specific session
+            const session = dashboardData.sessions.find(s => s.sessionId === sessionId);
+            const sessionPages = dashboardData.pageViews.filter(pv => pv.sessionId === sessionId);
+            const sessionChats = (dashboardData.chatHistory || []).filter(c => c.sessionId === sessionId);
+            
+            alert(`Session Details:\nID: ${sessionId}\nIP: ${session.ipAddress}\nPages Viewed: ${sessionPages.length}\nChat Messages: ${sessionChats.length}\nLocation: ${session.location?.city}, ${session.location?.country}`);
+        }
+
+        function refreshData() {
+            loadEnhancedDashboardData();
+            
+            const refreshBtn = event.target.closest('button');
+            const originalText = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Refreshing...';
+            
+            setTimeout(() => {
+                refreshBtn.innerHTML = originalText;
+            }, 1000);
+        }
+
+        function exportAllData() {
+            const allData = {
+                exportDate: new Date().toISOString(),
+                sessions: dashboardData.sessions,
+                formSubmissions: dashboardData.formSubmissions || [],
+                chatHistory: dashboardData.chatHistory || [],
+                pageViews: dashboardData.pageViews,
+                interactions: dashboardData.interactions || []
+            };
+            
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `lazarus-analytics-${new Date().getTime()}.json`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Allow Enter key for password
+        document.getElementById('admin-password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            if (!document.getElementById('dashboard-content').classList.contains('hidden')) {
+                loadEnhancedDashboardData();
+            }
+        }, 30000);
+
+        // Initialize with sessions tab
+        setTimeout(() => {
+            if (!document.getElementById('dashboard-content').classList.contains('hidden')) {
+                showTab('sessions');
+            }
+        }, 100);
+    </script>
+</body>
+</html>

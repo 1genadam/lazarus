@@ -49,6 +49,13 @@ Our services include:
         return 'chat-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
     }
 
+    // Integration with analytics tracker
+    logToAnalytics(userMessage, botResponse, step = null) {
+        if (window.analyticsTracker) {
+            window.analyticsTracker.trackChatMessage(userMessage, botResponse, step);
+        }
+    }
+
     async init() {
         this.bindEvents();
         this.addWelcomeMessage();
@@ -215,6 +222,9 @@ Our services include:
 
         // Log user message
         this.logMessage('user', userMessage);
+        
+        // Log to analytics tracker
+        this.logToAnalytics(userMessage, null, this.bookingFlow.step);
 
         // Add user message
         this.messages.push({
@@ -238,6 +248,9 @@ Our services include:
                 bookingFlowActive: this.bookingFlow.active,
                 bookingStep: this.bookingFlow.step
             });
+            
+            // Log to analytics tracker
+            this.logToAnalytics(userMessage, response, this.bookingFlow.step);
             
             this.messages.push({
                 role: 'assistant',
