@@ -747,7 +747,18 @@ Other
             saveFormData();
             // Submit final form data
             console.log('Final form submission:', formData);
-            alert('Thank you! Your consultation request has been submitted.');
+            
+            // Change button to success state
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.innerHTML = '<i class="fas fa-check mr-2"></i>Sent';
+            submitButton.className = 'bg-green-500 text-white font-bold py-3 px-6 rounded-lg cursor-default';
+            submitButton.disabled = true;
+            
+            // Redirect to about page after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'about.html';
+            }, 2000);
+            
             // In production, send to server and show success message
         }
     });
