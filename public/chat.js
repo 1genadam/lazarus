@@ -3,7 +3,8 @@
 
 class LazarusChatWidget {
     constructor() {
-        this.apiKey = null; // Will be loaded from backend
+        this.backendAvailable = false; // Will be checked during initialization
+        this.useBackendProxy = true; // Use backend proxy instead of direct OpenAI calls
         this.messages = [];
         this.isLoading = false;
         this.bookingFlow = {
@@ -72,17 +73,20 @@ Our services include:
     }
 
     async loadConfig() {
-        // In a real deployment, this would fetch from a secure backend endpoint
-        // For now, we'll use environment variables or demo mode
+        // Check if backend proxy is available
         try {
+            console.log('🔍 Checking backend availability...');
             const response = await fetch('/api/config');
             if (response.ok) {
                 const config = await response.json();
-                this.apiKey = config.openaiKey;
+                this.backendAvailable = config.openaiAvailable;
+                console.log('✅ Backend proxy available:', this.backendAvailable);
+            } else {
+                throw new Error('Backend not responding');
             }
         } catch (error) {
-            // Fallback to demo mode if backend not available
-            console.log('Using demo mode for chat');
+            console.log('❌ Backend proxy not available, using demo mode:', error.message);
+            this.backendAvailable = false;
         }
     }
 
@@ -275,40 +279,44 @@ Our services include:
     }
 
     async getAIResponse(userMessage) {
-        // Try OpenAI API first if available
-        if (this.apiKey) {
+        // Try backend proxy first if available
+        if (this.backendAvailable) {
+            console.log('🤖 Using backend proxy for OpenAI...');
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.apiKey}`
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
-                        messages: [
-                            {
-                                role: 'system',
-                                content: this.systemPrompt
-                            },
-                            {
-                                role: 'user',
-                                content: userMessage
-                            }
-                        ],
-                        max_tokens: 200,
-                        temperature: 0.7
+                        message: userMessage
                     })
                 });
 
+                console.log('📡 Backend proxy response status:', response.status);
+                
                 if (response.ok) {
                     const data = await response.json();
-                    return data.choices[0].message.content;
+                    if (data.success && data.message) {
+                        console.log('✅ Backend proxy success:', data.message.substring(0, 100) + '...');
+                        return data.message;
+                    } else if (data.fallback) {
+                        console.log('⚠️ Backend returned fallback response');
+                        return data.fallback;
+                    }
+                } else {
+                    const errorData = await response.json();
+                    console.error('❌ Backend proxy error:', response.status, errorData);
+                    if (errorData.fallback) {
+                        return errorData.fallback;
+                    }
                 }
             } catch (error) {
-                console.error('OpenAI API error:', error);
+                console.error('💥 Backend proxy network error:', error);
                 // Fall back to demo responses
             }
+        } else {
+            console.log('🔑 Backend not available, using demo responses');
         }
 
         // Enhanced demo responses for common home remodeling questions (fallback)
@@ -343,6 +351,18 @@ Our services include:
             message.includes('weather') || message.includes('sports') || message.includes('movie') ||
             message.includes('music') || message.includes('forget') || message.includes('train')) {
             return demoResponses.unrelated;
+        }
+        
+        // Build to suit and custom questions
+        if (message.includes('build to suit') || message.includes('custom build') || message.includes('custom design')) {
+            return "Absolutely! We specialize in build-to-suit and custom design projects. Whether you need a completely custom kitchen layout, unique built-in storage solutions, or a one-of-a-kind bathroom design, we work closely with you to create spaces that perfectly match your vision and lifestyle. Our design team will collaborate with you from concept to completion. What kind of custom project are you envisioning?";
+        }
+        
+        if (message.includes('do you') || message.includes('can you')) {
+            if (message.includes('kitchen') || message.includes('bathroom') || message.includes('remodel') || 
+                message.includes('renovation') || message.includes('design') || message.includes('build')) {
+                return "Yes! We handle all aspects of home remodeling including kitchen and bathroom renovations, whole home remodels, custom carpentry, flooring installation, plumbing, electrical work, and accessibility modifications. We're licensed, insured, and have 15+ years of experience. What specific project are you considering?";
+            }
         }
         
         // Home remodeling topics

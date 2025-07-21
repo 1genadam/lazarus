@@ -1,0 +1,28 @@
+{
+  "name": "lazarus-home-remodeling",
+  "version": "1.0.0",
+  "description": "Lazarus Home Remodeling Website with OpenAI Chat Integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Static site - no build needed'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "home-remodeling",
+    "website",
+    "openai",
+    "chat",
+    "express"
+  ],
+  "author": "Lazarus Home Remodeling",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

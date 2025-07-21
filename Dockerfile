@@ -1,13 +1,31 @@
-FROM nginx:alpine
+# Use Node.js as base image for backend server
+FROM node:18-alpine
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Install wget for health check
+RUN apk add --no-cache wget
 
-# Copy static files
-COPY public /usr/share/nginx/html
+# Set working directory
+WORKDIR /app
 
-# Expose port 80
-EXPOSE 80
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install --production
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Copy application files
+COPY . .
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nodejs -u 1001 -G nodejs
+RUN chown -R nodejs:nodejs /app
+USER nodejs
+
+# Expose port 3000 (internal port, Fly.io maps to 80/443)
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
+
+# Start the Node.js backend server
+CMD ["npm", "start"]

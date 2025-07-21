@@ -9,11 +9,11 @@ kill_timeout = "30s"
 
 [env]
   NODE_ENV = "production"
-  PORT = "80"
+  PORT = "3000"
 
 # HTTP service configuration
 [http_service]
-  internal_port = 80
+  internal_port = 3000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
@@ -24,8 +24,8 @@ kill_timeout = "30s"
     grace_period = "30s"
     interval = "15s"
     method = "GET"
-    path = "/"
-    port = 80
+    path = "/health"
+    port = 3000
     timeout = "10s"
     type = "http"
 
