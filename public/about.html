@@ -20,10 +20,6 @@
 <i class="fas fa-phone-alt mr-2"></i>
 <span class="hidden sm:inline">(586) 248-8888</span>
 </a>
-<a class="flex items-center hover:text-white transition-colors duration-300" href="mailto:contact@lazarusremodeling.com">
-<i class="fas fa-envelope mr-2"></i>
-<span class="hidden sm:inline">contact@lazarusremodeling.com</span>
-</a>
 </div>
 </div>
 <div class="container mx-auto px-4">
@@ -171,18 +167,12 @@
 <li><i class="fas fa-phone-alt mr-2 text-red-500"></i> (586) 248-8888</li>
 </ul>
 </div>
-<div>
-<h3 class="text-lg font-bold mb-4">Follow Us</h3>
-<div class="flex justify-center md:justify-start space-x-4">
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f text-xl"></i></a>
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram text-xl"></i></a>
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter text-xl"></i></a>
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-houzz text-xl"></i></a>
-</div>
-</div>
 </div>
 <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
 <p>© 2023 Lazarus Home Remodeling. All Rights Reserved.</p>
+<p class="mt-2">
+<a href="#" onclick="adminAccess()" class="text-gray-600 hover:text-gray-400 text-xs">System</a>
+</p>
 </div>
 </div>
 </footer>
@@ -193,6 +183,16 @@
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+    }
+
+    // Admin access function
+    function adminAccess() {
+        const password = prompt('Enter admin password:');
+        if (password === 'Hellolazarus1!') {
+            window.location.href = 'admin-dashboard.html';
+        } else if (password !== null) {
+            alert('Incorrect password');
+        }
     }
 </script>
 </body></html>

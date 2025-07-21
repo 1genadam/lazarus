@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<script src="admin-auth.js"></script>
 <style type="text/tailwindcss">
         body {
             font-family: 'Roboto', sans-serif;
@@ -42,6 +43,13 @@
             height: 1px;
             transform-origin: left;
         }
+        .date-input-yellow::-webkit-calendar-picker-indicator {
+            filter: invert(80%) sepia(100%) saturate(2000%) hue-rotate(35deg) brightness(110%);
+            cursor: pointer;
+        }
+        .date-input-yellow::-webkit-calendar-picker-indicator:hover {
+            filter: invert(85%) sepia(100%) saturate(2000%) hue-rotate(35deg) brightness(120%);
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -51,10 +59,6 @@
 <a class="flex items-center hover:text-white transition-colors duration-300" href="tel:(586) 248-8888">
 <i class="fas fa-phone-alt mr-2"></i>
 <span class="hidden sm:inline">(586) 248-8888</span>
-</a>
-<a class="flex items-center hover:text-white transition-colors duration-300" href="mailto:contact@lazarusremodeling.com">
-<i class="fas fa-envelope mr-2"></i>
-<span class="hidden sm:inline">contact@lazarusremodeling.com</span>
 </a>
 </div>
 </div>
@@ -112,31 +116,176 @@
 <div class="text-center md:text-left">
 <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Revive Your Home, <br/>Restore Your Life.</h1>
 <p class="text-lg md:text-xl text-red-200 mb-8">Experience a resurrection in your living space with our expert remodeling services. Quality craftsmanship, inspired design.</p>
-<div class="mt-8">
-<a class="inline-block bg-yellow-400 text-red-800 font-bold py-4 px-10 rounded-lg text-lg hover:bg-yellow-500 transition-colors duration-300" href="#get-quote">Get a Free Quote</a>
-</div>
 </div>
 <div class="bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl p-8" id="get-quote">
 <h2 class="text-3xl font-bold text-white mb-6 text-center">Get a Free Estimate</h2>
-<form class="space-y-4">
+
+<!-- Progress Bar -->
+<div class="mb-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-400 text-red-800 font-bold text-sm" id="step-1-indicator">1</div>
+<div class="ml-2 text-sm font-medium text-white">Contact Info</div>
+</div>
+<div class="flex-1 mx-4 h-1 bg-white/20 rounded">
+<div class="h-1 bg-yellow-400 rounded transition-all duration-300" id="progress-bar-1" style="width: 0%"></div>
+</div>
+<div class="flex items-center">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 text-white font-bold text-sm" id="step-2-indicator">2</div>
+<div class="ml-2 text-sm font-medium text-white/70">Project Details</div>
+</div>
+<div class="flex-1 mx-4 h-1 bg-white/20 rounded">
+<div class="h-1 bg-yellow-400 rounded transition-all duration-300" id="progress-bar-2" style="width: 0%"></div>
+</div>
+<div class="flex items-center">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 text-white font-bold text-sm" id="step-3-indicator">3</div>
+<div class="ml-2 text-sm font-medium text-white/70">Appointment</div>
+</div>
+</div>
+</div>
+
+<form id="multi-step-form" class="space-y-4">
+<!-- Step 1: Contact Information -->
+<div id="step-1" class="step-content">
 <div>
 <label class="block text-sm font-medium text-red-200" for="hero-name">Name</label>
-<input autocomplete="name" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-name" name="name" type="text"/>
+<input autocomplete="name" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-name" name="name" type="text" required/>
 </div>
 <div>
 <label class="block text-sm font-medium text-red-200" for="hero-email">Email</label>
-<input autocomplete="email" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-email" name="email" type="email"/>
+<input autocomplete="email" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-email" name="email" type="email" required/>
 </div>
 <div>
 <label class="block text-sm font-medium text-red-200" for="hero-phone">Phone Number</label>
-<input autocomplete="tel" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-phone" name="phone" type="tel"/>
+<input autocomplete="tel" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-phone" name="phone" type="tel" required/>
+</div>
+<div class="flex justify-end pt-4">
+<button type="button" class="bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300" id="next-step-1">Next</button>
+</div>
+</div>
+
+<!-- Step 2: Project Details -->
+<div id="step-2" class="step-content hidden">
+<div>
+<label class="block text-sm font-medium text-red-200 mb-3">Services of Interest (Select all that apply)</label>
+<div class="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto bg-white/10 rounded-lg p-3">
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Kitchen Remodeling" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Kitchen Remodeling
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Bathroom Remodeling" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Bathroom Remodeling
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Walk-in Tub Installation" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Walk-in Tub Installation
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="ADA Remodeling" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+ADA Remodeling
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Room Additions" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Room Additions
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Basement Finishing" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Basement Finishing
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Flooring Installation" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Flooring Installation
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Plumbing Services" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Plumbing Services
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Electrical Work" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Electrical Work
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Interior Renovations" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Interior Renovations
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Custom Carpentry" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Custom Carpentry
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="General Home Improvements" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+General Home Improvements
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Design" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Design
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Other" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Other
+</label>
+</div>
 </div>
 <div>
-<label class="block text-sm font-medium text-red-200" for="hero-message">How can we help?</label>
+<label class="block text-sm font-medium text-red-200" for="hero-project-start">Project Start Timeline</label>
+<select class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-project-start" name="project-start" required>
+<option value="">Select timeline...</option>
+<option value="now">Now</option>
+<option value="1-2-weeks">1-2 weeks</option>
+<option value="2-4-weeks">2-4 weeks</option>
+<option value="1-3-months">1-3 months</option>
+<option value="3-months-plus">3+ months</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-contact-method">Preferred Contact Method</label>
+<select class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-contact-method" name="contact-method" required>
+<option value="">Select contact method...</option>
+<option value="call">Phone Call</option>
+<option value="home-visit">Home Visit</option>
+</select>
+</div>
+<div id="hero-address-field" class="hidden">
+<label class="block text-sm font-medium text-red-200" for="hero-address">Address</label>
+<input class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white placeholder-white/70 focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-address" name="address" type="text" placeholder="Enter your address for home visit"/>
+</div>
+<div class="flex justify-between pt-4">
+<button type="button" class="bg-white/20 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/30 transition-colors duration-300" id="back-step-2">Back</button>
+<button type="button" class="bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300" id="next-step-2">Next</button>
+</div>
+</div>
+
+<!-- Step 3: Appointment -->
+<div id="step-3" class="step-content hidden">
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-date">Preferred Date</label>
+<input class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm date-input-yellow" id="hero-date" name="date" type="date" required/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-time">Preferred Time</label>
+<select class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-time" name="time" required>
+<option value="">Select time...</option>
+<option value="8:00-9:00">8:00 AM - 9:00 AM</option>
+<option value="9:00-10:00">9:00 AM - 10:00 AM</option>
+<option value="10:00-11:00">10:00 AM - 11:00 AM</option>
+<option value="11:00-12:00">11:00 AM - 12:00 PM</option>
+<option value="12:00-13:00">12:00 PM - 1:00 PM</option>
+<option value="13:00-14:00">1:00 PM - 2:00 PM</option>
+<option value="14:00-15:00">2:00 PM - 3:00 PM</option>
+<option value="15:00-16:00">3:00 PM - 4:00 PM</option>
+<option value="16:00-17:00">4:00 PM - 5:00 PM</option>
+<option value="17:00-18:00">5:00 PM - 6:00 PM</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-message">Important project details:</label>
 <textarea class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-message" name="message" rows="3"></textarea>
 </div>
-<div class="text-center pt-2">
-<button class="w-full inline-flex justify-center rounded-md border border-transparent bg-yellow-400 py-3 px-8 text-lg font-medium text-red-800 shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-red-800" type="submit">Request Consultation</button>
+<div class="flex justify-between pt-4">
+<button type="button" class="bg-white/20 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/30 transition-colors duration-300" id="back-step-3">Back</button>
+<button type="submit" class="bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300">Request Consultation</button>
+</div>
 </div>
 </form>
 </div>
@@ -201,7 +350,7 @@
 </div>
 <div class="bg-gray-50 p-6 rounded-lg shadow-md col-span-1 md:col-span-2 lg:col-span-3">
 <h3 class="text-xl font-semibold text-gray-700 mb-2">Design</h3>
-<p class="text-gray-600">Kitchen, bathroom, laundry room, basement, and patio tile design.</p>
+<p class="text-gray-600">We design and build living spaces to suit your lifestyle with professional design expertise to maximize space and achieve the aesthetic based on any time period or style you desire.</p>
 </div>
 </div>
 </div>
@@ -302,23 +451,17 @@
 <li><i class="fas fa-phone-alt mr-2 text-red-500"></i> (586) 248-8888</li>
 </ul>
 </div>
-<div>
-<h3 class="text-lg font-bold mb-4">Follow Us</h3>
-<div class="flex justify-center md:justify-start space-x-4">
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f text-xl"></i></a>
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram text-xl"></i></a>
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter text-xl"></i></a>
-<a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-houzz text-xl"></i></a>
-</div>
-</div>
 </div>
 <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
 <p>© 2023 Lazarus Home Remodeling. All Rights Reserved.</p>
+<p class="mt-2">
+<a href="#" onclick="adminAccess()" class="text-gray-600 hover:text-gray-400 text-xs">System</a>
+</p>
 </div>
 </div>
 </footer>
 <div class="fixed bottom-4 right-4 z-50">
-<button class="bg-red-800 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-red-700 transition-colors duration-300" id="chat-widget-button">
+<button class="bg-yellow-400 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition-colors duration-300" id="chat-widget-button">
 <i class="fas fa-comments text-2xl"></i>
 </button>
 <div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
@@ -337,8 +480,8 @@
 </div>
 <div class="p-4 border-t border-gray-200">
 <div class="flex items-center">
-<input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Type your message..." type="text"/>
-<button class="ml-3 bg-red-800 text-white p-2 rounded-full hover:bg-red-700">
+<input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Type your message..." type="text"/>
+<button type="button" class="ml-3 bg-yellow-400 text-white p-2 rounded-full hover:bg-yellow-500">
 <i class="fas fa-paper-plane"></i>
 </button>
 </div>
@@ -424,5 +567,205 @@
     
     // Start bathroom image rotation every 6 seconds (offset from kitchen)
     setInterval(rotateBathroomImage, 6000);
+
+    // Multi-step form functionality
+    let currentStep = 1;
+    let inactivityTimer;
+    const formData = {};
+
+    // Progress bar and step indicators
+    function updateProgressBar(step) {
+        const indicators = document.querySelectorAll('[id^="step-"][id$="-indicator"]');
+        const progressBars = document.querySelectorAll('[id^="progress-bar-"]');
+        
+        indicators.forEach((indicator, index) => {
+            const stepNum = index + 1;
+            if (stepNum < step) {
+                indicator.classList.remove('bg-white/20');
+                indicator.classList.add('bg-yellow-400', 'text-red-800');
+                indicator.nextElementSibling.classList.remove('text-white/70');
+                indicator.nextElementSibling.classList.add('text-white');
+            } else if (stepNum === step) {
+                indicator.classList.remove('bg-white/20');
+                indicator.classList.add('bg-yellow-400', 'text-red-800');
+                indicator.nextElementSibling.classList.remove('text-white/70');
+                indicator.nextElementSibling.classList.add('text-white');
+            } else {
+                indicator.classList.add('bg-white/20');
+                indicator.classList.remove('bg-yellow-400', 'text-red-800');
+                indicator.nextElementSibling.classList.add('text-white/70');
+                indicator.nextElementSibling.classList.remove('text-white');
+            }
+        });
+
+        progressBars.forEach((bar, index) => {
+            const stepNum = index + 1;
+            if (stepNum < step) {
+                bar.style.width = '100%';
+            } else {
+                bar.style.width = '0%';
+            }
+        });
+    }
+
+    // Show specific step
+    function showStep(step) {
+        document.querySelectorAll('.step-content').forEach(content => {
+            content.classList.add('hidden');
+        });
+        document.getElementById(`step-${step}`).classList.remove('hidden');
+        currentStep = step;
+        updateProgressBar(step);
+    }
+
+    // Validate current step
+    function validateStep(step) {
+        const stepElement = document.getElementById(`step-${step}`);
+        const requiredFields = stepElement.querySelectorAll('[required]');
+        
+        // Check regular required fields
+        for (let field of requiredFields) {
+            if (!field.value.trim()) {
+                field.focus();
+                return false;
+            }
+        }
+        
+        // For step 2, check if at least one service is selected
+        if (step === 2) {
+            const serviceCheckboxes = stepElement.querySelectorAll('input[name="services"]:checked');
+            if (serviceCheckboxes.length === 0) {
+                alert('Please select at least one service of interest.');
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    // Save form data
+    function saveFormData() {
+        const form = document.getElementById('multi-step-form');
+        const formDataObj = new FormData(form);
+        
+        // Handle multiple checkboxes for services
+        const services = [];
+        const serviceCheckboxes = form.querySelectorAll('input[name="services"]:checked');
+        serviceCheckboxes.forEach(checkbox => services.push(checkbox.value));
+        
+        // Clear existing formData
+        Object.keys(formData).forEach(key => delete formData[key]);
+        
+        // Add all form data
+        for (let [key, value] of formDataObj.entries()) {
+            if (key === 'services') {
+                // Skip individual service entries, we'll handle them as array
+                continue;
+            }
+            formData[key] = value;
+        }
+        
+        // Add services array
+        if (services.length > 0) {
+            formData.services = services;
+        }
+        
+        // Auto-save via AJAX (mock implementation - replace with actual endpoint)
+        console.log('Auto-saving form data:', formData);
+        // In production, send formData to server endpoint
+    }
+
+    // Reset inactivity timer
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(() => {
+            saveFormData();
+            console.log('Form auto-saved due to inactivity');
+        }, 60000); // 60 seconds
+    }
+
+    // Contact method address field toggle
+    const contactMethodSelect = document.getElementById('hero-contact-method');
+    const addressField = document.getElementById('hero-address-field');
+    const addressInput = document.getElementById('hero-address');
+    
+    if (contactMethodSelect && addressField && addressInput) {
+        contactMethodSelect.addEventListener('change', function() {
+            if (this.value === 'home-visit') {
+                addressField.classList.remove('hidden');
+                addressInput.setAttribute('required', 'required');
+            } else {
+                addressField.classList.add('hidden');
+                addressInput.removeAttribute('required');
+                addressInput.value = '';
+            }
+            resetInactivityTimer();
+        });
+    }
+
+    // Admin access function - now using secure authentication
+    async function adminAccess() {
+        const password = prompt('Enter admin password:');
+        if (password === null) return; // User cancelled
+
+        const result = await window.adminAuth.authenticate(password);
+        
+        if (result.success) {
+            window.location.href = 'admin-dashboard.html';
+        } else {
+            alert(result.message || 'Access denied');
+        }
+    }
+
+    // Step navigation
+    document.getElementById('next-step-1').addEventListener('click', function() {
+        if (validateStep(1)) {
+            saveFormData();
+            showStep(2);
+        }
+    });
+
+    document.getElementById('next-step-2').addEventListener('click', function() {
+        if (validateStep(2)) {
+            saveFormData();
+            showStep(3);
+        }
+    });
+
+    document.getElementById('back-step-2').addEventListener('click', function() {
+        showStep(1);
+    });
+
+    document.getElementById('back-step-3').addEventListener('click', function() {
+        showStep(2);
+    });
+
+    // Form submission
+    document.getElementById('multi-step-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (validateStep(3)) {
+            saveFormData();
+            // Submit final form data
+            console.log('Final form submission:', formData);
+            alert('Thank you! Your consultation request has been submitted.');
+            // In production, send to server and show success message
+        }
+    });
+
+    // Track form interactions for auto-save
+    document.getElementById('multi-step-form').addEventListener('input', resetInactivityTimer);
+    document.getElementById('multi-step-form').addEventListener('change', resetInactivityTimer);
+
+    // Initialize
+    showStep(1);
+    resetInactivityTimer();
+
+    // Ensure date input opens calendar on click
+    document.getElementById('hero-date').addEventListener('click', function(e) {
+        if (e.target.type === 'date') {
+            e.target.showPicker && e.target.showPicker();
+        }
+    });
 </script>
+<script src="chat.js"></script>
 </body></html>

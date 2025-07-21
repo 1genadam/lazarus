@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Reports - Lazarus Home Remodeling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">
+                    <i class="fas fa-comments text-yellow-400 mr-3"></i>
+                    Chat Reports Dashboard
+                </h1>
+                <button onclick="refreshData()" class="bg-yellow-400 text-red-800 px-4 py-2 rounded-lg font-medium hover:bg-yellow-500">
+                    <i class="fas fa-sync-alt mr-2"></i>Refresh
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-100">Total Conversations</p>
+                            <p class="text-3xl font-bold" id="total-conversations">0</p>
+                        </div>
+                        <i class="fas fa-comments text-4xl text-blue-200"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-green-100">Completed Bookings</p>
+                            <p class="text-3xl font-bold" id="completed-bookings">0</p>
+                        </div>
+                        <i class="fas fa-calendar-check text-4xl text-green-200"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-yellow-100">Conversion Rate</p>
+                            <p class="text-3xl font-bold" id="conversion-rate">0%</p>
+                        </div>
+                        <i class="fas fa-chart-line text-4xl text-yellow-200"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-purple-100">Avg. Session Time</p>
+                            <p class="text-3xl font-bold" id="avg-session-time">0m</p>
+                        </div>
+                        <i class="fas fa-clock text-4xl text-purple-200"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="bg-white border rounded-lg mb-8">
+                <div class="bg-gray-50 px-6 py-4 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-star text-yellow-400 mr-2"></i>
+                        Recent Bookings (Leads)
+                    </h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Session</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookings-table" class="bg-white divide-y divide-gray-200">
+                            <!-- Bookings will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chat Sessions -->
+            <div class="bg-white border rounded-lg">
+                <div class="bg-gray-50 px-6 py-4 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-history text-blue-400 mr-2"></i>
+                        Recent Chat Sessions
+                    </h2>
+                </div>
+                <div class="divide-y divide-gray-200" id="chat-sessions">
+                    <!-- Chat sessions will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data for demonstration - replace with actual API calls
+        let chatData = {
+            conversations: [],
+            bookings: [],
+            events: []
+        };
+
+        function loadStoredData() {
+            // Load from localStorage (fallback storage)
+            const storedChats = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+            const storedBookings = JSON.parse(localStorage.getItem('chatBookings') || '[]');
+            
+            chatData.conversations = storedChats;
+            chatData.bookings = storedBookings;
+            
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Update stats
+            document.getElementById('total-conversations').textContent = chatData.conversations.length;
+            document.getElementById('completed-bookings').textContent = chatData.bookings.length;
+            
+            const conversionRate = chatData.conversations.length > 0 ? 
+                ((chatData.bookings.length / chatData.conversations.length) * 100).toFixed(1) : 0;
+            document.getElementById('conversion-rate').textContent = conversionRate + '%';
+            
+            // Update bookings table
+            const bookingsTable = document.getElementById('bookings-table');
+            bookingsTable.innerHTML = '';
+            
+            chatData.bookings.slice(-10).reverse().forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        ${new Date(booking.timestamp).toLocaleString()}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        ${booking.data.name || 'N/A'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <a href="tel:${booking.data.phone}" class="text-blue-600 hover:underline">
+                            ${booking.data.phone || 'N/A'}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <a href="mailto:${booking.data.email}" class="text-blue-600 hover:underline">
+                            ${booking.data.email || 'N/A'}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
+                            ${booking.data.projectType || 'N/A'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${booking.data.sessionId || 'N/A'}
+                    </td>
+                `;
+                bookingsTable.appendChild(row);
+            });
+
+            // Update chat sessions
+            const chatSessions = document.getElementById('chat-sessions');
+            chatSessions.innerHTML = '';
+            
+            chatData.conversations.slice(-10).reverse().forEach(session => {
+                const sessionDiv = document.createElement('div');
+                sessionDiv.className = 'p-6';
+                sessionDiv.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-900">Session: ${session.data.sessionId || 'Unknown'}</span>
+                        <span class="text-xs text-gray-500">${new Date(session.timestamp).toLocaleString()}</span>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <strong>Event:</strong> ${session.data.eventType || 'Message'}<br>
+                        <strong>Content:</strong> ${session.data.content || JSON.stringify(session.data).substring(0, 100) + '...'}
+                    </div>
+                `;
+                chatSessions.appendChild(sessionDiv);
+            });
+        }
+
+        function refreshData() {
+            // In production, this would fetch from your backend API
+            // For now, reload from localStorage
+            loadStoredData();
+            
+            // Show refresh feedback
+            const refreshBtn = event.target.closest('button');
+            const originalText = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Refreshing...';
+            
+            setTimeout(() => {
+                refreshBtn.innerHTML = originalText;
+            }, 1000);
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            loadStoredData();
+        }, 5000);
+
+        // Initial load
+        loadStoredData();
+
+        // Add some demo data if none exists
+        if (chatData.conversations.length === 0) {
+            // Add demo conversation
+            chatData.conversations.push({
+                timestamp: new Date().toISOString(),
+                data: {
+                    sessionId: 'demo-session-1',
+                    eventType: 'chat_session_started',
+                    content: 'Demo conversation started'
+                }
+            });
+
+            // Add demo booking
+            chatData.bookings.push({
+                timestamp: new Date().toISOString(),
+                data: {
+                    sessionId: 'demo-session-1',
+                    name: 'John Smith',
+                    phone: '(586) 248-8888',
+                    email: 'john@example.com',
+                    projectType: 'Kitchen Remodeling'
+                }
+            });
+
+            updateDashboard();
+        }
+    </script>
+</body>
+</html>
