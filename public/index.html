@@ -44,11 +44,18 @@
             transform-origin: left;
         }
         .date-input-yellow::-webkit-calendar-picker-indicator {
-            filter: invert(80%) sepia(100%) saturate(2000%) hue-rotate(35deg) brightness(110%);
+            filter: invert(1) brightness(100%);
             cursor: pointer;
         }
         .date-input-yellow::-webkit-calendar-picker-indicator:hover {
-            filter: invert(85%) sepia(100%) saturate(2000%) hue-rotate(35deg) brightness(120%);
+            filter: invert(1) brightness(90%);
+        }
+        /* White chevron for select dropdowns */
+        select {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
         }
     </style>
 </head>
@@ -466,9 +473,9 @@ Other
 </button>
 <div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
 <div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
-<h3 class="font-bold text-lg">Chat with Us</h3>
+<h3 class="font-bold text-lg">Chat with us</h3>
 <button class="text-white hover:text-yellow-400" id="close-chat-widget">
-<i class="fas fa-times"></i>
+<i class="fas fa-chevron-down"></i>
 </button>
 </div>
 <div class="p-4 h-64 overflow-y-auto">
