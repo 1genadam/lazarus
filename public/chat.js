@@ -279,6 +279,23 @@ Our services include:
     }
 
     async getAIResponse(userMessage) {
+        // Check for booking intent first (before AI or demo responses)
+        const message = userMessage.toLowerCase();
+        
+        // Enhanced booking intent detection
+        if (message.includes('contractor') || message.includes('come out') || message.includes('visit') ||
+            message.includes('book') || message.includes('schedule') || message.includes('appointment') || 
+            message.includes('consultation') || message.includes('estimate') || message.includes('quote') ||
+            message.includes('call') || message.includes('contact') || message.includes('speak with') ||
+            message.includes('meet') || message.includes('pricing') || message.includes('cost')) {
+            return this.startBookingFlow();
+        }
+
+        // Check if we're in booking flow
+        if (this.bookingFlow.active) {
+            return this.handleBookingFlow(userMessage);
+        }
+        
         // Try backend proxy first if available
         if (this.backendAvailable) {
             console.log('🤖 Using backend proxy for OpenAI...');
@@ -299,6 +316,14 @@ Our services include:
                     const data = await response.json();
                     if (data.success && data.message) {
                         console.log('✅ Backend proxy success:', data.message.substring(0, 100) + '...');
+                        
+                        // Check if AI response should trigger booking flow
+                        const aiResponse = data.message.toLowerCase();
+                        if (aiResponse.includes('contact us') || aiResponse.includes('call us') || 
+                            aiResponse.includes('(586) 248-8888') || aiResponse.includes('schedule')) {
+                            return this.startBookingFlow();
+                        }
+                        
                         return data.message;
                     } else if (data.fallback) {
                         console.log('⚠️ Backend returned fallback response');
@@ -378,16 +403,6 @@ Our services include:
         if (message.includes('floor') || message.includes('flooring')) return "We install all types of flooring including hardwood, tile, laminate, and luxury vinyl. Flooring projects typically range from $3,000-$15,000 depending on materials and square footage. What type of flooring are you considering?";
         if (message.includes('whole home') || message.includes('entire') || message.includes('complete')) return "Whole home remodeling is our specialty! These comprehensive projects typically range from $30,000-$150,000+ and take 8-12+ weeks. We handle everything from design to completion. What areas of your home are you looking to renovate?";
 
-        // Check if we're in booking flow
-        if (this.bookingFlow.active) {
-            return this.handleBookingFlow(userMessage);
-        }
-
-        // Check if user wants to book appointment
-        if (message.includes('book') || message.includes('schedule') || message.includes('appointment') || 
-            message.includes('consultation') || message.includes('estimate') || message.includes('quote')) {
-            return this.startBookingFlow();
-        }
 
         // Default response for general remodeling questions
         return "Thanks for your question! I'm here to help with your home remodeling needs. We specialize in kitchen and bathroom remodeling, whole home renovations, flooring, and accessibility modifications. Our projects typically range from $2,000 for small updates to $150,000+ for complete home transformations. What specific project are you considering? Call (586) 248-8888 or say 'book appointment' for a free consultation!";
