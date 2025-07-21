@@ -120,36 +120,15 @@
               </div>
             </div>
             <h2 class="text-[#141414] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Meet Our Team</h2>
-            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-              <div class="flex flex-col gap-3 pb-3">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgBTGorQpSt7ZZMVrNRiYImsdpKvSF4MeCIW9guCbWW-miiuz8QLnWPx_n8To7kUQs1lHXUBThJjQoq7HxEQnX_3YiKcKYHePHNsSsMK3eOIM0aZl7SfKAJvck-TcDcnkvQ2hCbOqmQP-HFDEH6Pb6Ef7Do_KnxQ0b9yvlE5maq55zPJ00alAeiGAwxTsy4aUJWX-LYnlcQ_JYEXyqEf8xNArODkGJufrZTF0zi5T1GN4-I040JR_ChNbB0AMu4GXyxLU0OTxo7kgx");'
-                ></div>
-                <div>
-                  <p class="text-[#141414] text-base font-medium leading-normal">Mark Lazarus</p>
-                  <p class="text-[#757575] text-sm font-normal leading-normal">Founder &amp; CEO</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-4 md:gap-9 px-4">
+              <div class="w-80">
+                <div class="w-80 h-80 bg-center bg-no-repeat bg-cover rounded-xl" style='background-image: url("20200125_Mark_BD-286.jpg");'></div>
               </div>
-              <div class="flex flex-col gap-3 pb-3">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeThCPQ1NaF0POzr13tpyhvxzN80BLT5KI7GT5H9qzLoOWGD1CBsFfMgSuH_idCePKiSutN6IaSSHHckbEwy19Om8368VZGVrOtiDfYAoMbymBYfuQT8sN_flbFBSGvZtofuS4gYuWEMZo1b2DEj3pl1hjzia9t0aqlrfvIG4hjmvdbI4Paz4PsYYJ_08oJdYy6LfEVPvqOrMYOxoxiXfvhMm2XvYtFaqtnOIO3hcs_OnUvl43hHk_aGupDZbLI215bI_fGfr8aj77");'
-                ></div>
-                <div>
-                  <p class="text-[#141414] text-base font-medium leading-normal">Sarah Johnson</p>
-                  <p class="text-[#757575] text-sm font-normal leading-normal">Design Director</p>
-                </div>
-              </div>
-              <div class="flex flex-col gap-3 pb-3">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBApoZhI2__qfD9NrDTNAdg_N3GMKJuyLpLhD9mTfo1QIa0XchKvOd-imNdhKkB1WF5l-BEA-Q0jzRNMufVsE1Kgvxz6l725gxiVTfcLTcYheRJtx0plqpQyc5xOqjEEv1Ig1HiizZK3Xty_RhMxgPH3SiVLq-Cro_qPgl2hkLW15DreqOA6yXMZCuQFJNtUjHcSYeOdmP9yGVLFzvoYGDfCEhU81Ju9U7NHvdRr1fovDoYzeAcEDZOrURYyh5n1yc0MWNaOuB2DOS5");'
-                ></div>
-                <div>
-                  <p class="text-[#141414] text-base font-medium leading-normal">David Lee</p>
-                  <p class="text-[#757575] text-sm font-normal leading-normal">Project Manager</p>
-                </div>
+              <div>
+                <h3 class="text-[#141414] text-xl font-bold leading-tight mb-2">Robert Sher (Founder & CEO) and Rachel Sher (CMO)</h3>
+                <p class="text-[#757575] text-base leading-normal">
+                  Robert and Rachel Sher are the owners of Lazarus Home Remodeling, bringing together a shared passion for transforming homes and enhancing lives. Together, they manage a team of highly skilled remodelers, craftsmen, artisans, and carpenters who have decades of combined experience making the vision of their customers come to life. Their commitment to quality craftsmanship and exceptional customer service has made Lazarus Home Remodeling a trusted name in home renovation, where every project is approached with meticulous attention to detail and a dedication to exceeding expectations.
+                </p>
               </div>
             </div>
 </div>
@@ -176,6 +155,35 @@
 </div>
 </div>
 </footer>
+<div class="fixed bottom-4 right-4 z-50">
+<button class="bg-yellow-400 text-red-800 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition-colors duration-300" id="chat-widget-button">
+<i class="fas fa-comments text-2xl"></i>
+</button>
+<div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
+<div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
+<h3 class="font-bold text-lg">Chat with us</h3>
+<button class="text-white hover:text-yellow-400" id="close-chat-widget">
+<i class="fas fa-chevron-down"></i>
+</button>
+</div>
+<div class="p-4 h-64 overflow-y-auto">
+<div class="flex mb-4">
+<div class="bg-gray-200 p-3 rounded-lg max-w-xs">
+<p class="text-sm">Hello! How can we help you with your remodeling project today?</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-200">
+<div class="flex items-center">
+<input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Type your message..." type="text"/>
+<button type="button" class="ml-3 bg-yellow-400 text-red-800 p-2 rounded-full hover:bg-yellow-500">
+<i class="fas fa-paper-plane"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script src="chat.js"></script>
 <script>
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
