@@ -258,29 +258,60 @@ sudo certbot --nginx -d lazarushomeremodeling.com
 
 ## 🌍 Custom Domain Setup
 
+### **Current Domain Configuration** (✅ Active)
+```bash
+# Domain: lazarushomeremodeling.com (Registered with GoDaddy)
+# DNS Management: Spaceship (launch1.spaceship.net, launch2.spaceship.net)
+# Current Configuration for Fly.io hosting:
+
+# A Record (IPv4):
+@    A    149.248.199.186    TTL: 1 min
+
+# CNAME (www subdomain):
+www  CNAME    lazarus-home-remodeling.fly.dev    TTL: 5 min
+```
+
 ### **Domain Configuration Steps**
 ```bash
-# 1. Purchase domain (lazarushomeremodeling.com)
-# 2. Configure DNS records
+# 1. Domain already purchased: lazarushomeremodeling.com (GoDaddy)
+# 2. DNS Management migrated to Spaceship (July 21, 2025)
+# 3. Fly.io integration configured
 
-# For GitHub Pages:
+# For Fly.io hosting (CURRENT SETUP):
+# A record: @ -> 149.248.199.186 (Fly.io dedicated IP)
+# CNAME: www -> lazarus-home-remodeling.fly.dev
+
+# For GitHub Pages (Alternative):
 # CNAME record: www -> 1genadam.github.io
 # A records for apex domain:
-# 185.199.108.153
-# 185.199.109.153  
-# 185.199.110.153
-# 185.199.111.153
+# 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
 
 # For Netlify/Vercel:
 # Follow platform-specific DNS instructions
 ```
 
-### **DNS Configuration Example**
+### **Current DNS Configuration**
 ```dns
-; DNS Zone File
-@    IN A     185.199.108.153
-@    IN A     185.199.109.153
-www  IN CNAME 1genadam.github.io.
+; Active DNS Zone File - Spaceship Management
+@    IN A     149.248.199.186                    ; Fly.io hosting
+www  IN CNAME lazarus-home-remodeling.fly.dev    ; www subdomain
+@    IN MX    mx1.spacemail.com                  ; Email service
+@    IN MX    mx2.spacemail.com                  ; Email service
+@    IN TXT   v=spf1 include:spf.spacemail.com ~all  ; Email security
+```
+
+### **Verify Domain Configuration**
+```bash
+# Check current DNS resolution
+dig A lazarushomeremodeling.com
+dig CNAME www.lazarushomeremodeling.com
+
+# Test website accessibility
+curl -I https://lazarushomeremodeling.com
+curl -I https://www.lazarushomeremodeling.com
+
+# Backup access (always available)
+curl -I https://lazarus-home-remodeling.fly.dev
 ```
 
 ---

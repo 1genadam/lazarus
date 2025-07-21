@@ -3,13 +3,24 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Lazarus Home Remodeling</title>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <script src="admin-auth.js"></script>
 <script src="analytics-tracker.js"></script>
 <script src="form-tracker.js"></script>
 <style type="text/tailwindcss">
+        @font-face {
+            font-family: 'Blanka';
+            src: url('./fonts/Blanka-Regular.woff2') format('woff2'),
+                 url('./fonts/Blanka-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         body {
             font-family: 'Roboto', sans-serif;
         }
@@ -106,15 +117,7 @@
 <div class="container mx-auto px-4">
 <div class="flex justify-between items-center py-4">
 <a class="flex flex-col items-center" href="#">
-<div class="flex justify-center items-center mb-1">
-<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-<span class="w-16 h-px bg-yellow-400"></span>
-<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-<span class="w-16 h-px bg-yellow-400"></span>
-<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-</div>
-<span class="text-3xl font-bold tracking-widest">LAZARUS</span>
-<span class="text-lg tracking-widest">HOME REMODELING</span>
+<img src="header-logo.png" alt="Lazarus Home Remodeling" class="h-16 w-auto"/>
 </a>
 <nav class="hidden md:flex items-center space-x-6">
 <a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
@@ -932,25 +935,74 @@ Other
     });
 
     // Form submission
-    document.getElementById('multi-step-form').addEventListener('submit', function(e) {
+    document.getElementById('multi-step-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         if (validateStep(3)) {
             saveFormData();
-            // Submit final form data
-            console.log('Final form submission:', formData);
             
-            // Change button to success state
             const submitButton = document.querySelector('button[type="submit"]');
-            submitButton.innerHTML = '<i class="fas fa-check mr-2"></i>Sent';
-            submitButton.className = 'bg-green-500 text-white font-bold py-3 px-6 rounded-lg cursor-default';
+            const originalButtonContent = submitButton.innerHTML;
+            
+            // Show loading state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
             submitButton.disabled = true;
+            submitButton.className = 'bg-yellow-500 text-white font-bold py-3 px-6 rounded-lg cursor-default';
             
-            // Redirect to about page after 2 seconds
-            setTimeout(() => {
-                window.location.href = 'about.html';
-            }, 2000);
-            
-            // In production, send to server and show success message
+            try {
+                // Submit form data to backend
+                console.log('Submitting form data:', formData);
+                
+                const response = await fetch('/api/forms/hero', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Form submitted successfully:', result);
+                    
+                    // Show success state
+                    submitButton.innerHTML = '<i class="fas fa-check mr-2"></i>Sent Successfully!';
+                    submitButton.className = 'bg-green-500 text-white font-bold py-3 px-6 rounded-lg cursor-default';
+                    
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg';
+                    successMessage.innerHTML = '<i class="fas fa-check-circle mr-2"></i><strong>Thank you!</strong> Your consultation request has been submitted. We\'ll contact you within 24 hours.';
+                    submitButton.parentNode.appendChild(successMessage);
+                    
+                    // Redirect to about page after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'about.html';
+                    }, 3000);
+                    
+                } else {
+                    throw new Error(result.error || 'Form submission failed');
+                }
+                
+            } catch (error) {
+                console.error('❌ Form submission error:', error);
+                
+                // Show error state
+                submitButton.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Try Again';
+                submitButton.className = 'bg-red-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-600';
+                submitButton.disabled = false;
+                
+                // Show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+                errorMessage.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i><strong>Oops!</strong> There was an issue submitting your form. Please try again or call us at <a href="tel:586-248-8888" class="underline">(586) 248-8888</a>.';
+                
+                // Remove existing error message if any
+                const existingError = submitButton.parentNode.querySelector('.bg-red-100');
+                if (existingError) existingError.remove();
+                
+                submitButton.parentNode.appendChild(errorMessage);
+            }
         }
     });
 

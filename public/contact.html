@@ -3,6 +3,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Contact - Lazarus Home Remodeling</title>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -28,15 +30,7 @@
 <div class="container mx-auto px-4">
 <div class="flex justify-between items-center py-4">
 <a class="flex flex-col items-center" href="/">
-<div class="flex justify-center items-center mb-1">
-<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-<span class="w-16 h-px bg-yellow-400"></span>
-<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-<span class="w-16 h-px bg-yellow-400"></span>
-<span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-</div>
-<span class="text-3xl font-bold tracking-widest">LAZARUS</span>
-<span class="text-lg tracking-widest">HOME REMODELING</span>
+<img src="header-logo.png" alt="Lazarus Home Remodeling" class="h-16 w-auto"/>
 </a>
 <nav class="hidden md:flex items-center space-x-6">
 <a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
@@ -74,7 +68,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 <div>
 <h2 class="text-2xl font-bold text-gray-800 mb-6">Get a Free Quote</h2>
-<form class="space-y-4">
+<form id="contact-form" class="space-y-4">
 <div>
 <label class="block text-sm font-medium text-gray-700" for="name">Name</label>
 <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" id="name" name="name" type="text" required/>
@@ -234,5 +228,84 @@
             alert(result.message || 'Access denied');
         }
     }
+
+    // Contact form submission handler
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalButtonContent = submitButton.innerHTML;
+        
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            service: document.getElementById('service').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Show loading state
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+        submitButton.disabled = true;
+        submitButton.className = 'inline-flex justify-center rounded-md border border-transparent bg-yellow-500 py-3 px-8 text-lg font-medium text-white cursor-default';
+        
+        try {
+            const response = await fetch('/api/forms/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('✅ Contact form submitted successfully:', result);
+                
+                // Show success state
+                submitButton.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                submitButton.className = 'inline-flex justify-center rounded-md border border-transparent bg-green-500 py-3 px-8 text-lg font-medium text-white cursor-default';
+                
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg';
+                successMessage.innerHTML = '<i class="fas fa-check-circle mr-2"></i><strong>Thank you!</strong> Your message has been sent. We\'ll get back to you soon.';
+                submitButton.parentNode.appendChild(successMessage);
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    this.reset();
+                    submitButton.innerHTML = originalButtonContent;
+                    submitButton.className = 'inline-flex justify-center rounded-md border border-transparent bg-red-600 py-3 px-8 text-lg font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2';
+                    submitButton.disabled = false;
+                    successMessage.remove();
+                }, 3000);
+                
+            } else {
+                throw new Error(result.error || 'Form submission failed');
+            }
+            
+        } catch (error) {
+            console.error('❌ Contact form submission error:', error);
+            
+            // Show error state
+            submitButton.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Try Again';
+            submitButton.className = 'inline-flex justify-center rounded-md border border-transparent bg-red-500 py-3 px-8 text-lg font-medium text-white shadow-sm hover:bg-red-600';
+            submitButton.disabled = false;
+            
+            // Show error message
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+            errorMessage.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i><strong>Oops!</strong> There was an issue sending your message. Please try again or call us at <a href="tel:586-248-8888" class="underline">(586) 248-8888</a>.';
+            
+            // Remove existing error message if any
+            const existingError = submitButton.parentNode.querySelector('.bg-red-100');
+            if (existingError) existingError.remove();
+            
+            submitButton.parentNode.appendChild(errorMessage);
+        }
+    });
 </script>
 </body></html>

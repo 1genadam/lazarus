@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +26,203 @@ if (fs.existsSync(envPath)) {
 app.use(express.json({ limit: '1mb' }));
 app.use(cors());
 
+// Email configuration (Spaceship/Spacemail)
+const emailConfig = {
+    host: 'mail.spacemail.com',
+    port: 465,
+    secure: true, // SSL
+    auth: {
+        user: process.env.EMAIL_USER || 'robert@lazarushomeremodeling.com',
+        pass: process.env.EMAIL_PASSWORD
+    },
+    from: 'robert@lazarushomeremodeling.com'
+};
+
+// Create email transporter
+let emailTransporter = null;
+if (process.env.EMAIL_PASSWORD) {
+    try {
+        emailTransporter = nodemailer.createTransport(emailConfig);
+        console.log('📧 Email service configured');
+    } catch (error) {
+        console.error('❌ Email configuration error:', error.message);
+    }
+} else {
+    console.log('⚠️ Email service disabled - EMAIL_PASSWORD not configured');
+}
+
+// Email service functions
+async function sendFormEmail(formData, formType) {
+    if (!emailTransporter) {
+        console.log('📧 Email service not available - form data logged locally');
+        console.log(`${formType} Form Submission:`, formData);
+        return { success: false, message: 'Email service not configured' };
+    }
+
+    try {
+        const emailSubject = `New ${formType} Inquiry - Lazarus Home Remodeling`;
+        const emailBody = formatFormEmail(formData, formType);
+
+        const mailOptions = {
+            from: emailConfig.from,
+            to: 'robert@lazarushomeremodeling.com',
+            subject: emailSubject,
+            html: emailBody,
+            text: stripHtml(emailBody)
+        };
+
+        const result = await emailTransporter.sendMail(mailOptions);
+        console.log('✅ Email sent successfully:', result.messageId);
+        return { success: true, messageId: result.messageId };
+    } catch (error) {
+        console.error('❌ Email sending failed:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+function formatFormEmail(formData, formType) {
+    const timestamp = new Date().toLocaleString('en-US', { 
+        timeZone: 'America/New_York',
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    if (formType === 'Hero Multi-Step') {
+        return `
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .header { background: #dc2626; color: white; padding: 20px; text-align: center; }
+                .content { padding: 20px; }
+                .field { margin-bottom: 15px; }
+                .label { font-weight: bold; color: #dc2626; }
+                .value { margin-left: 10px; }
+                .services { margin-left: 20px; }
+                .footer { background: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>🏠 New Consultation Request</h1>
+                <p>Lazarus Home Remodeling</p>
+            </div>
+            
+            <div class="content">
+                <h2>Customer Information</h2>
+                <div class="field">
+                    <span class="label">Name:</span>
+                    <span class="value">${formData.name || 'Not provided'}</span>
+                </div>
+                <div class="field">
+                    <span class="label">Phone:</span>
+                    <span class="value">${formData.phone || 'Not provided'}</span>
+                </div>
+                <div class="field">
+                    <span class="label">Email:</span>
+                    <span class="value">${formData.email || 'Not provided'}</span>
+                </div>
+                
+                <h2>Project Details</h2>
+                <div class="field">
+                    <span class="label">Project Type:</span>
+                    <span class="value">${formData.projectType || 'Not specified'}</span>
+                </div>
+                <div class="field">
+                    <span class="label">Budget Range:</span>
+                    <span class="value">${formData.budget || 'Not specified'}</span>
+                </div>
+                <div class="field">
+                    <span class="label">Timeline:</span>
+                    <span class="value">${formData.timeline || 'Not specified'}</span>
+                </div>
+                
+                ${formData.services ? `
+                <div class="field">
+                    <span class="label">Services Requested:</span>
+                    <div class="services">
+                        ${Array.isArray(formData.services) ? formData.services.join('<br>') : formData.services}
+                    </div>
+                </div>
+                ` : ''}
+                
+                ${formData.description ? `
+                <div class="field">
+                    <span class="label">Project Description:</span>
+                    <div class="value">${formData.description}</div>
+                </div>
+                ` : ''}
+            </div>
+            
+            <div class="footer">
+                <p><strong>Received:</strong> ${timestamp}</p>
+                <p><strong>Source:</strong> Website Hero Form</p>
+                <p><strong>Next Step:</strong> Contact customer within 24 hours</p>
+            </div>
+        </body>
+        </html>
+        `;
+    } else if (formType === 'Contact') {
+        return `
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .header { background: #dc2626; color: white; padding: 20px; text-align: center; }
+                .content { padding: 20px; }
+                .field { margin-bottom: 15px; }
+                .label { font-weight: bold; color: #dc2626; }
+                .value { margin-left: 10px; }
+                .footer { background: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>📞 New Contact Form Submission</h1>
+                <p>Lazarus Home Remodeling</p>
+            </div>
+            
+            <div class="content">
+                <h2>Contact Information</h2>
+                <div class="field">
+                    <span class="label">Name:</span>
+                    <span class="value">${formData.name || 'Not provided'}</span>
+                </div>
+                <div class="field">
+                    <span class="label">Email:</span>
+                    <span class="value">${formData.email || 'Not provided'}</span>
+                </div>
+                <div class="field">
+                    <span class="label">Phone:</span>
+                    <span class="value">${formData.phone || 'Not provided'}</span>
+                </div>
+                
+                <h2>Message</h2>
+                <div class="field">
+                    <div class="value">${formData.message || 'No message provided'}</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p><strong>Received:</strong> ${timestamp}</p>
+                <p><strong>Source:</strong> Website Contact Form</p>
+                <p><strong>Next Step:</strong> Respond to customer inquiry</p>
+            </div>
+        </body>
+        </html>
+        `;
+    }
+
+    return `<p>New form submission received at ${timestamp}</p><pre>${JSON.stringify(formData, null, 2)}</pre>`;
+}
+
+function stripHtml(html) {
+    return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+
 // Serve static files
 app.use(express.static('public'));
 
@@ -34,7 +232,8 @@ app.get('/health', (req, res) => {
         status: 'healthy',
         service: 'Lazarus Home Remodeling Backend',
         timestamp: new Date().toISOString(),
-        openai: process.env.OPENAI_API_KEY ? 'configured' : 'missing'
+        openai: process.env.OPENAI_API_KEY ? 'configured' : 'missing',
+        email: emailTransporter ? 'configured' : 'disabled'
     });
 });
 
@@ -171,6 +370,87 @@ app.post('/api/bookings', (req, res) => {
     console.log('📅 New Booking:', req.body);
     // In production, this would save to database and send notifications
     res.json({ success: true, message: 'Booking received' });
+});
+
+// Form submission endpoints
+app.post('/api/forms/hero', async (req, res) => {
+    try {
+        console.log('📝 Received hero form submission:', req.body);
+        
+        // Validate required fields
+        const { name, phone, email } = req.body;
+        if (!name || !phone || !email) {
+            return res.status(400).json({
+                success: false,
+                error: 'Name, phone, and email are required'
+            });
+        }
+
+        // Send email notification
+        const emailResult = await sendFormEmail(req.body, 'Hero Multi-Step');
+        
+        if (emailResult.success) {
+            console.log('✅ Hero form email sent successfully');
+            res.json({
+                success: true,
+                message: 'Form submitted and email sent successfully',
+                messageId: emailResult.messageId
+            });
+        } else {
+            console.log('⚠️ Hero form submitted but email failed:', emailResult.error);
+            res.json({
+                success: true,
+                message: 'Form submitted successfully (email notification pending)',
+                emailError: emailResult.error
+            });
+        }
+    } catch (error) {
+        console.error('❌ Hero form submission error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Internal server error processing form'
+        });
+    }
+});
+
+app.post('/api/forms/contact', async (req, res) => {
+    try {
+        console.log('📞 Received contact form submission:', req.body);
+        
+        // Validate required fields
+        const { name, email, message } = req.body;
+        if (!name || !email || !message) {
+            return res.status(400).json({
+                success: false,
+                error: 'Name, email, and message are required'
+            });
+        }
+
+        // Send email notification
+        const emailResult = await sendFormEmail(req.body, 'Contact');
+        
+        if (emailResult.success) {
+            console.log('✅ Contact form email sent successfully');
+            res.json({
+                success: true,
+                message: 'Message sent successfully',
+                messageId: emailResult.messageId
+            });
+        } else {
+            console.log('⚠️ Contact form submitted but email failed:', emailResult.error);
+            res.json({
+                success: true,
+                message: 'Message submitted successfully (email notification pending)',
+                emailError: emailResult.error
+            });
+        }
+    } catch (error) {
+        console.error('❌ Contact form submission error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Internal server error processing message'
+        });
+    }
 });
 
 // Catch-all handler for frontend routes
