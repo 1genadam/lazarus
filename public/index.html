@@ -834,6 +834,22 @@ Other
             }
         }
         
+        // For step 3, validate appointment date is not today or earlier
+        if (step === 3) {
+            const dateInput = stepElement.querySelector('input[name="date"]');
+            if (dateInput && dateInput.value) {
+                const selectedDate = new Date(dateInput.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+                
+                if (selectedDate <= today) {
+                    alert('Please select a date starting tomorrow or later for your appointment.');
+                    dateInput.focus();
+                    return false;
+                }
+            }
+        }
+        
         return true;
     }
 
@@ -1014,8 +1030,15 @@ Other
     showStep(1);
     resetInactivityTimer();
 
+    // Set minimum date to tomorrow
+    const dateInput = document.getElementById('hero-date');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowString = tomorrow.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    dateInput.setAttribute('min', tomorrowString);
+
     // Ensure date input opens calendar on click
-    document.getElementById('hero-date').addEventListener('click', function(e) {
+    dateInput.addEventListener('click', function(e) {
         if (e.target.type === 'date') {
             e.target.showPicker && e.target.showPicker();
         }

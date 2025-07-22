@@ -127,32 +127,53 @@ function formatFormEmail(formData, formType) {
                 </div>
                 
                 <h2>Project Details</h2>
-                <div class="field">
-                    <span class="label">Project Type:</span>
-                    <span class="value">${formData.projectType || 'Not specified'}</span>
-                </div>
-                <div class="field">
-                    <span class="label">Budget Range:</span>
-                    <span class="value">${formData.budget || 'Not specified'}</span>
-                </div>
-                <div class="field">
-                    <span class="label">Timeline:</span>
-                    <span class="value">${formData.timeline || 'Not specified'}</span>
-                </div>
-                
                 ${formData.services ? `
                 <div class="field">
-                    <span class="label">Services Requested:</span>
+                    <span class="label">Project Type:</span>
                     <div class="services">
                         ${Array.isArray(formData.services) ? formData.services.join('<br>') : formData.services}
                     </div>
                 </div>
+                ` : `
+                <div class="field">
+                    <span class="label">Project Type:</span>
+                    <span class="value">Not specified</span>
+                </div>
+                `}
+                <div class="field">
+                    <span class="label">Timeline:</span>
+                    <span class="value">${formData['project-start'] || 'Not specified'}</span>
+                </div>
+                
+                <h2>Contact & Scheduling</h2>
+                <div class="field">
+                    <span class="label">Preferred Contact Method:</span>
+                    <span class="value">${formData['contact-method'] || 'Not specified'}</span>
+                </div>
+                ${formData.address ? `
+                <div class="field">
+                    <span class="label">Address:</span>
+                    <span class="value">${formData.address}</span>
+                </div>
+                ` : ''}
+                ${formData.date ? `
+                <div class="field">
+                    <span class="label">Preferred Date:</span>
+                    <span class="value">${formData.date}</span>
+                </div>
+                ` : ''}
+                ${formData.time ? `
+                <div class="field">
+                    <span class="label">Preferred Time:</span>
+                    <span class="value">${formData.time}</span>
+                </div>
                 ` : ''}
                 
-                ${formData.description ? `
+                ${formData.message ? `
+                <h2>Project Details</h2>
                 <div class="field">
-                    <span class="label">Project Description:</span>
-                    <div class="value">${formData.description}</div>
+                    <span class="label">Additional Information:</span>
+                    <div class="value">${formData.message}</div>
                 </div>
                 ` : ''}
             </div>
