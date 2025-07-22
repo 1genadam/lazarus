@@ -3,8 +3,8 @@
 ## 📤 Repository Information
 - **GitHub**: https://github.com/1genadam/lazarus
 - **Main Branch**: `main` 
-- **License**: Public repository
-- **Current Authentication**: Personal Access Token (configured)
+- **License**: Private repository
+- **Current Authentication**: Personal Access Token (requires setup)
 
 ## 🔄 Automated Publishing
 
@@ -47,11 +47,22 @@ git push origin main
 
 ## 🔐 Authentication Setup
 
-### ✅ CURRENT METHOD: Personal Access Token (Working)
+### 🔧 CURRENT METHOD: Personal Access Token (Setup Required)
 ```bash
-# This project is currently configured with Personal Access Token
-# Token is already configured in the remote URL
-# Simply use: git push origin main
+# Configure your Personal Access Token in the remote URL:
+# 1. Create token at GitHub → Settings → Developer settings → Personal access tokens
+# 2. Select 'repo' permissions
+# 3. Update remote URL with your token:
+git remote set-url origin https://YOUR_GITHUB_TOKEN@github.com/1genadam/lazarus.git
+
+# 4. Then push normally:
+git push origin main
+```
+
+**Example Token Configuration:**
+```bash
+# Replace YOUR_GITHUB_TOKEN with your actual token
+git remote set-url origin https://ghp_xxxxxxxxxxxxxxxxxxxx@github.com/1genadam/lazarus.git
 ```
 
 ### Alternative: SSH Key Setup
@@ -211,7 +222,8 @@ git status  # Should not show .env files
 ```bash
 # Authentication Error
 # Error: could not read Username for 'https://github.com'
-# Solution: Token authentication is configured, use:
+# Solution: Configure Personal Access Token in remote URL:
+git remote set-url origin https://YOUR_GITHUB_TOKEN@github.com/1genadam/lazarus.git
 git push origin main
 
 # Permission Denied
