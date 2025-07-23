@@ -13,7 +13,6 @@ class LazarusChatWidget {
             data: {}
         };
         this.sessionId = this.generateSessionId();
-        this.pageLoadTime = Date.now(); // Track when chat widget was initialized
         this.conversationLog = {
             sessionId: this.sessionId,
             startTime: new Date().toISOString(),
@@ -49,79 +48,6 @@ Our services include:
 
     generateSessionId() {
         return 'chat-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-    }
-
-    getDeviceInfo() {
-        const userAgent = navigator.userAgent;
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-        const isTablet = /iPad|Android(?=.*Mobile)/i.test(userAgent);
-        const isDesktop = !isMobile && !isTablet;
-        
-        // Detect specific devices and browsers
-        const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-        const isAndroid = /Android/.test(userAgent);
-        const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent);
-        const isChrome = /Chrome/.test(userAgent);
-        const isFirefox = /Firefox/.test(userAgent);
-        
-        return {
-            userAgent: userAgent,
-            deviceType: isMobile ? 'mobile' : (isTablet ? 'tablet' : 'desktop'),
-            isMobile: isMobile,
-            isTablet: isTablet,
-            isDesktop: isDesktop,
-            isIOS: isIOS,
-            isAndroid: isAndroid,
-            browser: isChrome ? 'chrome' : (isSafari ? 'safari' : (isFirefox ? 'firefox' : 'other')),
-            viewport: {
-                width: window.innerWidth,
-                height: window.innerHeight
-            },
-            screen: {
-                width: window.screen.width,
-                height: window.screen.height,
-                pixelRatio: window.devicePixelRatio || 1
-            },
-            touchCapable: 'ontouchstart' in window || navigator.maxTouchPoints > 0
-        };
-    }
-
-    isElementVisible(element) {
-        if (!element) return false;
-        const rect = element.getBoundingClientRect();
-        const style = window.getComputedStyle(element);
-        
-        return rect.width > 0 && 
-               rect.height > 0 && 
-               style.display !== 'none' && 
-               style.visibility !== 'hidden' && 
-               style.opacity !== '0';
-    }
-
-    isElementClickable(element) {
-        if (!element || !this.isElementVisible(element)) return false;
-        
-        const rect = element.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        // Check if element at center point is the target element or a child
-        const elementAtPoint = document.elementFromPoint(centerX, centerY);
-        return element.contains(elementAtPoint) || elementAtPoint === element;
-    }
-
-    getElementPosition(element) {
-        if (!element) return null;
-        const rect = element.getBoundingClientRect();
-        return {
-            top: rect.top,
-            left: rect.left,
-            bottom: rect.bottom,
-            right: rect.right,
-            width: rect.width,
-            height: rect.height,
-            visible: this.isElementVisible(element)
-        };
     }
 
     // Integration with analytics tracker
@@ -171,103 +97,23 @@ Our services include:
         const messageInput = document.querySelector('#chat-widget input');
         const sendButton = document.querySelector('#chat-widget button[type="button"]');
 
-        console.log('Binding chat events...', { 
-            chatButton: !!chatButton, 
-            chatWidget: !!chatWidget, 
-            closeButton: !!closeButton,
-            messageInput: !!messageInput,
-            sendButton: !!sendButton
-        });
-
-        // Debug missing elements
-        if (!chatButton) console.error('❌ Missing: chat-widget-button element');
-        if (!chatWidget) console.error('❌ Missing: chat-widget element');
-        if (!closeButton) console.error('❌ Missing: close-chat-widget element');
-        if (!messageInput) console.error('❌ Missing: chat input element');
-        if (!sendButton) console.error('❌ Missing: chat send button element');
+        console.log('Binding chat events...', { chatButton, chatWidget, closeButton });
 
         if (chatButton && chatWidget) {
-            console.log('✅ Adding click event listener to chat button');
-            
             chatButton.addEventListener('click', (e) => {
-                console.log('🖱️ Chat button clicked - basic handler');
                 e.preventDefault();
                 e.stopPropagation();
+                console.log('Chat button clicked!');
+                const wasHidden = chatWidget.classList.contains('hidden');
+                chatWidget.classList.toggle('hidden');
                 
-                try {
-                    const wasHidden = chatWidget.classList.contains('hidden');
-                    console.log('Chat widget was hidden:', wasHidden);
-                    
-                    chatWidget.classList.toggle('hidden');
-                    console.log('Chat widget toggled, now hidden:', chatWidget.classList.contains('hidden'));
-                    
-                    // Try to get device info safely
-                    let deviceInfo = null;
-                    try {
-                        deviceInfo = this.getDeviceInfo();
-                    } catch (error) {
-                        console.warn('Could not get device info:', error);
-                    }
-                    
-                    const clickInfo = {
-                        trigger: 'button_click',
-                        deviceInfo: deviceInfo,
-                        clickCoordinates: {
-                            x: e.clientX || 0,
-                            y: e.clientY || 0
-                        },
-                        timestamp: new Date().toISOString()
-                    };
-                    
-                    // Try to log event safely
-                    try {
-                        this.logEvent('chat_button_clicked', clickInfo);
-                        console.log('✅ Button click logged successfully');
-                    } catch (error) {
-                        console.warn('Could not log button click:', error);
-                    }
-                    
-                    if (wasHidden) {
-                        try {
-                            this.logEvent('chat_opened', { ...clickInfo, success: true });
-                            messageInput?.focus();
-                            console.log('✅ Chat opened and logged');
-                        } catch (error) {
-                            console.warn('Could not log chat opened:', error);
-                        }
-                    } else {
-                        try {
-                            this.logEvent('chat_closed', { ...clickInfo, success: true });
-                            console.log('✅ Chat closed and logged');
-                        } catch (error) {
-                            console.warn('Could not log chat closed:', error);
-                        }
-                    }
-                } catch (error) {
-                    console.error('❌ Error in chat button click handler:', error);
-                    // Fallback - just toggle the widget
-                    chatWidget.classList.toggle('hidden');
+                if (wasHidden) {
+                    this.logEvent('chat_opened', { trigger: 'button_click' });
+                    messageInput?.focus();
+                } else {
+                    this.logEvent('chat_closed', { trigger: 'button_click' });
                 }
             });
-            
-            console.log('✅ Chat button click handler added successfully');
-        } else {
-            console.error('❌ Cannot bind chat button - missing elements:', {
-                chatButton: !!chatButton,
-                chatWidget: !!chatWidget
-            });
-            
-            // Try to log binding failure safely
-            try {
-                this.logEvent('chat_button_bind_failed', {
-                    chatButton: !!chatButton,
-                    chatWidget: !!chatWidget,
-                    reason: !chatButton ? 'button_not_found' : 'widget_not_found',
-                    timestamp: new Date().toISOString()
-                });
-            } catch (error) {
-                console.warn('Could not log binding failure:', error);
-            }
         }
 
         if (closeButton && chatWidget) {
@@ -296,11 +142,14 @@ Our services include:
             });
         }
 
-        // Auto-open chat widget on page load with retry mechanism
-        this.autoOpenChatWidget();
-        
-        // Track initial page state and responsiveness
-        this.trackInitialPageState();
+        // Auto-open chat widget on page load after a brief delay
+        setTimeout(() => {
+            if (chatWidget) {
+                chatWidget.classList.remove('hidden');
+                messageInput?.focus();
+                this.logEvent('chat_opened', { trigger: 'auto_open' });
+            }
+        }, 2000);
 
         // Track when user leaves page
         window.addEventListener('beforeunload', () => {
@@ -310,84 +159,6 @@ Our services include:
                 bookingCompleted: !!this.conversationLog.completedBooking
             });
         });
-    }
-
-    autoOpenChatWidget(attempt = 1, maxAttempts = 5) {
-        const delay = attempt === 1 ? 2000 : 1000; // Initial 2s delay, then 1s retries
-        
-        setTimeout(() => {
-            console.log(`Auto-open attempt ${attempt}/${maxAttempts}...`);
-            
-            // Ensure DOM is ready and re-query elements
-            if (document.readyState !== 'complete') {
-                console.log('DOM not ready, waiting for document.readyState === complete');
-                if (attempt < maxAttempts) {
-                    this.autoOpenChatWidget(attempt + 1, maxAttempts);
-                }
-                return;
-            }
-            
-            const autoOpenChatWidget = document.getElementById('chat-widget');
-            const autoOpenMessageInput = document.querySelector('#chat-widget input');
-            
-            // Debug DOM state
-            console.log('DOM Debug:', {
-                readyState: document.readyState,
-                chatWidget: !!autoOpenChatWidget,
-                chatButton: !!document.getElementById('chat-widget-button'),
-                closeButton: !!document.getElementById('close-chat-widget'),
-                hasHiddenClass: autoOpenChatWidget?.classList.contains('hidden')
-            });
-            
-            if (autoOpenChatWidget) {
-                console.log('✅ Auto-opening chat widget successfully!');
-                
-                try {
-                    autoOpenChatWidget.classList.remove('hidden');
-                    autoOpenMessageInput?.focus();
-                    
-                    // Try to log the auto-open event safely
-                    try {
-                        const autoOpenInfo = {
-                            trigger: 'auto_open',
-                            attempt: attempt,
-                            timestamp: new Date().toISOString()
-                        };
-                        this.logEvent('chat_opened', autoOpenInfo);
-                        console.log('✅ Auto-open logged successfully');
-                    } catch (error) {
-                        console.warn('Could not log auto-open:', error);
-                    }
-                } catch (error) {
-                    console.error('❌ Error during auto-open:', error);
-                }
-                
-                return; // Success, stop retrying
-            } else {
-                console.warn(`❌ Auto-open attempt ${attempt} failed: chat-widget element not found`);
-                
-                // Retry if we haven't reached max attempts
-                if (attempt < maxAttempts) {
-                    console.log(`Retrying auto-open in ${1000}ms... (${attempt + 1}/${maxAttempts})`);
-                    this.autoOpenChatWidget(attempt + 1, maxAttempts);
-                } else {
-                    const deviceInfo = this.getDeviceInfo();
-                    const failureInfo = {
-                        maxAttempts: maxAttempts,
-                        deviceInfo: deviceInfo,
-                        domState: {
-                            readyState: document.readyState,
-                            hasButton: !!document.getElementById('chat-widget-button'),
-                            hasWidget: !!document.getElementById('chat-widget'),
-                            hasCloseButton: !!document.getElementById('close-chat-widget')
-                        }
-                    };
-                    
-                    console.error('❌ Auto-open failed after all attempts. Chat widget may not be properly initialized.', failureInfo);
-                    this.logEvent('chat_auto_open_failed', failureInfo);
-                }
-            }
-        }, delay);
     }
 
     addWelcomeMessage() {
@@ -405,111 +176,13 @@ Our services include:
             timestamp: new Date().toISOString(),
             sessionId: this.sessionId,
             eventType: eventType,
-            pageUrl: window.location.href,
-            userAgent: navigator.userAgent,
             ...data
         };
         
         console.log('Chat Event:', eventData);
         
-        // Enhanced event registration for chat opens
-        if (eventType === 'chat_opened') {
-            this.registerChatOpenEvent(eventData);
-        }
-        
         // Send to backend reporting endpoint
         this.sendToBackend('/api/chat-events', eventData);
-        
-        // Integrate with analytics tracker if available
-        if (window.analyticsTracker) {
-            window.analyticsTracker.trackChatEvent(eventData);
-        }
-    }
-
-    registerChatOpenEvent(eventData) {
-        console.log('🎯 CHAT OPENED EVENT REGISTERED:', eventData);
-        
-        // Add to localStorage for persistence
-        const chatEvents = JSON.parse(localStorage.getItem('chat_events') || '[]');
-        chatEvents.push(eventData);
-        localStorage.setItem('chat_events', JSON.stringify(chatEvents));
-        
-        // Custom event dispatch for other parts of the application
-        const customEvent = new CustomEvent('chatOpened', {
-            detail: eventData
-        });
-        window.dispatchEvent(customEvent);
-        
-        // Additional tracking data for analytics
-        const enhancedData = {
-            ...eventData,
-            deviceInfo: eventData.deviceInfo || this.getDeviceInfo(),
-            timeOnPage: Date.now() - this.pageLoadTime,
-            referrer: document.referrer,
-            language: navigator.language,
-            performance: {
-                loadTime: this.pageLoadTime,
-                eventTime: Date.now(),
-                timeSinceLoad: Date.now() - this.pageLoadTime
-            }
-        };
-        
-        // Store enhanced event data
-        localStorage.setItem('last_chat_open_event', JSON.stringify(enhancedData));
-        
-        console.log('📊 Enhanced chat open tracking:', enhancedData);
-    }
-
-    trackInitialPageState() {
-        const deviceInfo = this.getDeviceInfo();
-        const chatButton = document.getElementById('chat-widget-button');
-        const chatWidget = document.getElementById('chat-widget');
-        const closeButton = document.getElementById('close-chat-widget');
-        
-        const pageState = {
-            deviceInfo: deviceInfo,
-            elementsFound: {
-                chatButton: !!chatButton,
-                chatWidget: !!chatWidget,
-                closeButton: !!closeButton
-            },
-            elementVisibility: {
-                chatButtonVisible: this.isElementVisible(chatButton),
-                chatButtonClickable: this.isElementClickable(chatButton),
-                chatWidgetVisible: this.isElementVisible(chatWidget)
-            },
-            elementPositions: {
-                chatButton: this.getElementPosition(chatButton),
-                chatWidget: this.getElementPosition(chatWidget)
-            },
-            pageMetrics: {
-                loadTime: this.pageLoadTime,
-                documentReady: document.readyState,
-                windowLoaded: document.readyState === 'complete'
-            }
-        };
-        
-        this.logEvent('chat_initial_page_state', pageState);
-        console.log('📱 Initial page state tracked:', pageState);
-        
-        // Track viewport changes for responsiveness issues
-        window.addEventListener('resize', () => {
-            const newDeviceInfo = this.getDeviceInfo();
-            this.logEvent('chat_viewport_changed', {
-                oldViewport: deviceInfo.viewport,
-                newViewport: newDeviceInfo.viewport,
-                deviceInfo: newDeviceInfo
-            });
-        });
-        
-        // Track visibility changes
-        document.addEventListener('visibilitychange', () => {
-            this.logEvent('chat_page_visibility_changed', {
-                hidden: document.hidden,
-                visibilityState: document.visibilityState,
-                deviceInfo: this.getDeviceInfo()
-            });
-        });
     }
 
     logMessage(role, content, metadata = {}) {
