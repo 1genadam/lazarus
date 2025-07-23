@@ -4,7 +4,14 @@
 
 The chat system on the Lazarus Home Remodeling website is not working. We need to run diagnostics to identify the problem.
 
-## 📋 Step-by-Step Instructions
+## 🖥️ CCU System Access
+
+Your Claude Computer Use system is configured and ready:
+- **Web Interface**: http://localhost:8070
+- **Container Status**: ✅ Active (ID: a7d990b3a65d)
+- **FTP Server**: ✅ Configured (localhost:21)
+
+## 📋 Step-by-Step Instructions  
 
 ### Step 1: Navigate to the Diagnostic Tool
 1. Go to the project folder: `/Users/robertsher/Projects/lazarus/`
@@ -33,9 +40,35 @@ For EACH page:
 ### Step 4: Save Reports
 Save all diagnostic files to:
 - **Primary location**: Desktop folder named `lazarus-chat-reports`
-- **Backup location**: `/Users/robertsher/Desktop/lazarus-chat-reports/`
+- **FTP Upload location**: Upload to CCU via FTP for developer analysis
+  
+### Step 5: Upload to CCU FTP Server
+Use your configured FTP setup to upload reports:
+```bash
+# FTP Connection Details (from your CCU setup)
+Host: localhost
+Port: 21
+Username: ftpuser  
+Password: ftppass
+Directory: /home/ftpuser/ftp
+```
 
-### Step 5: Generate Summary
+**Upload Process:**
+1. Open FTP client or use command line: `ftp -n localhost 21`
+2. Login: `user ftpuser ftppass`
+3. Create directory: `mkdir lazarus-chat-reports`
+4. Change to directory: `cd lazarus-chat-reports`
+5. Upload all report files: `put chat-diagnostic-*.txt`
+6. Upload summary: `put SUMMARY.txt`
+
+**Automated Upload Option:**
+Run the provided script for easier upload:
+```bash
+cd /Users/robertsher/Projects/lazarus/
+./upload-to-ccu.sh
+```
+
+### Step 6: Generate Summary
 Create a summary file called `SUMMARY.txt` with:
 ```
 CHAT SYSTEM DIAGNOSTIC SUMMARY
