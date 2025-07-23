@@ -113,6 +113,15 @@ This index provides a comprehensive overview of all documentation files in the `
 | **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** | Development workflow and coding standards | HTML/CSS/JS patterns, file structure, best practices |
 | **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** | Common issues and solutions | Error resolution, debugging tips, maintenance procedures |
 | **[QUICK_START.md](QUICK_START.md)** | Getting started guide for developers | Setup instructions, local development, deployment steps |
+| **[CCU_DIAGNOSTIC_SYSTEM.md](CCU_DIAGNOSTIC_SYSTEM.md)** | Claude Computer Use diagnostic integration | CCU setup, FTP workflow, diagnostic tool usage, troubleshooting procedures |
+
+### **🖥️ CCU Diagnostic System Integration** (July 23, 2025)
+| Component | Technology | Purpose | Status |
+|-----------|------------|---------|---------|
+| **Diagnostic Tools** | HTML/JavaScript diagnostic suite | Comprehensive chat system analysis | ✅ **ACTIVE** |
+| **FTP Integration** | CCU FTP server (localhost:21) | Automated report transfer | ✅ **CONFIGURED** |
+| **CCU Container** | Docker (ID: a7d990b3a65d) | Sandboxed testing environment | ✅ **RUNNING** |
+| **Upload Automation** | bash script (upload-to-ccu.sh) | One-click report transfer | ✅ **READY** |
 
 ---
 
@@ -179,6 +188,7 @@ This index provides a comprehensive overview of all documentation files in the `
 6. **✅ Smart Booking**: 3-step appointment flow with date validation (no same-day bookings)
 7. **✅ Lead Generation**: Complete customer data capture with comprehensive reporting
 8. **✅ Automated Deployment**: Fly.io hosting with GitHub integration
+9. **✅ CCU Diagnostic Integration**: Claude Computer Use system for advanced troubleshooting
 
 ### **📈 Business Impact**
 - **🎯 Customer Experience**: Professional website with AI-powered assistance

@@ -10,6 +10,8 @@ A modern, responsive website for Lazarus Home Remodeling showcasing their compre
 - **Before/After Gallery**: Visual demonstrations of completed projects
 - **Client Testimonials**: Customer reviews and ratings
 - **Contact Integration**: Easy quote request system
+- **AI-Powered Chat**: OpenAI integration with intelligent customer assistance
+- **CCU Diagnostic System**: Advanced troubleshooting with Claude Computer Use integration
 
 ## Pages
 
@@ -32,11 +34,26 @@ A modern, responsive website for Lazarus Home Remodeling showcasing their compre
 
 ```
 lazarus/
-├── public/
+├── public/                 # Website files
 │   ├── index.html          # Main landing page
-│   └── services.html       # Services showcase page
+│   ├── services.html       # Services showcase page
+│   ├── about.html          # About page
+│   ├── contact.html        # Contact page
+│   ├── gallery.html        # Project gallery
+│   ├── blog.html           # Blog page
+│   └── chat.js             # AI chat system
+├── diagnostic-tools/       # CCU diagnostic system
+│   ├── chat-diagnostic.html # Visual diagnostic interface
+│   ├── console-diagnostic.js # Browser console diagnostic
+│   ├── CCU-INSTRUCTIONS.md  # CCU usage guide
+│   ├── upload-to-ccu.sh    # Automated FTP upload
+│   └── README.md           # Diagnostic tools documentation
+├── readme/                 # Complete documentation
+│   ├── CCU_DIAGNOSTIC_SYSTEM.md # CCU integration guide
+│   ├── TROUBLESHOOTING.md  # General troubleshooting
+│   └── index.md            # Documentation index
 ├── Dockerfile              # Container configuration
-├── nginx.conf              # Web server configuration
+├── server.js               # Backend server with OpenAI integration
 ├── fly.toml                # Fly.io deployment config
 └── README.md               # This file
 ```
