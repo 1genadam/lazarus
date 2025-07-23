@@ -1,0 +1,63 @@
+🚀 LAZARUS CHAT DIAGNOSTIC - QUICK START
+
+PROBLEM: Chat system not working on Lazarus Home Remodeling website
+YOUR MISSION: Test 6 pages, document issues, upload results via FTP
+
+⚡ IMMEDIATE ACTIONS:
+1. mkdir -p /home/computeruse/Desktop/lazarus-diagnostics
+2. cd /home/computeruse/Desktop/lazarus-diagnostics  
+3. Open browser
+4. Go to: https://lazarushomeremodeling.com/
+
+🔍 WHAT TO TEST ON EACH PAGE:
+• Look for yellow chat button (bottom-right)
+• Click it - does chat widget open?
+• F12 → Console - any red errors?
+• Take screenshot if broken
+
+📝 PAGES TO TEST (in order):
+1. https://lazarushomeremodeling.com/ 
+2. https://lazarushomeremodeling.com/about.html
+3. https://lazarushomeremodeling.com/services.html
+4. https://lazarushomeremodeling.com/contact.html
+5. https://lazarushomeremodeling.com/gallery.html
+6. https://lazarushomeremodeling.com/blog.html
+
+📄 CREATE SUMMARY FILE:
+After testing all pages, create "DIAGNOSTIC-SUMMARY.txt":
+```
+LAZARUS CHAT ISSUES FOUND:
+==========================
+Date: [today's date]
+
+BROKEN ON ALL PAGES:
+- [what doesn't work everywhere]
+
+WORKING CORRECTLY:
+- [what does work]
+
+CONSOLE ERRORS SEEN:
+- [any JavaScript errors from F12 console]
+
+RECOMMENDATIONS:
+- [what should be fixed first]
+```
+
+📤 UPLOAD RESULTS:
+```
+ftp localhost 21
+(login: ftpuser / password: ftppass)
+mkdir lazarus-diagnostics-complete
+cd lazarus-diagnostics-complete  
+lcd /home/computeruse/Desktop/lazarus-diagnostics
+mput *
+quit
+```
+
+✅ DONE WHEN:
+- All 6 pages tested
+- Summary file created
+- Files uploaded to FTP
+- Problems clearly documented
+
+START NOW → Open browser → Go to homepage → Begin testing!

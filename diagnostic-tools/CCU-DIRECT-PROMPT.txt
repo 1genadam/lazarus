@@ -1,0 +1,53 @@
+MISSION: Debug Lazarus Home Remodeling chat system. Chat button not clickable, widget not loading across website pages.
+
+SETUP:
+1. mkdir -p /home/computeruse/Desktop/lazarus-diagnostics && cd /home/computeruse/Desktop/lazarus-diagnostics
+2. Open browser (Chrome/Firefox)
+
+TEST THESE 6 PAGES with diagnostic tool:
+• https://lazarushomeremodeling.com/ (homepage)
+• https://lazarushomeremodeling.com/about.html
+• https://lazarushomeremodeling.com/services.html  
+• https://lazarushomeremodeling.com/contact.html
+• https://lazarushomeremodeling.com/gallery.html
+• https://lazarushomeremodeling.com/blog.html
+
+FOR EACH PAGE:
+1. Navigate to page
+2. Look for yellow chat button (bottom-right corner)
+3. Try clicking chat button - does widget open?
+4. Press F12, check Console tab for errors
+5. Test manually: can you type in chat? Does send button work?
+6. Take screenshot if you see issues
+7. Save notes: "Page [NAME]: Chat button [works/broken], Widget [opens/stuck], Errors: [list any console errors]"
+
+WHAT TO LOOK FOR:
+🔴 CRITICAL: Button not visible, not clickable, JavaScript errors
+🟡 WARNING: Slow loading, widget appears but doesn't work
+🟢 WORKING: Button clicks, widget opens, can type messages
+
+CREATE THESE FILES:
+• DIAGNOSTIC-SUMMARY.txt (your findings across all pages)
+• ISSUES-FOUND.txt (specific problems you observed)  
+• Screenshots of any broken functionality
+
+UPLOAD TO DEVELOPER via FTP:
+```
+ftp localhost 21
+(login: ftpuser, password: ftppass)
+mkdir lazarus-chat-diagnostics-july23
+cd lazarus-chat-diagnostics-july23
+lcd /home/computeruse/Desktop/lazarus-diagnostics
+mput *.txt
+mkdir screenshots
+cd screenshots
+lcd screenshots  
+mput *.png
+quit
+```
+
+SUCCESS = All 6 pages tested + summary file + FTP upload complete + developer has clear picture of what's broken.
+
+EXPECTED TIME: 30-45 minutes
+
+START NOW: Open browser and begin testing the homepage first.
