@@ -69,7 +69,11 @@ Our services include:
         }
 
         // Start session tracking
-        this.logEvent('chat_session_started', { sessionId: this.sessionId });
+        try {
+            this.logEvent('chat_session_started', { sessionId: this.sessionId });
+        } catch (error) {
+            console.warn('Could not log session start:', error);
+        }
     }
 
     async loadConfig() {
