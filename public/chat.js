@@ -97,7 +97,20 @@ Our services include:
         const messageInput = document.querySelector('#chat-widget input');
         const sendButton = document.querySelector('#chat-widget button[type="button"]');
 
-        console.log('Binding chat events...', { chatButton, chatWidget, closeButton });
+        console.log('Binding chat events...', { 
+            chatButton: !!chatButton, 
+            chatWidget: !!chatWidget, 
+            closeButton: !!closeButton,
+            messageInput: !!messageInput,
+            sendButton: !!sendButton
+        });
+
+        // Debug missing elements
+        if (!chatButton) console.error('❌ Missing: chat-widget-button element');
+        if (!chatWidget) console.error('❌ Missing: chat-widget element');
+        if (!closeButton) console.error('❌ Missing: close-chat-widget element');
+        if (!messageInput) console.error('❌ Missing: chat input element');
+        if (!sendButton) console.error('❌ Missing: chat send button element');
 
         if (chatButton && chatWidget) {
             chatButton.addEventListener('click', (e) => {
@@ -144,10 +157,17 @@ Our services include:
 
         // Auto-open chat widget on page load after a brief delay
         setTimeout(() => {
-            if (chatWidget) {
-                chatWidget.classList.remove('hidden');
-                messageInput?.focus();
+            // Re-query elements to ensure they exist at auto-open time
+            const autoOpenChatWidget = document.getElementById('chat-widget');
+            const autoOpenMessageInput = document.querySelector('#chat-widget input');
+            
+            if (autoOpenChatWidget) {
+                console.log('Auto-opening chat widget...');
+                autoOpenChatWidget.classList.remove('hidden');
+                autoOpenMessageInput?.focus();
                 this.logEvent('chat_opened', { trigger: 'auto_open' });
+            } else {
+                console.warn('Auto-open failed: chat-widget element not found');
             }
         }, 2000);
 

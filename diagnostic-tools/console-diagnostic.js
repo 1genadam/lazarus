@@ -72,6 +72,16 @@ const diagnostic = {
             this.log('JS', 'Chat Instance', 'FAIL', 'window.lazarusChat not found');
         }
         
+        // Check auto-open functionality
+        const chatWidget = document.getElementById('chat-widget');
+        if (chatWidget) {
+            const isHidden = chatWidget.classList.contains('hidden');
+            this.log('JS', 'Auto-Open Status', isHidden ? 'FAIL' : 'PASS', 
+                isHidden ? 'Chat widget is hidden (auto-open failed)' : 'Chat widget is visible (auto-open worked)');
+        } else {
+            this.log('JS', 'Auto-Open Status', 'FAIL', 'Chat widget element not found for auto-open');
+        }
+        
         if (typeof LazarusChatWidget !== 'undefined') {
             this.log('JS', 'Chat Class', 'PASS', 'LazarusChatWidget available');
         } else {
