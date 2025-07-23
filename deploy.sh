@@ -31,20 +31,13 @@ clear_system_cache() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
         echo "🍎 Clearing macOS DNS cache..."
-        sudo dscacheutil -flushcache
-        sudo killall -HUP mDNSResponder
-        echo "✅ macOS DNS cache cleared"
+        echo "ℹ️  DNS cache clearing skipped (requires sudo)"
+        echo "   Manual clear: sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Linux
         echo "🐧 Clearing Linux DNS cache..."
-        if command_exists systemctl; then
-            sudo systemctl restart systemd-resolved 2>/dev/null || echo "⚠️  systemd-resolved not available"
-        fi
-        # Clear nscd cache if available
-        if command_exists nscd; then
-            sudo nscd -i hosts 2>/dev/null || echo "⚠️  nscd not available"
-        fi
-        echo "✅ Linux DNS cache cleared"
+        echo "ℹ️  DNS cache clearing skipped (requires sudo)"
+        echo "   Manual clear: sudo systemctl restart systemd-resolved"
     elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
         # Windows
         echo "🪟 Clearing Windows DNS cache..."
