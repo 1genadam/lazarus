@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Event Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Chat Event Registration Test</h1>
+        
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <h2 class="text-xl font-semibold mb-4">Chat Events Log</h2>
+            <div id="event-log" class="bg-gray-50 p-4 rounded border h-64 overflow-y-auto"></div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <h2 class="text-xl font-semibold mb-4">Test Controls</h2>
+            <button id="check-events" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Check Stored Events</button>
+            <button id="clear-events" class="bg-red-500 text-white px-4 py-2 rounded">Clear Events</button>
+        </div>
+
+        <!-- Chat Widget (simplified) -->
+        <div class="fixed bottom-4 right-4">
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-white p-4 rounded-full shadow-lg" id="chat-widget-button">
+                <i class="fas fa-comments text-2xl"></i>
+            </button>
+            <div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
+                <div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
+                    <h3 class="font-bold text-lg">Chat Test</h3>
+                    <button class="text-white hover:text-yellow-400" id="close-chat-widget">✕</button>
+                </div>
+                <div class="p-4">
+                    <div id="chat-messages" class="border rounded p-2 h-40 overflow-y-auto bg-gray-50 mb-3"></div>
+                    <div class="flex">
+                        <input type="text" id="chat-input" class="flex-1 border rounded-l px-3 py-2" placeholder="Type a message...">
+                        <button type="button" id="send-chat-message" class="bg-red-800 text-white px-4 py-2 rounded-r">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="analytics-tracker.js"></script>
+    <script src="chat.js"></script>
+    <script>
+        // Event listener for custom chatOpened event
+        window.addEventListener('chatOpened', function(event) {
+            addToLog('🎯 Custom chatOpened event fired:', event.detail);
+        });
+
+        // Log function
+        function addToLog(message, data = null) {
+            const log = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'mb-2 p-2 border-b border-gray-200';
+            entry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+            if (data) {
+                entry.innerHTML += `<pre class="text-sm text-gray-600 mt-1">${JSON.stringify(data, null, 2)}</pre>`;
+            }
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Test controls
+        document.getElementById('check-events').addEventListener('click', function() {
+            const chatEvents = JSON.parse(localStorage.getItem('chat_events') || '[]');
+            const lastEvent = JSON.parse(localStorage.getItem('last_chat_open_event') || 'null');
+            const analyticsEvents = JSON.parse(localStorage.getItem('analytics_chat_events') || '[]');
+            
+            addToLog('📊 Chat Events in localStorage:', chatEvents);
+            addToLog('📊 Last Chat Open Event:', lastEvent);
+            addToLog('📊 Analytics Chat Events:', analyticsEvents);
+        });
+
+        document.getElementById('clear-events').addEventListener('click', function() {
+            localStorage.removeItem('chat_events');
+            localStorage.removeItem('last_chat_open_event');
+            localStorage.removeItem('analytics_chat_events');
+            addToLog('🗑️ All chat events cleared from localStorage');
+        });
+
+        // Override console.log to capture chat system logs
+        const originalLog = console.log;
+        console.log = function(...args) {
+            if (args[0] && args[0].includes && (args[0].includes('Chat Event:') || args[0].includes('CHAT OPENED EVENT'))) {
+                addToLog('💬 ' + args[0], args[1]);
+            }
+            originalLog.apply(console, args);
+        };
+    </script>
+</body>
+</html>

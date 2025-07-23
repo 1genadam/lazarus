@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Events Dashboard - Lazarus Home Remodeling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Chat Events Dashboard</h1>
+            <p class="text-gray-600">Monitor chat widget performance and device responsiveness</p>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700">Chat Opens</h3>
+                        <p class="text-3xl font-bold text-green-600" id="total-opens">0</p>
+                    </div>
+                    <i class="fas fa-chart-line text-green-500 text-2xl"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700">Button Clicks</h3>
+                        <p class="text-3xl font-bold text-blue-600" id="total-clicks">0</p>
+                    </div>
+                    <i class="fas fa-mouse-pointer text-blue-500 text-2xl"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700">Auto-Open Issues</h3>
+                        <p class="text-3xl font-bold text-red-600" id="auto-open-issues">0</p>
+                    </div>
+                    <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700">Unique Devices</h3>
+                        <p class="text-3xl font-bold text-purple-600" id="unique-devices">0</p>
+                    </div>
+                    <i class="fas fa-mobile-alt text-purple-500 text-2xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Breakdown -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Device Types</h2>
+                <div id="device-breakdown" class="space-y-3"></div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Browser Types</h2>
+                <div id="browser-breakdown" class="space-y-3"></div>
+            </div>
+        </div>
+
+        <!-- Issues Detection -->
+        <div class="bg-white p-6 rounded-lg shadow mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Detected Issues</h2>
+            <div id="issues-list" class="space-y-4"></div>
+        </div>
+
+        <!-- Recent Events -->
+        <div class="bg-white p-6 rounded-lg shadow mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">Recent Events</h2>
+                <div class="space-x-2">
+                    <button id="refresh-data" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <i class="fas fa-refresh mr-2"></i>Refresh
+                    </button>
+                    <button id="clear-data" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        <i class="fas fa-trash mr-2"></i>Clear Data
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left">Timestamp</th>
+                            <th class="px-4 py-2 text-left">Event Type</th>
+                            <th class="px-4 py-2 text-left">Device</th>
+                            <th class="px-4 py-2 text-left">Browser</th>
+                            <th class="px-4 py-2 text-left">Status</th>
+                            <th class="px-4 py-2 text-left">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="events-table" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ChatEventsDashboard {
+            constructor() {
+                this.loadData();
+                this.bindEvents();
+                this.startAutoRefresh();
+            }
+
+            bindEvents() {
+                document.getElementById('refresh-data').addEventListener('click', () => this.loadData());
+                document.getElementById('clear-data').addEventListener('click', () => this.clearData());
+            }
+
+            loadData() {
+                const chatEvents = JSON.parse(localStorage.getItem('chat_events') || '[]');
+                const analyticsEvents = JSON.parse(localStorage.getItem('analytics_chat_events') || '[]');
+                const allEvents = [...chatEvents, ...analyticsEvents].sort((a, b) => 
+                    new Date(b.timestamp) - new Date(a.timestamp)
+                );
+
+                this.updateSummaryCards(allEvents);
+                this.updateDeviceBreakdown(allEvents);
+                this.updateBrowserBreakdown(allEvents);
+                this.detectIssues(allEvents);
+                this.updateEventsTable(allEvents);
+            }
+
+            updateSummaryCards(events) {
+                const opens = events.filter(e => e.eventType === 'chat_opened').length;
+                const clicks = events.filter(e => e.eventType === 'chat_button_clicked').length;
+                const autoOpenIssues = events.filter(e => e.eventType === 'chat_auto_open_failed').length;
+                const uniqueDevices = new Set(events.map(e => e.deviceInfo?.userAgent || e.userAgent)).size;
+
+                document.getElementById('total-opens').textContent = opens;
+                document.getElementById('total-clicks').textContent = clicks;
+                document.getElementById('auto-open-issues').textContent = autoOpenIssues;
+                document.getElementById('unique-devices').textContent = uniqueDevices;
+            }
+
+            updateDeviceBreakdown(events) {
+                const deviceCounts = {};
+                events.forEach(event => {
+                    const deviceType = event.deviceInfo?.deviceType || 'unknown';
+                    deviceCounts[deviceType] = (deviceCounts[deviceType] || 0) + 1;
+                });
+
+                const container = document.getElementById('device-breakdown');
+                container.innerHTML = '';
+                
+                Object.entries(deviceCounts).forEach(([device, count]) => {
+                    const percentage = ((count / events.length) * 100).toFixed(1);
+                    container.innerHTML += `
+                        <div class="flex justify-between items-center">
+                            <span class="capitalize">${device}</span>
+                            <span class="text-sm text-gray-600">${count} (${percentage}%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                    `;
+                });
+            }
+
+            updateBrowserBreakdown(events) {
+                const browserCounts = {};
+                events.forEach(event => {
+                    const browser = event.deviceInfo?.browser || 'unknown';
+                    browserCounts[browser] = (browserCounts[browser] || 0) + 1;
+                });
+
+                const container = document.getElementById('browser-breakdown');
+                container.innerHTML = '';
+                
+                Object.entries(browserCounts).forEach(([browser, count]) => {
+                    const percentage = ((count / events.length) * 100).toFixed(1);
+                    container.innerHTML += `
+                        <div class="flex justify-between items-center">
+                            <span class="capitalize">${browser}</span>
+                            <span class="text-sm text-gray-600">${count} (${percentage}%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                    `;
+                });
+            }
+
+            detectIssues(events) {
+                const issues = [];
+                
+                // Detect auto-open failures
+                const autoOpenFailures = events.filter(e => e.eventType === 'chat_auto_open_failed');
+                if (autoOpenFailures.length > 0) {
+                    issues.push({
+                        type: 'Auto-open Failures',
+                        severity: 'high',
+                        count: autoOpenFailures.length,
+                        description: 'Chat widget failed to auto-open on some devices'
+                    });
+                }
+
+                // Detect button binding failures
+                const bindFailures = events.filter(e => e.eventType === 'chat_button_bind_failed');
+                if (bindFailures.length > 0) {
+                    issues.push({
+                        type: 'Button Binding Issues',
+                        severity: 'high',
+                        count: bindFailures.length,
+                        description: 'Chat button failed to bind event listeners'
+                    });
+                }
+
+                // Detect clickability issues
+                const clickabilityIssues = events.filter(e => 
+                    e.elementInfo?.buttonClickable === false && e.eventType === 'chat_button_clicked'
+                );
+                if (clickabilityIssues.length > 0) {
+                    issues.push({
+                        type: 'Button Clickability Issues',
+                        severity: 'medium',
+                        count: clickabilityIssues.length,
+                        description: 'Chat button was clicked but detected as not properly clickable'
+                    });
+                }
+
+                this.displayIssues(issues);
+            }
+
+            displayIssues(issues) {
+                const container = document.getElementById('issues-list');
+                
+                if (issues.length === 0) {
+                    container.innerHTML = '<div class="text-green-600 font-medium">✅ No issues detected</div>';
+                    return;
+                }
+
+                container.innerHTML = issues.map(issue => `
+                    <div class="border-l-4 ${issue.severity === 'high' ? 'border-red-500 bg-red-50' : 'border-yellow-500 bg-yellow-50'} p-4 rounded">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle ${issue.severity === 'high' ? 'text-red-500' : 'text-yellow-500'} mr-2"></i>
+                            <h3 class="font-medium">${issue.type} (${issue.count})</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">${issue.description}</p>
+                    </div>
+                `).join('');
+            }
+
+            updateEventsTable(events) {
+                const tbody = document.getElementById('events-table');
+                const recentEvents = events.slice(0, 50); // Show last 50 events
+                
+                tbody.innerHTML = recentEvents.map(event => {
+                    const timestamp = new Date(event.timestamp).toLocaleString();
+                    const deviceInfo = event.deviceInfo || {};
+                    const status = this.getEventStatus(event);
+                    
+                    return `
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 text-sm">${timestamp}</td>
+                            <td class="px-4 py-2 text-sm">${event.eventType}</td>
+                            <td class="px-4 py-2 text-sm">${deviceInfo.deviceType || 'unknown'}</td>
+                            <td class="px-4 py-2 text-sm">${deviceInfo.browser || 'unknown'}</td>
+                            <td class="px-4 py-2 text-sm">${status}</td>
+                            <td class="px-4 py-2 text-sm">
+                                <button onclick="this.showDetails('${JSON.stringify(event).replace(/'/g, "\\'")}')">
+                                    <i class="fas fa-info-circle text-blue-500 hover:text-blue-700"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            getEventStatus(event) {
+                if (event.eventType === 'chat_opened') {
+                    return '<span class="text-green-600">✅ Success</span>';
+                } else if (event.eventType === 'chat_auto_open_failed') {
+                    return '<span class="text-red-600">❌ Failed</span>';
+                } else if (event.eventType === 'chat_button_clicked') {
+                    return '<span class="text-blue-600">🖱️ Clicked</span>';
+                } else {
+                    return '<span class="text-gray-600">ℹ️ Info</span>';
+                }
+            }
+
+            clearData() {
+                if (confirm('Are you sure you want to clear all chat event data?')) {
+                    localStorage.removeItem('chat_events');
+                    localStorage.removeItem('analytics_chat_events');
+                    localStorage.removeItem('last_chat_open_event');
+                    this.loadData();
+                }
+            }
+
+            startAutoRefresh() {
+                setInterval(() => {
+                    this.loadData();
+                }, 30000); // Refresh every 30 seconds
+            }
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ChatEventsDashboard();
+        });
+
+        // Global function for showing event details
+        function showDetails(eventData) {
+            const event = JSON.parse(eventData);
+            alert(JSON.stringify(event, null, 2));
+        }
+    </script>
+</body>
+</html>
