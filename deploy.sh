@@ -82,9 +82,14 @@ if [ ! -d ".git" ]; then
     git remote add origin $GITHUB_REPO
 fi
 
-# Update remote origin
-echo "🔗 Setting remote origin: $GITHUB_REPO"
-git remote set-url origin $GITHUB_REPO 2>/dev/null || git remote add origin $GITHUB_REPO
+# Check if remote origin exists, but preserve existing authentication
+echo "🔗 Checking remote origin configuration..."
+if ! git remote get-url origin >/dev/null 2>&1; then
+    echo "📦 Adding remote origin: $GITHUB_REPO"
+    git remote add origin $GITHUB_REPO
+else
+    echo "✅ Remote origin already configured"
+fi
 
 # Check git status
 echo "📋 Checking git status..."
