@@ -187,48 +187,87 @@ Our services include:
         if (!sendButton) console.error('❌ Missing: chat send button element');
 
         if (chatButton && chatWidget) {
+            console.log('✅ Adding click event listener to chat button');
+            
             chatButton.addEventListener('click', (e) => {
+                console.log('🖱️ Chat button clicked - basic handler');
                 e.preventDefault();
                 e.stopPropagation();
                 
-                const deviceInfo = this.getDeviceInfo();
-                const clickInfo = {
-                    trigger: 'button_click',
-                    deviceInfo: deviceInfo,
-                    clickCoordinates: {
-                        x: e.clientX,
-                        y: e.clientY
-                    },
-                    elementInfo: {
-                        buttonVisible: this.isElementVisible(chatButton),
-                        buttonClickable: this.isElementClickable(chatButton),
-                        widgetPosition: this.getElementPosition(chatWidget)
+                try {
+                    const wasHidden = chatWidget.classList.contains('hidden');
+                    console.log('Chat widget was hidden:', wasHidden);
+                    
+                    chatWidget.classList.toggle('hidden');
+                    console.log('Chat widget toggled, now hidden:', chatWidget.classList.contains('hidden'));
+                    
+                    // Try to get device info safely
+                    let deviceInfo = null;
+                    try {
+                        deviceInfo = this.getDeviceInfo();
+                    } catch (error) {
+                        console.warn('Could not get device info:', error);
                     }
-                };
-                
-                // Always log button click regardless of outcome
-                this.logEvent('chat_button_clicked', clickInfo);
-                console.log('🖱️ Chat button clicked!', clickInfo);
-                
-                const wasHidden = chatWidget.classList.contains('hidden');
-                chatWidget.classList.toggle('hidden');
-                
-                if (wasHidden) {
-                    this.logEvent('chat_opened', { ...clickInfo, success: true });
-                    messageInput?.focus();
-                } else {
-                    this.logEvent('chat_closed', { ...clickInfo, success: true });
+                    
+                    const clickInfo = {
+                        trigger: 'button_click',
+                        deviceInfo: deviceInfo,
+                        clickCoordinates: {
+                            x: e.clientX || 0,
+                            y: e.clientY || 0
+                        },
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Try to log event safely
+                    try {
+                        this.logEvent('chat_button_clicked', clickInfo);
+                        console.log('✅ Button click logged successfully');
+                    } catch (error) {
+                        console.warn('Could not log button click:', error);
+                    }
+                    
+                    if (wasHidden) {
+                        try {
+                            this.logEvent('chat_opened', { ...clickInfo, success: true });
+                            messageInput?.focus();
+                            console.log('✅ Chat opened and logged');
+                        } catch (error) {
+                            console.warn('Could not log chat opened:', error);
+                        }
+                    } else {
+                        try {
+                            this.logEvent('chat_closed', { ...clickInfo, success: true });
+                            console.log('✅ Chat closed and logged');
+                        } catch (error) {
+                            console.warn('Could not log chat closed:', error);
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Error in chat button click handler:', error);
+                    // Fallback - just toggle the widget
+                    chatWidget.classList.toggle('hidden');
                 }
             });
+            
+            console.log('✅ Chat button click handler added successfully');
         } else {
-            // Log when button binding fails
-            const deviceInfo = this.getDeviceInfo();
-            this.logEvent('chat_button_bind_failed', {
-                deviceInfo: deviceInfo,
+            console.error('❌ Cannot bind chat button - missing elements:', {
                 chatButton: !!chatButton,
-                chatWidget: !!chatWidget,
-                reason: !chatButton ? 'button_not_found' : 'widget_not_found'
+                chatWidget: !!chatWidget
             });
+            
+            // Try to log binding failure safely
+            try {
+                this.logEvent('chat_button_bind_failed', {
+                    chatButton: !!chatButton,
+                    chatWidget: !!chatWidget,
+                    reason: !chatButton ? 'button_not_found' : 'widget_not_found',
+                    timestamp: new Date().toISOString()
+                });
+            } catch (error) {
+                console.warn('Could not log binding failure:', error);
+            }
         }
 
         if (closeButton && chatWidget) {
@@ -301,22 +340,28 @@ Our services include:
             });
             
             if (autoOpenChatWidget) {
-                const deviceInfo = this.getDeviceInfo();
-                const autoOpenInfo = {
-                    trigger: 'auto_open',
-                    attempt: attempt,
-                    deviceInfo: deviceInfo,
-                    elementInfo: {
-                        widgetVisible: this.isElementVisible(autoOpenChatWidget),
-                        widgetPosition: this.getElementPosition(autoOpenChatWidget),
-                        inputAvailable: !!autoOpenMessageInput
-                    }
-                };
+                console.log('✅ Auto-opening chat widget successfully!');
                 
-                console.log('✅ Auto-opening chat widget successfully!', autoOpenInfo);
-                autoOpenChatWidget.classList.remove('hidden');
-                autoOpenMessageInput?.focus();
-                this.logEvent('chat_opened', autoOpenInfo);
+                try {
+                    autoOpenChatWidget.classList.remove('hidden');
+                    autoOpenMessageInput?.focus();
+                    
+                    // Try to log the auto-open event safely
+                    try {
+                        const autoOpenInfo = {
+                            trigger: 'auto_open',
+                            attempt: attempt,
+                            timestamp: new Date().toISOString()
+                        };
+                        this.logEvent('chat_opened', autoOpenInfo);
+                        console.log('✅ Auto-open logged successfully');
+                    } catch (error) {
+                        console.warn('Could not log auto-open:', error);
+                    }
+                } catch (error) {
+                    console.error('❌ Error during auto-open:', error);
+                }
+                
                 return; // Success, stop retrying
             } else {
                 console.warn(`❌ Auto-open attempt ${attempt} failed: chat-widget element not found`);
