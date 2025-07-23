@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System Diagnostic Tool</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .section h3 {
+            color: #ffff00;
+            margin-top: 0;
+        }
+        .status-good { color: #00ff00; }
+        .status-warning { color: #ffaa00; }
+        .status-error { color: #ff0000; }
+        .copy-btn {
+            background: #444;
+            color: #fff;
+            border: 1px solid #666;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        .copy-btn:hover {
+            background: #555;
+        }
+        pre {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .test-result {
+            padding: 5px;
+            margin: 2px 0;
+            border-left: 3px solid;
+        }
+        .test-pass {
+            border-color: #0f0;
+            background: rgba(0, 255, 0, 0.1);
+        }
+        .test-fail {
+            border-color: #f00;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        .test-warn {
+            border-color: #fa0;
+            background: rgba(255, 170, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Lazarus Chat System Diagnostic Tool</h1>
+        <p>This tool will analyze the chat system and generate a comprehensive report. Run this on each page where chat is not working.</p>
+        
+        <button onclick="runDiagnostic()" style="background: #007acc; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;">🚀 Run Full Diagnostic</button>
+        
+        <div id="results"></div>
+        
+        <div class="section" id="export-section" style="display: none;">
+            <h3>📋 Export Results</h3>
+            <p><strong>📤 INSTRUCTIONS FOR SHARING REPORT:</strong></p>
+            <ol style="color: #fff; text-align: left; padding-left: 20px;">
+                <li><strong>Download the report:</strong> Click "Download Report File" below</li>
+                <li><strong>Save location:</strong> Save to your Desktop or Downloads folder</li>
+                <li><strong>Share with developer:</strong> 
+                    <ul style="margin: 5px 0; padding-left: 20px;">
+                        <li>Email the .txt file as attachment</li>
+                        <li>Upload to file sharing service (Dropbox, Google Drive, etc.)</li>
+                        <li>Or copy text below and paste in chat/email</li>
+                    </ul>
+                </li>
+            </ol>
+            <button class="copy-btn" onclick="downloadReport()">💾 Download Report File</button>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Text to Clipboard</button>
+            <p style="color: #ffaa00;">⚠️ <strong>Important:</strong> Run this diagnostic on EACH page where chat is not working (index, about, services, etc.)</p>
+        </div>
+    </div>
+
+    <script>
+        let diagnosticReport = '';
+        
+        function addResult(section, test, status, message, details = '') {
+            const statusClass = status === 'PASS' ? 'test-pass' : status === 'FAIL' ? 'test-fail' : 'test-warn';
+            const statusIcon = status === 'PASS' ? '✅' : status === 'FAIL' ? '❌' : '⚠️';
+            
+            const result = `
+                <div class="test-result ${statusClass}">
+                    <strong>${statusIcon} ${test}</strong>: ${message}
+                    ${details ? `<pre>${details}</pre>` : ''}
+                </div>
+            `;
+            
+            document.getElementById(section).innerHTML += result;
+            
+            // Add to report
+            diagnosticReport += `[${status}] ${section.toUpperCase()} - ${test}: ${message}\n`;
+            if (details) {
+                diagnosticReport += `Details: ${details}\n`;
+            }
+            diagnosticReport += '\n';
+        }
+
+        function createSection(id, title) {
+            const section = document.createElement('div');
+            section.className = 'section';
+            section.id = id;
+            section.innerHTML = `<h3>${title}</h3>`;
+            document.getElementById('results').appendChild(section);
+        }
+
+        function runDiagnostic() {
+            document.getElementById('results').innerHTML = '';
+            diagnosticReport = `LAZARUS CHAT SYSTEM DIAGNOSTIC REPORT\n`;
+            diagnosticReport += `Generated: ${new Date().toISOString()}\n`;
+            diagnosticReport += `URL: ${window.location.href}\n`;
+            diagnosticReport += `User Agent: ${navigator.userAgent}\n`;
+            diagnosticReport += `=`.repeat(80) + '\n\n';
+
+            // Create sections
+            createSection('basic-info', '📊 Basic Information');
+            createSection('dom-elements', '🏗️ DOM Elements Check');
+            createSection('javascript', '🔧 JavaScript Environment');
+            createSection('chat-system', '💬 Chat System Analysis');
+            createSection('network', '🌐 Network & Resources');
+            createSection('console-errors', '🐛 Console Errors');
+            createSection('recommendations', '💡 Recommendations');
+
+            // Run tests
+            checkBasicInfo();
+            checkDOMElements();
+            checkJavaScript();
+            checkChatSystem();
+            checkNetwork();
+            checkConsoleErrors();
+            generateRecommendations();
+
+            document.getElementById('export-section').style.display = 'block';
+        }
+
+        function checkBasicInfo() {
+            addResult('basic-info', 'Page URL', 'PASS', window.location.href);
+            addResult('basic-info', 'Browser', 'PASS', navigator.userAgent);
+            addResult('basic-info', 'Viewport', 'PASS', `${window.innerWidth}x${window.innerHeight}`);
+            addResult('basic-info', 'Document Ready State', document.readyState === 'complete' ? 'PASS' : 'WARN', document.readyState);
+        }
+
+        function checkDOMElements() {
+            const requiredElements = [
+                { id: 'chat-widget-button', name: 'Chat Button' },
+                { id: 'chat-widget', name: 'Chat Widget Container' },
+                { id: 'close-chat-widget', name: 'Close Chat Button' },
+                { id: 'chat-messages', name: 'Chat Messages Container' },
+                { id: 'chat-input', name: 'Chat Input Field' },
+                { id: 'send-chat-message', name: 'Send Message Button' }
+            ];
+
+            requiredElements.forEach(element => {
+                const el = document.getElementById(element.id);
+                if (el) {
+                    const computed = window.getComputedStyle(el);
+                    const isVisible = computed.display !== 'none' && computed.visibility !== 'hidden' && computed.opacity !== '0';
+                    addResult('dom-elements', element.name, 'PASS', `Found and ${isVisible ? 'visible' : 'hidden'}`, 
+                        `Element: ${el.tagName}\nClasses: ${el.className}\nStyles: display:${computed.display}, visibility:${computed.visibility}, opacity:${computed.opacity}`);
+                } else {
+                    addResult('dom-elements', element.name, 'FAIL', 'Element not found in DOM');
+                }
+            });
+
+            // Check for chat.js script
+            const chatScript = Array.from(document.scripts).find(script => script.src.includes('chat.js'));
+            if (chatScript) {
+                addResult('dom-elements', 'Chat.js Script', 'PASS', 'Script tag found', `Source: ${chatScript.src}`);
+            } else {
+                addResult('dom-elements', 'Chat.js Script', 'FAIL', 'chat.js script tag not found');
+            }
+        }
+
+        function checkJavaScript() {
+            // Check if chat system is initialized
+            if (typeof window.lazarusChat !== 'undefined') {
+                addResult('javascript', 'Chat System Instance', 'PASS', 'window.lazarusChat exists', 
+                    `Type: ${typeof window.lazarusChat}\nConstructor: ${window.lazarusChat.constructor.name}`);
+            } else {
+                addResult('javascript', 'Chat System Instance', 'FAIL', 'window.lazarusChat not found');
+            }
+
+            // Check for LazarusChatWidget class
+            if (typeof LazarusChatWidget !== 'undefined') {
+                addResult('javascript', 'Chat Widget Class', 'PASS', 'LazarusChatWidget class available');
+            } else {
+                addResult('javascript', 'Chat Widget Class', 'FAIL', 'LazarusChatWidget class not found');
+            }
+
+            // Check event listeners
+            const chatButton = document.getElementById('chat-widget-button');
+            if (chatButton) {
+                const hasListeners = getEventListeners ? getEventListeners(chatButton) : 'Unable to check (Chrome DevTools required)';
+                addResult('javascript', 'Chat Button Events', typeof hasListeners === 'object' && hasListeners.click ? 'PASS' : 'WARN', 
+                    'Event listener check', JSON.stringify(hasListeners, null, 2));
+            }
+
+            // Check for admin auth
+            if (typeof window.adminAuth !== 'undefined') {
+                addResult('javascript', 'Admin Auth System', 'PASS', 'Admin authentication available');
+            } else {
+                addResult('javascript', 'Admin Auth System', 'WARN', 'Admin auth not loaded');
+            }
+        }
+
+        function checkChatSystem() {
+            // Test chat button click
+            const chatButton = document.getElementById('chat-widget-button');
+            const chatWidget = document.getElementById('chat-widget');
+            
+            if (chatButton && chatWidget) {
+                const initiallyHidden = chatWidget.classList.contains('hidden');
+                
+                try {
+                    chatButton.click();
+                    setTimeout(() => {
+                        const nowHidden = chatWidget.classList.contains('hidden');
+                        if (initiallyHidden !== nowHidden) {
+                            addResult('chat-system', 'Button Click Test', 'PASS', 'Chat widget toggles on button click');
+                        } else {
+                            addResult('chat-system', 'Button Click Test', 'FAIL', 'Chat widget does not toggle on button click');
+                        }
+                        
+                        // Reset to initial state
+                        if (initiallyHidden) chatWidget.classList.add('hidden');
+                        else chatWidget.classList.remove('hidden');
+                    }, 100);
+                } catch (error) {
+                    addResult('chat-system', 'Button Click Test', 'FAIL', 'Error during click test', error.message);
+                }
+            }
+
+            // Check chat input functionality
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) {
+                try {
+                    chatInput.focus();
+                    chatInput.value = 'test message';
+                    const hasValue = chatInput.value === 'test message';
+                    chatInput.value = '';
+                    addResult('chat-system', 'Chat Input Test', hasValue ? 'PASS' : 'FAIL', 
+                        hasValue ? 'Input field accepts text' : 'Input field not working');
+                } catch (error) {
+                    addResult('chat-system', 'Chat Input Test', 'FAIL', 'Error testing input', error.message);
+                }
+            }
+
+            // Check backend connectivity
+            if (window.lazarusChat && typeof window.lazarusChat.loadConfig === 'function') {
+                window.lazarusChat.loadConfig().then(() => {
+                    addResult('chat-system', 'Backend Connection', 'PASS', 'Backend configuration loaded');
+                }).catch(error => {
+                    addResult('chat-system', 'Backend Connection', 'WARN', 'Backend not available (demo mode)', error.message);
+                });
+            }
+        }
+
+        function checkNetwork() {
+            // Check if we can reach the backend
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    addResult('network', 'Health Check', 'PASS', 'Backend health check successful', JSON.stringify(data, null, 2));
+                })
+                .catch(error => {
+                    addResult('network', 'Health Check', 'FAIL', 'Backend health check failed', error.message);
+                });
+
+            // Check OpenAI API configuration
+            fetch('/api/config')
+                .then(response => response.json())
+                .then(data => {
+                    addResult('network', 'API Configuration', 'PASS', 'API config accessible', JSON.stringify(data, null, 2));
+                })
+                .catch(error => {
+                    addResult('network', 'API Configuration', 'WARN', 'API config not accessible', error.message);
+                });
+
+            // Check resource loading
+            const resources = performance.getEntriesByType('resource');
+            const chatJs = resources.find(r => r.name.includes('chat.js'));
+            const adminAuthJs = resources.find(r => r.name.includes('admin-auth.js'));
+            
+            if (chatJs) {
+                addResult('network', 'Chat.js Loading', chatJs.responseEnd > 0 ? 'PASS' : 'FAIL', 
+                    `Load time: ${(chatJs.responseEnd - chatJs.requestStart).toFixed(2)}ms`);
+            } else {
+                addResult('network', 'Chat.js Loading', 'FAIL', 'chat.js not found in resource timeline');
+            }
+
+            if (adminAuthJs) {
+                addResult('network', 'Admin-auth.js Loading', adminAuthJs.responseEnd > 0 ? 'PASS' : 'WARN', 
+                    `Load time: ${(adminAuthJs.responseEnd - adminAuthJs.requestStart).toFixed(2)}ms`);
+            }
+        }
+
+        function checkConsoleErrors() {
+            // Capture console errors
+            const originalError = console.error;
+            const originalWarn = console.warn;
+            const errors = [];
+            const warnings = [];
+
+            console.error = function(...args) {
+                errors.push(args.join(' '));
+                originalError.apply(console, arguments);
+            };
+
+            console.warn = function(...args) {
+                warnings.push(args.join(' '));
+                originalWarn.apply(console, arguments);
+            };
+
+            setTimeout(() => {
+                if (errors.length > 0) {
+                    addResult('console-errors', 'JavaScript Errors', 'FAIL', `${errors.length} errors found`, errors.join('\n'));
+                } else {
+                    addResult('console-errors', 'JavaScript Errors', 'PASS', 'No console errors detected');
+                }
+
+                if (warnings.length > 0) {
+                    addResult('console-errors', 'JavaScript Warnings', 'WARN', `${warnings.length} warnings found`, warnings.join('\n'));
+                } else {
+                    addResult('console-errors', 'JavaScript Warnings', 'PASS', 'No console warnings detected');
+                }
+
+                console.error = originalError;
+                console.warn = originalWarn;
+            }, 2000);
+        }
+
+        function generateRecommendations() {
+            const recommendations = [];
+            
+            if (!document.getElementById('chat-widget-button')) {
+                recommendations.push('❌ Add missing chat-widget-button element with proper ID');
+            }
+            
+            if (!document.getElementById('chat-messages')) {
+                recommendations.push('❌ Add missing chat-messages container with proper ID');
+            }
+            
+            if (!window.lazarusChat) {
+                recommendations.push('❌ Chat system not initialized - check chat.js loading and DOM ready events');
+            }
+            
+            if (!Array.from(document.scripts).find(s => s.src.includes('chat.js'))) {
+                recommendations.push('❌ Include chat.js script before closing </body> tag');
+            }
+
+            if (recommendations.length === 0) {
+                recommendations.push('✅ All basic requirements appear to be met - check browser console for runtime errors');
+            }
+
+            recommendations.forEach((rec, index) => {
+                addResult('recommendations', `Recommendation ${index + 1}`, 'INFO', rec);
+            });
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(diagnosticReport).then(() => {
+                alert('Diagnostic report copied to clipboard!');
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = diagnosticReport;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Diagnostic report copied to clipboard!');
+            });
+        }
+
+        function downloadReport() {
+            const blob = new Blob([diagnosticReport], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `lazarus-chat-diagnostic-${new Date().toISOString().slice(0,16).replace(/:/g,'-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Run diagnostic automatically after 1 second
+        setTimeout(() => {
+            console.log('Auto-running diagnostic...');
+            runDiagnostic();
+        }, 1000);
+    </script>
+</body>
+</html>
