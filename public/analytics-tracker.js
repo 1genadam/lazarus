@@ -284,28 +284,6 @@ class AnalyticsTracker {
         this.saveChatHistory();
     }
 
-    // Track chat widget events (open, close, etc.)
-    trackChatEvent(eventData) {
-        const chatEvent = {
-            ...eventData,
-            analyticsSessionId: this.sessionId,
-            analyticsUserId: this.userId,
-            ipAddress: this.ipAddress,
-            location: this.location,
-            timestamp: eventData.timestamp || new Date().toISOString()
-        };
-        
-        // Store chat events separately for detailed analysis
-        const chatEvents = JSON.parse(localStorage.getItem('analytics_chat_events') || '[]');
-        chatEvents.push(chatEvent);
-        localStorage.setItem('analytics_chat_events', JSON.stringify(chatEvents));
-        
-        console.log('📊 Analytics: Chat event tracked:', chatEvent);
-        
-        // Also add to interactions for general tracking
-        this.trackInteraction('chat_event', eventData.eventType, eventData);
-    }
-
     // Data persistence methods
     saveSessionData() {
         const sessionData = {
@@ -401,8 +379,7 @@ class AnalyticsTracker {
             pageViews: JSON.parse(localStorage.getItem('analytics_all_page_views') || '[]'),
             interactions: JSON.parse(localStorage.getItem('analytics_all_interactions') || '[]'),
             formSubmissions: JSON.parse(localStorage.getItem('analytics_all_forms') || '[]'),
-            chatHistory: JSON.parse(localStorage.getItem('analytics_all_chats') || '[]'),
-            chatEvents: JSON.parse(localStorage.getItem('analytics_chat_events') || '[]')
+            chatHistory: JSON.parse(localStorage.getItem('analytics_all_chats') || '[]')
         };
     }
 

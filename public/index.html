@@ -1,70 +1,1048 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Test - Blank Slate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="bg-white">
-
-    <!-- CHAT WIDGET ONLY -->
-    <div class="fixed bottom-4 right-4 z-50">
-        <button class="bg-yellow-400 text-red-800 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition-colors duration-300" id="chat-widget-button">
-            <i class="fas fa-comments text-2xl"></i>
-        </button>
-        <div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
-            <div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
-                <h3 class="font-bold text-lg">Chat with us</h3>
-                <button class="text-white hover:text-yellow-400" id="close-chat-widget">
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-            </div>
-            <div id="chat-messages" class="p-4 h-64 overflow-y-auto bg-gray-50">
-                <div class="flex mb-4">
-                    <div class="bg-gray-200 p-3 rounded-lg max-w-xs">
-                        <p class="text-sm">Hello! I'm here to help you with your home remodeling project. How can I assist you today?</p>
-                    </div>
-                </div>
-            </div>
-            <div class="p-4 border-t">
-                <div class="flex">
-                    <input type="text" placeholder="Type your message..." class="flex-1 border rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                    <button type="button" class="bg-red-800 text-white px-4 py-2 rounded-r hover:bg-red-900">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ONLY CHAT SCRIPT -->
-    <script src="chat.js"></script>
-    
-    <script>
-        console.log('🔍 BLANK SLATE TEST PAGE LOADED');
-        console.log('DOM readyState:', document.readyState);
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lazarus Home Remodeling</title>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<script src="admin-auth.js"></script>
+<script src="analytics-tracker.js"></script>
+<script src="form-tracker.js"></script>
+<style type="text/tailwindcss">
+        @font-face {
+            font-family: 'Blanka';
+            src: url('./fonts/Blanka-Regular.woff2') format('woff2'),
+                 url('./fonts/Blanka-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
         
-        setTimeout(() => {
-            console.log('🔍 Checking elements...');
-            const button = document.getElementById('chat-widget-button');
-            const widget = document.getElementById('chat-widget');
-            console.log('Button found:', !!button);
-            console.log('Widget found:', !!widget);
-            console.log('Chat system:', typeof window.lazarusChat);
-            
-            // Manual test
-            if (button && widget) {
-                console.log('🖱️ Adding manual click test...');
-                button.addEventListener('click', function() {
-                    console.log('🖱️ MANUAL CLICK!');
-                    widget.classList.toggle('hidden');
-                    console.log('Widget hidden:', widget.classList.contains('hidden'));
-                });
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .star {
+            color: #FFD700;
+        }
+        .trinity-dots-container {
+            position: relative;
+            width: 100px;height: 50px;}
+        .trinity-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .trinity-dot-1 {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .trinity-dot-2 {
+            bottom: 0;
+            left: 0;
+        }
+        .trinity-dot-3 {
+            bottom: 0;
+            right: 0;
+        }
+        .trinity-line {
+            position: absolute;
+            background-color: white;
+            height: 1px;
+            transform-origin: left;
+        }
+        .date-input-yellow::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(100%);
+            cursor: pointer;
+        }
+        .date-input-yellow::-webkit-calendar-picker-indicator:hover {
+            filter: invert(1) brightness(90%);
+        }
+        /* White chevron for select dropdowns */
+        select {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+        
+        /* Carousel enhancements */
+        .carousel-arrow {
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .carousel-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .carousel-dot {
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+        
+        .carousel-dot:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
             }
-        }, 1000);
-    </script>
+            
+            .carousel-counter {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+<header class="bg-red-800 text-white shadow-md">
+<div class="bg-red-900/50 text-yellow-400 py-1">
+<div class="container mx-auto px-4 flex justify-center md:justify-end items-center space-x-6 text-sm">
+<a class="flex items-center hover:text-white transition-colors duration-300" href="tel:(586) 248-8888">
+<i class="fas fa-phone-alt mr-2"></i>
+<span class="hidden sm:inline">(586) 248-8888</span>
+</a>
+</div>
+</div>
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-center py-4">
+<a class="flex flex-col items-center" href="#">
+<img src="header-logo.png" alt="Lazarus Home Remodeling" class="h-16 w-auto"/>
+</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="services.html">Services</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="about.html">About</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="blog.html">Blog</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="gallery.html">Gallery</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="contact.html">Contact</a>
+</nav>
+<div class="md:hidden">
+<button class="text-white focus:outline-none" id="menu-btn">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="hidden md:hidden bg-red-900" id="mobile-menu">
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="/">Home</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="services.html">Services</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="about.html">About</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="blog.html">Blog</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="gallery.html">Gallery</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="contact.html">Contact</a>
+</div>
+</header>
+<section class="bg-red-800 text-white py-12 md:py-20 relative">
+<div class="absolute top-4 right-4">
+<div class="relative w-10 h-10">
+<span class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rounded-full"></span>
+<span class="absolute bottom-0 left-0 w-2 h-2 bg-white rounded-full"></span>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-white rounded-full"></span>
+<svg class="absolute w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<line class="stroke-current text-white" stroke-width="2" x1="50" x2="10" y1="10" y2="90"></line>
+<line class="stroke-current text-white" stroke-width="2" x1="50" x2="90" y1="10" y2="90"></line>
+<line class="stroke-current text-white" stroke-width="2" x1="10" x2="90" y1="90" y2="90"></line>
+</svg>
+</div>
+</div>
+<div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+<div class="text-center md:text-left">
+<h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Revive Your Home, <br/>Restore Your Life.</h1>
+<p class="text-lg md:text-xl text-red-200 mb-8">Experience a resurrection in your living space with our expert remodeling services. Quality craftsmanship, inspired design.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl p-8" id="get-quote">
+<h2 class="text-3xl font-bold text-white mb-6 text-center">Get a Free Estimate</h2>
 
-</body>
-</html>
+<!-- Progress Bar -->
+<div class="mb-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-400 text-red-800 font-bold text-sm" id="step-1-indicator">1</div>
+<div class="ml-2 text-sm font-medium text-white">Contact Info</div>
+</div>
+<div class="flex-1 mx-4 h-1 bg-white/20 rounded">
+<div class="h-1 bg-yellow-400 rounded transition-all duration-300" id="progress-bar-1" style="width: 0%"></div>
+</div>
+<div class="flex items-center">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 text-white font-bold text-sm" id="step-2-indicator">2</div>
+<div class="ml-2 text-sm font-medium text-white/70">Project Details</div>
+</div>
+<div class="flex-1 mx-4 h-1 bg-white/20 rounded">
+<div class="h-1 bg-yellow-400 rounded transition-all duration-300" id="progress-bar-2" style="width: 0%"></div>
+</div>
+<div class="flex items-center">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 text-white font-bold text-sm" id="step-3-indicator">3</div>
+<div class="ml-2 text-sm font-medium text-white/70">Appointment</div>
+</div>
+</div>
+</div>
+
+<form id="multi-step-form" class="space-y-4">
+<!-- Step 1: Contact Information -->
+<div id="step-1" class="step-content">
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-name">Name</label>
+<input autocomplete="name" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-name" name="name" type="text" required/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-email">Email</label>
+<input autocomplete="email" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-email" name="email" type="email" required/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-phone">Phone Number</label>
+<input autocomplete="tel" class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-phone" name="phone" type="tel" required/>
+</div>
+<div class="flex justify-end pt-4">
+<button type="button" class="bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300" id="next-step-1">Next</button>
+</div>
+</div>
+
+<!-- Step 2: Project Details -->
+<div id="step-2" class="step-content hidden">
+<div>
+<label class="block text-sm font-medium text-red-200 mb-3">Services of Interest (Select all that apply)</label>
+<div class="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto bg-white/10 rounded-lg p-3">
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Kitchen Remodeling" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Kitchen Remodeling
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Bathroom Remodeling" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Bathroom Remodeling
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Walk-in Tub Installation" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Walk-in Tub Installation
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="ADA Remodeling" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+ADA Remodeling
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Room Additions" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Room Additions
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Basement Finishing" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Basement Finishing
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Flooring Installation" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Flooring Installation
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Plumbing Services" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Plumbing Services
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Electrical Work" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Electrical Work
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Interior Renovations" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Interior Renovations
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Custom Carpentry" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Custom Carpentry
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="General Home Improvements" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+General Home Improvements
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Design" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Design
+</label>
+<label class="flex items-center text-sm text-white cursor-pointer hover:bg-white/10 p-2 rounded">
+<input type="checkbox" name="services" value="Other" class="mr-3 rounded bg-white/20 border-transparent text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0">
+Other
+</label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-project-start">Project Start Timeline</label>
+<select class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-project-start" name="project-start" required>
+<option value="">Select timeline...</option>
+<option value="now">Now</option>
+<option value="1-2-weeks">1-2 weeks</option>
+<option value="2-4-weeks">2-4 weeks</option>
+<option value="1-3-months">1-3 months</option>
+<option value="3-months-plus">3+ months</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-contact-method">Preferred Contact Method</label>
+<select class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-contact-method" name="contact-method" required>
+<option value="">Select contact method...</option>
+<option value="call">Phone Call</option>
+<option value="home-visit">Home Visit</option>
+</select>
+</div>
+<div id="hero-address-field" class="hidden">
+<label class="block text-sm font-medium text-red-200" for="hero-address">Address</label>
+<input class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white placeholder-white/70 focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-address" name="address" type="text" placeholder="Enter your address for home visit"/>
+</div>
+<div class="flex justify-between pt-4">
+<button type="button" class="bg-white/20 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/30 transition-colors duration-300" id="back-step-2">Back</button>
+<button type="button" class="bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300" id="next-step-2">Next</button>
+</div>
+</div>
+
+<!-- Step 3: Appointment -->
+<div id="step-3" class="step-content hidden">
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-date">Preferred Date</label>
+<input class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm date-input-yellow" id="hero-date" name="date" type="date" required/>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-time">Preferred Time</label>
+<select class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-time" name="time" required>
+<option value="">Select time...</option>
+<option value="8:00-9:00">8:00 AM - 9:00 AM</option>
+<option value="9:00-10:00">9:00 AM - 10:00 AM</option>
+<option value="10:00-11:00">10:00 AM - 11:00 AM</option>
+<option value="11:00-12:00">11:00 AM - 12:00 PM</option>
+<option value="12:00-13:00">12:00 PM - 1:00 PM</option>
+<option value="13:00-14:00">1:00 PM - 2:00 PM</option>
+<option value="14:00-15:00">2:00 PM - 3:00 PM</option>
+<option value="15:00-16:00">3:00 PM - 4:00 PM</option>
+<option value="16:00-17:00">4:00 PM - 5:00 PM</option>
+<option value="17:00-18:00">5:00 PM - 6:00 PM</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-red-200" for="hero-message">Important project details:</label>
+<textarea class="mt-1 block w-full rounded-md bg-white/20 border-transparent text-white focus:border-white focus:bg-white/30 focus:ring-0 sm:text-sm" id="hero-message" name="message" rows="3"></textarea>
+</div>
+<div class="flex justify-between pt-4">
+<button type="button" class="bg-white/20 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/30 transition-colors duration-300" id="back-step-3">Back</button>
+<button type="submit" class="bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300">Request Consultation</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</section>
+<main class="container mx-auto mt-8 px-4">
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+<div class="bg-white p-6">
+<h2 class="text-3xl font-bold text-center text-red-800">Kitchen Design Gallery</h2>
+<p class="text-center text-gray-600 mt-2">Browse through our stunning kitchen transformations</p>
+</div>
+<div class="relative">
+<img id="kitchen-showcase" alt="Beautiful kitchen remodeling showcase" class="w-full h-auto transition-opacity duration-500" src="kitchen_assets/Kitchen_Angle_2025_02_13.webp"/>
+<!-- Navigation arrows -->
+<button onclick="previousKitchenImage()" class="carousel-arrow absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10">
+<i class="fas fa-chevron-left"></i>
+</button>
+<button onclick="nextKitchenImage()" class="carousel-arrow absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10">
+<i class="fas fa-chevron-right"></i>
+</button>
+<!-- Image counter -->
+<div class="carousel-counter absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+<span id="kitchen-counter">1</span> / <span id="kitchen-total">10</span>
+</div>
+<!-- Dot indicators -->
+<div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2" id="kitchen-dots">
+<!-- Dots will be generated by JavaScript -->
+</div>
+</div>
+<div class="p-8">
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Our Services</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Kitchen Remodeling</h3>
+<p class="text-gray-600">Complete kitchen renovations and updates.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Bathroom Remodeling</h3>
+<p class="text-gray-600">Full bathroom makeovers and renovations.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Walk-in Tub Installation</h3>
+<p class="text-gray-600">Safe, accessible bathing solutions.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">ADA Remodeling</h3>
+<p class="text-gray-600">Accessibility modifications and barrier-free design.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Room Additions</h3>
+<p class="text-gray-600">Adding space to your home.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Basement Finishing</h3>
+<p class="text-gray-600">Converting basements into livable space.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Flooring Installation</h3>
+<p class="text-gray-600">Hardwood, tile, laminate, and more.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Plumbing Services</h3>
+<p class="text-gray-600">Installation, repairs, and upgrades.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Electrical Work</h3>
+<p class="text-gray-600">Wiring, fixtures, and electrical upgrades.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Interior Renovations</h3>
+<p class="text-gray-600">Living rooms, bedrooms, dining areas.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Custom Carpentry</h3>
+<p class="text-gray-600">Built-ins, cabinets, trim work.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">General Home Improvements</h3>
+<p class="text-gray-600">Repairs, updates, and enhancements.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md col-span-1 md:col-span-2 lg:col-span-3">
+<h3 class="text-xl font-semibold text-gray-700 mb-2">Design</h3>
+<p class="text-gray-600">We design and build living spaces to suit your lifestyle with professional design expertise to maximize space and achieve the aesthetic based on any time period or style you desire.</p>
+</div>
+</div>
+</div>
+
+<!-- Bathroom Showcase Section -->
+<div class="bg-white rounded-lg shadow-lg overflow-hidden mt-8">
+<div class="bg-white p-6">
+<h2 class="text-3xl font-bold text-center text-red-800">Bathroom Design Gallery</h2>
+<p class="text-center text-gray-600 mt-2">Discover our beautiful bathroom renovations and designs</p>
+</div>
+<div class="relative">
+<img id="bathroom-showcase" alt="Beautiful bathroom remodeling showcase" class="w-full h-auto transition-opacity duration-500" src="bathroom_assets/Master+bath+with+blue+barn+door.jpeg"/>
+<!-- Navigation arrows -->
+<button onclick="previousBathroomImage()" class="carousel-arrow absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10">
+<i class="fas fa-chevron-left"></i>
+</button>
+<button onclick="nextBathroomImage()" class="carousel-arrow absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10">
+<i class="fas fa-chevron-right"></i>
+</button>
+<!-- Image counter -->
+<div class="carousel-counter absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+<span id="bathroom-counter">1</span> / <span id="bathroom-total">10</span>
+</div>
+<!-- Dot indicators -->
+<div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2" id="bathroom-dots">
+<!-- Dots will be generated by JavaScript -->
+</div>
+</div>
+<div class="p-8">
+<h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Bathroom Transformations</h2>
+<p class="text-lg text-gray-600 text-center">From spa-like retreats to functional family bathrooms, see how we create stunning bathroom spaces tailored to your lifestyle.</p>
+</div>
+</div>
+
+<div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">What Our Clients Say</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<div class="flex items-center mb-2">
+<span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+</div>
+<p class="text-gray-600 italic mb-4">"Lazarus transformed our outdated kitchen into a modern masterpiece. The attention to detail was incredible!"</p>
+<p class="text-gray-800 font-semibold">- The Johnson Family</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<div class="flex items-center mb-2">
+<span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+</div>
+<p class="text-gray-600 italic mb-4">"Professional, courteous, and the craftsmanship is top-notch. Our new bathroom is like a spa."</p>
+<p class="text-gray-800 font-semibold">- Mark T.</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+<div class="flex items-center mb-2">
+<span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+</div>
+<p class="text-gray-600 italic mb-4">"The team was fantastic. They finished our basement ahead of schedule and on budget. Highly recommend!"</p>
+<p class="text-gray-800 font-semibold">- Sarah P.</p>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-lg p-8 mt-8 hidden">
+<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Request a Quote</h2>
+<form class="space-y-6">
+<div>
+<label class="block text-sm font-medium text-gray-700" for="name">Name</label>
+<input autocomplete="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" id="name" name="name" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="email">Email</label>
+<input autocomplete="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" id="email" name="email" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="phone">Phone Number</label>
+<input autocomplete="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" id="phone" name="phone" type="tel"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="service">Service of Interest</label>
+<select class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" id="service" name="service">
+<option>Kitchen Remodeling</option>
+<option>Bathroom Remodeling</option>
+<option>Walk-in Tub Installation</option>
+<option>ADA Remodeling</option>
+<option>Room Additions</option>
+<option>Basement Finishing</option>
+<option>Flooring Installation</option>
+<option>Plumbing Services</option>
+<option>Electrical Work</option>
+<option>Interior Renovations</option>
+<option>Custom Carpentry</option>
+<option>General Home Improvements</option>
+<option>Design</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="message">Message</label>
+<textarea class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" id="message" name="message" rows="4"></textarea>
+</div>
+<div class="text-center">
+<button class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-3 px-8 text-lg font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" type="submit">Submit Request</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<footer class="bg-gray-800 text-white mt-10">
+<div class="container mx-auto py-8 px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+<div>
+<h3 class="text-lg font-bold mb-4">LAZARUS HOME REMODELING</h3>
+<p class="text-gray-400">Revive. Restore. Remarkable.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Contact Us</h3>
+<ul class="text-gray-400 space-y-2">
+<li><i class="fas fa-phone-alt mr-2 text-red-500"></i> (586) 248-8888</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+<p>© 2023 Lazarus Home Remodeling. All Rights Reserved.</p>
+<p class="mt-2">
+<a href="#" onclick="adminAccess()" class="text-gray-600 hover:text-gray-400 text-xs">System</a>
+</p>
+</div>
+</div>
+</footer>
+<div class="fixed bottom-4 right-4 z-50">
+<button class="bg-yellow-400 text-red-800 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition-colors duration-300" id="chat-widget-button">
+<i class="fas fa-comments text-2xl"></i>
+</button>
+<div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
+<div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
+<h3 class="font-bold text-lg">Chat with us</h3>
+<button class="text-white hover:text-yellow-400" id="close-chat-widget">
+<i class="fas fa-chevron-down"></i>
+</button>
+</div>
+<div class="p-4 h-64 overflow-y-auto" id="chat-messages">
+<div class="flex mb-4">
+<div class="bg-gray-200 p-3 rounded-lg max-w-xs">
+<p class="text-sm">Hello! How can we help you with your remodeling project today?</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-200">
+<div class="flex items-center">
+<input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Type your message..." type="text" id="chat-input"/>
+<button type="button" class="ml-3 bg-yellow-400 text-red-800 p-2 rounded-full hover:bg-yellow-500" id="send-chat-message">
+<i class="fas fa-paper-plane"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    // Chat functionality is handled by chat.js - removing duplicate event handlers
+
+    // Enhanced Kitchen Image Carousel
+    const kitchenImages = [
+        'kitchen_assets/Kitchen_Angle_2025_02_13.webp',
+        'kitchen_assets/Modern-Kitchen-Remodel-Monastery-NOLI-6.jpg',
+        'kitchen_assets/Custom-Kitchen-Remodel-Island-Designs-For-Your-Home-1080x675.jpg',
+        'kitchen_assets/kitchen-remodel-101-guide-1080x675.jpg',
+        'kitchen_assets/modern-kitchen-remodel-design.jpg',
+        'kitchen_assets/Sleek-kitchen-trends-2025-by-DECORILLA-1024x683-1.jpg',
+        'kitchen_assets/transitional-style-kitchen.webp',
+        'kitchen_assets/kitchen-island-installation.webp',
+        'kitchen_assets/11561_new-kitchen-1-2-1.webp',
+        'kitchen_assets/quailrun_09.webp'
+    ];
+    
+    let currentKitchenIndex = 0;
+    let kitchenAutoRotate = true;
+    const kitchenShowcase = document.getElementById('kitchen-showcase');
+    
+    // Initialize kitchen carousel
+    function initKitchenCarousel() {
+        // Set total count
+        document.getElementById('kitchen-total').textContent = kitchenImages.length;
+        
+        // Create dot indicators
+        const dotsContainer = document.getElementById('kitchen-dots');
+        dotsContainer.innerHTML = '';
+        kitchenImages.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = `carousel-dot w-2 h-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white' : 'bg-white/50'}`;
+            dot.onclick = () => goToKitchenImage(index);
+            dotsContainer.appendChild(dot);
+        });
+    }
+    
+    function updateKitchenDisplay() {
+        if (kitchenShowcase) {
+            kitchenShowcase.style.opacity = '0';
+            
+            setTimeout(() => {
+                kitchenShowcase.src = kitchenImages[currentKitchenIndex];
+                kitchenShowcase.style.opacity = '1';
+                
+                // Update counter
+                document.getElementById('kitchen-counter').textContent = currentKitchenIndex + 1;
+                
+                // Update dots
+                const dots = document.querySelectorAll('#kitchen-dots button');
+                dots.forEach((dot, index) => {
+                    if (index === currentKitchenIndex) {
+                        dot.className = 'carousel-dot w-2 h-2 rounded-full bg-white transition-all duration-300';
+                    } else {
+                        dot.className = 'carousel-dot w-2 h-2 rounded-full bg-white/50 transition-all duration-300';
+                    }
+                });
+            }, 250);
+        }
+    }
+    
+    function nextKitchenImage() {
+        kitchenAutoRotate = false; // Stop auto rotation when user interacts
+        currentKitchenIndex = (currentKitchenIndex + 1) % kitchenImages.length;
+        updateKitchenDisplay();
+        // Resume auto rotation after 10 seconds of no interaction
+        setTimeout(() => { kitchenAutoRotate = true; }, 10000);
+    }
+    
+    function previousKitchenImage() {
+        kitchenAutoRotate = false; // Stop auto rotation when user interacts
+        currentKitchenIndex = (currentKitchenIndex - 1 + kitchenImages.length) % kitchenImages.length;
+        updateKitchenDisplay();
+        // Resume auto rotation after 10 seconds of no interaction
+        setTimeout(() => { kitchenAutoRotate = true; }, 10000);
+    }
+    
+    function goToKitchenImage(index) {
+        kitchenAutoRotate = false; // Stop auto rotation when user interacts
+        currentKitchenIndex = index;
+        updateKitchenDisplay();
+        // Resume auto rotation after 10 seconds of no interaction
+        setTimeout(() => { kitchenAutoRotate = true; }, 10000);
+    }
+    
+    function autoRotateKitchen() {
+        if (kitchenAutoRotate) {
+            currentKitchenIndex = (currentKitchenIndex + 1) % kitchenImages.length;
+            updateKitchenDisplay();
+        }
+    }
+    
+    // Initialize kitchen carousel and start auto rotation
+    initKitchenCarousel();
+    setInterval(autoRotateKitchen, 5000);
+
+    // Enhanced Bathroom Image Carousel
+    const bathroomImages = [
+        'bathroom_assets/Master+bath+with+blue+barn+door.jpeg',
+        'bathroom_assets/bathroom-remodel-ideas.jpg',
+        'bathroom_assets/master-bathroom-remodel-ideas.jpg',
+        'bathroom_assets/How-to-plan-a-bathroom-remodel-scaled.jpg',
+        'bathroom_assets/Efficiency-Meets-Style-Modern-Bathroom-Products-for-Contemporary-Homes-scaled.jpeg',
+        'bathroom_assets/bathroom-remodeling-lisle-3.jpg',
+        'bathroom_assets/glass-doors-shower.jpg',
+        'bathroom_assets/sunsoaked-tower-lakes-haven-bathroom-remodel16-advance-design-studio-1.jpeg',
+        'bathroom_assets/top-bathroom-remodeling-trends-01.webp',
+        'bathroom_assets/mt-airy-bathroom-remodel-bath-10-1.webp'
+    ];
+    
+    let currentBathroomIndex = 0;
+    let bathroomAutoRotate = true;
+    const bathroomShowcase = document.getElementById('bathroom-showcase');
+    
+    // Initialize bathroom carousel
+    function initBathroomCarousel() {
+        // Set total count
+        document.getElementById('bathroom-total').textContent = bathroomImages.length;
+        
+        // Create dot indicators
+        const dotsContainer = document.getElementById('bathroom-dots');
+        dotsContainer.innerHTML = '';
+        bathroomImages.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = `carousel-dot w-2 h-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white' : 'bg-white/50'}`;
+            dot.onclick = () => goToBathroomImage(index);
+            dotsContainer.appendChild(dot);
+        });
+    }
+    
+    function updateBathroomDisplay() {
+        if (bathroomShowcase) {
+            bathroomShowcase.style.opacity = '0';
+            
+            setTimeout(() => {
+                bathroomShowcase.src = bathroomImages[currentBathroomIndex];
+                bathroomShowcase.style.opacity = '1';
+                
+                // Update counter
+                document.getElementById('bathroom-counter').textContent = currentBathroomIndex + 1;
+                
+                // Update dots
+                const dots = document.querySelectorAll('#bathroom-dots button');
+                dots.forEach((dot, index) => {
+                    if (index === currentBathroomIndex) {
+                        dot.className = 'carousel-dot w-2 h-2 rounded-full bg-white transition-all duration-300';
+                    } else {
+                        dot.className = 'carousel-dot w-2 h-2 rounded-full bg-white/50 transition-all duration-300';
+                    }
+                });
+            }, 250);
+        }
+    }
+    
+    function nextBathroomImage() {
+        bathroomAutoRotate = false; // Stop auto rotation when user interacts
+        currentBathroomIndex = (currentBathroomIndex + 1) % bathroomImages.length;
+        updateBathroomDisplay();
+        // Resume auto rotation after 10 seconds of no interaction
+        setTimeout(() => { bathroomAutoRotate = true; }, 10000);
+    }
+    
+    function previousBathroomImage() {
+        bathroomAutoRotate = false; // Stop auto rotation when user interacts
+        currentBathroomIndex = (currentBathroomIndex - 1 + bathroomImages.length) % bathroomImages.length;
+        updateBathroomDisplay();
+        // Resume auto rotation after 10 seconds of no interaction
+        setTimeout(() => { bathroomAutoRotate = true; }, 10000);
+    }
+    
+    function goToBathroomImage(index) {
+        bathroomAutoRotate = false; // Stop auto rotation when user interacts
+        currentBathroomIndex = index;
+        updateBathroomDisplay();
+        // Resume auto rotation after 10 seconds of no interaction
+        setTimeout(() => { bathroomAutoRotate = true; }, 10000);
+    }
+    
+    function autoRotateBathroom() {
+        if (bathroomAutoRotate) {
+            currentBathroomIndex = (currentBathroomIndex + 1) % bathroomImages.length;
+            updateBathroomDisplay();
+        }
+    }
+    
+    // Initialize bathroom carousel and start auto rotation (offset from kitchen)
+    initBathroomCarousel();
+    setInterval(autoRotateBathroom, 6000);
+
+    // Multi-step form functionality
+    let currentStep = 1;
+    let inactivityTimer;
+    const formData = {};
+
+    // Progress bar and step indicators
+    function updateProgressBar(step) {
+        const indicators = document.querySelectorAll('[id^="step-"][id$="-indicator"]');
+        const progressBars = document.querySelectorAll('[id^="progress-bar-"]');
+        
+        indicators.forEach((indicator, index) => {
+            const stepNum = index + 1;
+            if (stepNum < step) {
+                indicator.classList.remove('bg-white/20');
+                indicator.classList.add('bg-yellow-400', 'text-red-800');
+                indicator.nextElementSibling.classList.remove('text-white/70');
+                indicator.nextElementSibling.classList.add('text-white');
+            } else if (stepNum === step) {
+                indicator.classList.remove('bg-white/20');
+                indicator.classList.add('bg-yellow-400', 'text-red-800');
+                indicator.nextElementSibling.classList.remove('text-white/70');
+                indicator.nextElementSibling.classList.add('text-white');
+            } else {
+                indicator.classList.add('bg-white/20');
+                indicator.classList.remove('bg-yellow-400', 'text-red-800');
+                indicator.nextElementSibling.classList.add('text-white/70');
+                indicator.nextElementSibling.classList.remove('text-white');
+            }
+        });
+
+        progressBars.forEach((bar, index) => {
+            const stepNum = index + 1;
+            if (stepNum < step) {
+                bar.style.width = '100%';
+            } else {
+                bar.style.width = '0%';
+            }
+        });
+    }
+
+    // Show specific step
+    function showStep(step) {
+        document.querySelectorAll('.step-content').forEach(content => {
+            content.classList.add('hidden');
+        });
+        document.getElementById(`step-${step}`).classList.remove('hidden');
+        currentStep = step;
+        updateProgressBar(step);
+    }
+
+    // Validate current step
+    function validateStep(step) {
+        const stepElement = document.getElementById(`step-${step}`);
+        const requiredFields = stepElement.querySelectorAll('[required]');
+        
+        // Check regular required fields
+        for (let field of requiredFields) {
+            if (!field.value.trim()) {
+                field.focus();
+                return false;
+            }
+        }
+        
+        // For step 2, check if at least one service is selected
+        if (step === 2) {
+            const serviceCheckboxes = stepElement.querySelectorAll('input[name="services"]:checked');
+            if (serviceCheckboxes.length === 0) {
+                alert('Please select at least one service of interest.');
+                return false;
+            }
+        }
+        
+        // For step 3, validate appointment date is not today or earlier
+        if (step === 3) {
+            const dateInput = stepElement.querySelector('input[name="date"]');
+            if (dateInput && dateInput.value) {
+                const selectedDate = new Date(dateInput.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+                
+                if (selectedDate <= today) {
+                    alert('Please select a date starting tomorrow or later for your appointment.');
+                    dateInput.focus();
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+
+    // Save form data
+    function saveFormData() {
+        const form = document.getElementById('multi-step-form');
+        const formDataObj = new FormData(form);
+        
+        // Handle multiple checkboxes for services
+        const services = [];
+        const serviceCheckboxes = form.querySelectorAll('input[name="services"]:checked');
+        serviceCheckboxes.forEach(checkbox => services.push(checkbox.value));
+        
+        // Clear existing formData
+        Object.keys(formData).forEach(key => delete formData[key]);
+        
+        // Add all form data
+        for (let [key, value] of formDataObj.entries()) {
+            if (key === 'services') {
+                // Skip individual service entries, we'll handle them as array
+                continue;
+            }
+            formData[key] = value;
+        }
+        
+        // Add services array
+        if (services.length > 0) {
+            formData.services = services;
+        }
+        
+        // Auto-save via AJAX (mock implementation - replace with actual endpoint)
+        console.log('Auto-saving form data:', formData);
+        // In production, send formData to server endpoint
+    }
+
+    // Reset inactivity timer
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(() => {
+            saveFormData();
+            console.log('Form auto-saved due to inactivity');
+        }, 60000); // 60 seconds
+    }
+
+    // Contact method address field toggle
+    const contactMethodSelect = document.getElementById('hero-contact-method');
+    const addressField = document.getElementById('hero-address-field');
+    const addressInput = document.getElementById('hero-address');
+    
+    if (contactMethodSelect && addressField && addressInput) {
+        contactMethodSelect.addEventListener('change', function() {
+            if (this.value === 'home-visit') {
+                addressField.classList.remove('hidden');
+                addressInput.setAttribute('required', 'required');
+            } else {
+                addressField.classList.add('hidden');
+                addressInput.removeAttribute('required');
+                addressInput.value = '';
+            }
+            resetInactivityTimer();
+        });
+    }
+
+    // Admin access function - now using secure authentication
+    async function adminAccess() {
+        const password = prompt('Enter admin password:');
+        if (password === null) return; // User cancelled
+
+        const result = await window.adminAuth.authenticate(password);
+        
+        if (result.success) {
+            window.location.href = 'admin-dashboard.html';
+        } else {
+            alert(result.message || 'Access denied');
+        }
+    }
+
+    // Step navigation
+    document.getElementById('next-step-1').addEventListener('click', function() {
+        if (validateStep(1)) {
+            saveFormData();
+            showStep(2);
+        }
+    });
+
+    document.getElementById('next-step-2').addEventListener('click', function() {
+        if (validateStep(2)) {
+            saveFormData();
+            showStep(3);
+        }
+    });
+
+    document.getElementById('back-step-2').addEventListener('click', function() {
+        showStep(1);
+    });
+
+    document.getElementById('back-step-3').addEventListener('click', function() {
+        showStep(2);
+    });
+
+    // Form submission
+    document.getElementById('multi-step-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (validateStep(3)) {
+            saveFormData();
+            
+            const submitButton = document.querySelector('button[type="submit"]');
+            const originalButtonContent = submitButton.innerHTML;
+            
+            // Show loading state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            submitButton.disabled = true;
+            submitButton.className = 'bg-yellow-500 text-white font-bold py-3 px-6 rounded-lg cursor-default';
+            
+            try {
+                // Submit form data to backend
+                console.log('Submitting form data:', formData);
+                
+                const response = await fetch('/api/forms/hero', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Form submitted successfully:', result);
+                    
+                    // Show success state
+                    submitButton.innerHTML = '<i class="fas fa-check mr-2"></i>Sent Successfully!';
+                    submitButton.className = 'bg-green-500 text-white font-bold py-3 px-6 rounded-lg cursor-default';
+                    
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg';
+                    successMessage.innerHTML = '<i class="fas fa-check-circle mr-2"></i><strong>Thank you!</strong> Your consultation request has been submitted. We\'ll contact you within 24 hours.';
+                    submitButton.parentNode.appendChild(successMessage);
+                    
+                    // Redirect to about page after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'about.html';
+                    }, 3000);
+                    
+                } else {
+                    throw new Error(result.error || 'Form submission failed');
+                }
+                
+            } catch (error) {
+                console.error('❌ Form submission error:', error);
+                
+                // Show error state
+                submitButton.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Try Again';
+                submitButton.className = 'bg-red-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-600';
+                submitButton.disabled = false;
+                
+                // Show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+                errorMessage.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i><strong>Oops!</strong> There was an issue submitting your form. Please try again or call us at <a href="tel:586-248-8888" class="underline">(586) 248-8888</a>.';
+                
+                // Remove existing error message if any
+                const existingError = submitButton.parentNode.querySelector('.bg-red-100');
+                if (existingError) existingError.remove();
+                
+                submitButton.parentNode.appendChild(errorMessage);
+            }
+        }
+    });
+
+    // Track form interactions for auto-save
+    document.getElementById('multi-step-form').addEventListener('input', resetInactivityTimer);
+    document.getElementById('multi-step-form').addEventListener('change', resetInactivityTimer);
+
+    // Initialize
+    showStep(1);
+    resetInactivityTimer();
+
+    // Set minimum date to tomorrow
+    const dateInput = document.getElementById('hero-date');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowString = tomorrow.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    dateInput.setAttribute('min', tomorrowString);
+
+    // Ensure date input opens calendar on click
+    dateInput.addEventListener('click', function(e) {
+        if (e.target.type === 'date') {
+            e.target.showPicker && e.target.showPicker();
+        }
+    });
+</script>
+<script src="chat.js"></script>
+</body></html>

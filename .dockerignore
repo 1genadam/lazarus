@@ -1,0 +1,37 @@
+# Ignore everything except specific files/directories
+*
+
+# Include these files/directories
+!package*.json
+!server.js
+!public/
+!api/
+!.env
+!nginx.conf
+
+# Exclude backup directories
+public_backup/
+diagnostic-tools/
+creative/
+kitchen_assets/
+bathroom_assets/
+readme/
+
+# Exclude HTML files in root
+*.html
+chat-diagnostic.html
+test-chat-events.html
+chat-events-dashboard.html
+
+# Exclude other unnecessary files
+*.md
+*.txt
+*.sh
+*.png
+*.jpg
+*.jpeg
+*.webp
+console-diagnostic.js
+upload-to-ccu.sh
+publish_to_git.sh
+deploy.sh

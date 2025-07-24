@@ -13,6 +13,10 @@ class LazarusChatWidget {
             data: {}
         };
         this.sessionId = this.generateSessionId();
+        this.autoReopenDelay = 2 * 60 * 1000; // 2 minutes in milliseconds
+        
+        // Load chat state from localStorage to persist across page navigation
+        this.loadChatState();
         this.conversationLog = {
             sessionId: this.sessionId,
             startTime: new Date().toISOString(),
@@ -23,31 +27,84 @@ class LazarusChatWidget {
             pageUrl: window.location.href,
             userAgent: navigator.userAgent
         };
-        this.systemPrompt = `You are a friendly and knowledgeable customer service representative for Lazarus Home Remodeling. You ONLY discuss home remodeling topics. If someone asks about anything unrelated (like recipes, weather, etc.), politely redirect them back to home remodeling services.
-        
+        this.systemPrompt = `You are a helpful, witty, and knowledgeable customer service representative for Lazarus Home Remodeling. Your PRIMARY GOAL is to schedule consultations and appointments while being genuinely helpful about home remodeling topics. You ONLY discuss home remodeling topics. If someone asks about anything unrelated, politely redirect them back to home remodeling services with a touch of humor.
+
 Our services include:
-        - Kitchen Remodeling: $15,000-$50,000 (cabinets, countertops, appliances, lighting)
-        - Bathroom Remodeling: $8,000-$25,000 (fixtures, tiling, walk-in tubs, accessibility)
-        - Whole Home Remodeling: $30,000-$150,000+ (complete renovations)
-        - Room Additions and Basement Finishing: $20,000-$60,000
-        - Flooring Installation: $3,000-$15,000 (hardwood, tile, laminate)
-        - Custom Carpentry and Built-ins: $2,000-$20,000
-        - Plumbing and Electrical Work: $500-$10,000
-        - ADA Accessibility Modifications: $3,000-$15,000
-        
+        - Kitchen Remodeling (cabinets, countertops, appliances, lighting, islands, backsplashes)
+        - Bathroom Remodeling (fixtures, tiling, walk-in tubs, showers, vanities, accessibility features)
+        - Walk-in Tub Installation (safe, accessible bathing solutions)
+        - ADA Accessibility Modifications (barrier-free design, safety features)
+        - Room Additions (expanding your living space)
+        - Basement Finishing (converting basements into livable spaces)
+        - Flooring Installation (hardwood, tile, laminate, luxury vinyl)
+        - Plumbing Services (installation, repairs, upgrades)
+        - Electrical Work (wiring, fixtures, electrical upgrades)
+        - Interior Renovations (living rooms, bedrooms, dining areas)
+        - Custom Carpentry (built-ins, cabinets, trim work)
+        - General Home Improvements (repairs, updates, enhancements)
+        - Design Services (professional design expertise for any style or time period)
+
         Key Information:
         - Contact: (586) 248-8888
         - Free consultations and estimates available
-        - Licensed and insured with 15+ years experience
-        - Projects typically take 1-12 weeks depending on scope
         - We serve the greater Detroit area
         
-        Always be helpful and professional. For non-remodeling questions, say something like: "I specialize in home remodeling questions! Let me help you with your renovation needs instead. What home improvement project are you considering?"`;
+        IMPORTANT: Always try to guide conversations toward scheduling a consultation. Use phrases like "Would you like to schedule a free consultation?", "Let's set up a time to discuss your project", "I can help you book an appointment", or "Our team would love to see your space and give you ideas."
+        
+        Be professional but personable, knowledgeable but not overwhelming, and always helpful while steering toward appointment booking. For off-topic questions, redirect with humor: "I'm great with home renovations, but my recipe knowledge is about as reliable as a wobbly cabinet door! Let's talk about upgrading your space instead - what room are you looking to transform?"`;
         this.init();
     }
 
     generateSessionId() {
         return 'chat-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    }
+
+    loadChatState() {
+        try {
+            const savedState = localStorage.getItem('lazarusChatState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                this.chatClosedByUser = state.chatClosedByUser || false;
+                this.chatCloseTime = state.chatCloseTime || null;
+                
+                // Check if the saved close time is still within the delay period
+                if (this.chatClosedByUser && this.chatCloseTime) {
+                    const timeSinceClose = Date.now() - this.chatCloseTime;
+                    if (timeSinceClose >= this.autoReopenDelay) {
+                        // Reset if delay period has passed
+                        this.chatClosedByUser = false;
+                        this.chatCloseTime = null;
+                        this.saveChatState();
+                        console.log('✅ Chat state reset - 2 minutes have passed since last close');
+                    } else {
+                        const remainingTime = Math.ceil((this.autoReopenDelay - timeSinceClose) / 1000);
+                        console.log(`⏳ Chat state loaded - auto-open disabled for ${remainingTime}s more`);
+                    }
+                }
+            } else {
+                // First visit - initialize state
+                this.chatClosedByUser = false;
+                this.chatCloseTime = null;
+            }
+        } catch (error) {
+            console.warn('Could not load chat state from localStorage:', error);
+            this.chatClosedByUser = false;
+            this.chatCloseTime = null;
+        }
+    }
+
+    saveChatState() {
+        try {
+            const state = {
+                chatClosedByUser: this.chatClosedByUser,
+                chatCloseTime: this.chatCloseTime,
+                lastSaved: Date.now()
+            };
+            localStorage.setItem('lazarusChatState', JSON.stringify(state));
+            console.log('💾 Chat state saved to localStorage');
+        } catch (error) {
+            console.warn('Could not save chat state to localStorage:', error);
+        }
     }
 
     // Integration with analytics tracker
@@ -112,10 +169,26 @@ Our services include:
                 chatWidget.classList.toggle('hidden');
                 
                 if (wasHidden) {
+                    // User manually opened chat - reset any close tracking
+                    this.chatClosedByUser = false;
+                    this.chatCloseTime = null;
+                    this.saveChatState();
+                    console.log('✅ User manually opened chat - auto-open re-enabled');
+                    
                     this.logEvent('chat_opened', { trigger: 'button_click' });
                     messageInput?.focus();
                 } else {
-                    this.logEvent('chat_closed', { trigger: 'button_click' });
+                    // User manually closed chat via button - track this
+                    this.chatClosedByUser = true;
+                    this.chatCloseTime = Date.now();
+                    this.saveChatState();
+                    console.log('🚫 User manually closed chat via button - auto-reopen disabled for 2 minutes');
+                    
+                    this.logEvent('chat_closed', { 
+                        trigger: 'button_click',
+                        userClosed: true,
+                        closeTime: this.chatCloseTime
+                    });
                 }
             });
         }
@@ -125,7 +198,18 @@ Our services include:
                 e.preventDefault();
                 e.stopPropagation();
                 chatWidget.classList.add('hidden');
-                this.logEvent('chat_closed', { trigger: 'close_button' });
+                
+                // Track that user manually closed chat
+                this.chatClosedByUser = true;
+                this.chatCloseTime = Date.now();
+                this.saveChatState();
+                console.log('🚫 User manually closed chat - auto-reopen disabled for 2 minutes');
+                
+                this.logEvent('chat_closed', { 
+                    trigger: 'close_button',
+                    userClosed: true,
+                    closeTime: this.chatCloseTime
+                });
             });
         }
 
@@ -146,14 +230,67 @@ Our services include:
             });
         }
 
-        // Auto-open chat widget on page load after a brief delay
-        setTimeout(() => {
-            if (chatWidget) {
-                chatWidget.classList.remove('hidden');
-                messageInput?.focus();
-                this.logEvent('chat_opened', { trigger: 'auto_open' });
+        // Auto-open chat widget on page load after ensuring DOM is ready
+        const attemptAutoOpen = () => {
+            const widget = document.getElementById('chat-widget');
+            const input = document.querySelector('#chat-widget input');
+            console.log('🚀 Attempting auto-open...', { widget: !!widget, input: !!input });
+            
+            if (widget && !widget.classList.contains('hidden')) {
+                console.log('✅ Chat already open, skipping auto-open');
+                return;
             }
-        }, 2000);
+            
+            // Check if user recently closed the chat
+            if (this.chatClosedByUser && this.chatCloseTime) {
+                const timeSinceClose = Date.now() - this.chatCloseTime;
+                if (timeSinceClose < this.autoReopenDelay) {
+                    const remainingTime = Math.ceil((this.autoReopenDelay - timeSinceClose) / 1000);
+                    console.log(`⏳ Auto-open disabled - user closed chat ${Math.ceil(timeSinceClose/1000)}s ago. Will re-enable in ${remainingTime}s`);
+                    return;
+                } else {
+                    // Reset the flag after 2 minutes have passed
+                    this.chatClosedByUser = false;
+                    this.chatCloseTime = null;
+                    this.saveChatState();
+                    console.log('✅ Auto-open re-enabled - 2 minutes have passed since user closed chat');
+                }
+            }
+            
+            if (widget) {
+                console.log('🚀 Auto-opening chat widget...');
+                widget.classList.remove('hidden');
+                input?.focus();
+                this.logEvent('chat_opened', { trigger: 'auto_open' });
+                console.log('✅ Auto-open completed successfully!');
+            } else {
+                console.log('❌ Chat widget not found for auto-open');
+            }
+        };
+
+        // Try auto-open with multiple timing strategies
+        setTimeout(attemptAutoOpen, 1000);  // Try after 1 second
+        setTimeout(attemptAutoOpen, 3000);  // Fallback after 3 seconds
+        
+        // Periodic check to re-enable auto-open after delay period
+        setInterval(() => {
+            if (this.chatClosedByUser && this.chatCloseTime) {
+                const timeSinceClose = Date.now() - this.chatCloseTime;
+                if (timeSinceClose >= this.autoReopenDelay) {
+                    this.chatClosedByUser = false;
+                    this.chatCloseTime = null;
+                    this.saveChatState();
+                    console.log('✅ Auto-open re-enabled after 2-minute delay');
+                    
+                    // Attempt auto-open now that delay has passed
+                    const widget = document.getElementById('chat-widget');
+                    if (widget && widget.classList.contains('hidden')) {
+                        console.log('🚀 Attempting delayed auto-reopen...');
+                        attemptAutoOpen();
+                    }
+                }
+            }
+        }, 30000); // Check every 30 seconds
 
         // Track when user leaves page
         window.addEventListener('beforeunload', () => {
@@ -372,40 +509,40 @@ Our services include:
         };
 
         // Enhanced keyword matching for demo
-        const message = userMessage.toLowerCase();
+        const lowerMessage = userMessage.toLowerCase();
         
         // Check for non-remodeling topics first
-        if (message.includes('recipe') || message.includes('food') || message.includes('cook') || 
-            message.includes('dinner') || message.includes('burger') || message.includes('meal') ||
-            message.includes('weather') || message.includes('sports') || message.includes('movie') ||
-            message.includes('music') || message.includes('forget') || message.includes('train')) {
+        if (lowerMessage.includes('recipe') || lowerMessage.includes('food') || lowerMessage.includes('cook') || 
+            lowerMessage.includes('dinner') || lowerMessage.includes('burger') || lowerMessage.includes('meal') ||
+            lowerMessage.includes('weather') || lowerMessage.includes('sports') || lowerMessage.includes('movie') ||
+            lowerMessage.includes('music') || lowerMessage.includes('forget') || lowerMessage.includes('train')) {
             return demoResponses.unrelated;
         }
         
         // Build to suit and custom questions
-        if (message.includes('build to suit') || message.includes('custom build') || message.includes('custom design')) {
+        if (lowerMessage.includes('build to suit') || lowerMessage.includes('custom build') || lowerMessage.includes('custom design')) {
             return "Absolutely! We specialize in build-to-suit and custom design projects. Whether you need a completely custom kitchen layout, unique built-in storage solutions, or a one-of-a-kind bathroom design, we work closely with you to create spaces that perfectly match your vision and lifestyle. Our design team will collaborate with you from concept to completion. What kind of custom project are you envisioning?";
         }
         
-        if (message.includes('do you') || message.includes('can you')) {
-            if (message.includes('kitchen') || message.includes('bathroom') || message.includes('remodel') || 
-                message.includes('renovation') || message.includes('design') || message.includes('build')) {
+        if (lowerMessage.includes('do you') || lowerMessage.includes('can you')) {
+            if (lowerMessage.includes('kitchen') || lowerMessage.includes('bathroom') || lowerMessage.includes('remodel') || 
+                lowerMessage.includes('renovation') || lowerMessage.includes('design') || lowerMessage.includes('build')) {
                 return "Yes! We handle all aspects of home remodeling including kitchen and bathroom renovations, whole home remodels, custom carpentry, flooring installation, plumbing, electrical work, and accessibility modifications. We're licensed, insured, and have 15+ years of experience. What specific project are you considering?";
             }
         }
         
         // Home remodeling topics
-        if (message.includes('kitchen')) return demoResponses.kitchen;
-        if (message.includes('bathroom')) return demoResponses.bathroom;
-        if (message.includes('much') || message.includes('cost')) return demoResponses.cost;
-        if (message.includes('price') || message.includes('pricing')) return demoResponses.price;
-        if (message.includes('budget')) return demoResponses.budget;
-        if (message.includes('time') || message.includes('long') || message.includes('when') || message.includes('timeline')) return demoResponses.timeline;
-        if (message.includes('consultation') || message.includes('estimate') || message.includes('quote') || message.includes('appointment')) return demoResponses.consultation;
-        if (message.includes('experience') || message.includes('licensed') || message.includes('insured')) return demoResponses.experience;
-        if (message.includes('area') || message.includes('location') || message.includes('detroit')) return demoResponses.area;
-        if (message.includes('floor') || message.includes('flooring')) return "We install all types of flooring including hardwood, tile, laminate, and luxury vinyl. Flooring projects typically range from $3,000-$15,000 depending on materials and square footage. What type of flooring are you considering?";
-        if (message.includes('whole home') || message.includes('entire') || message.includes('complete')) return "Whole home remodeling is our specialty! These comprehensive projects typically range from $30,000-$150,000+ and take 8-12+ weeks. We handle everything from design to completion. What areas of your home are you looking to renovate?";
+        if (lowerMessage.includes('kitchen')) return demoResponses.kitchen;
+        if (lowerMessage.includes('bathroom')) return demoResponses.bathroom;
+        if (lowerMessage.includes('much') || lowerMessage.includes('cost')) return demoResponses.cost;
+        if (lowerMessage.includes('price') || lowerMessage.includes('pricing')) return demoResponses.price;
+        if (lowerMessage.includes('budget')) return demoResponses.budget;
+        if (lowerMessage.includes('time') || lowerMessage.includes('long') || lowerMessage.includes('when') || lowerMessage.includes('timeline')) return demoResponses.timeline;
+        if (lowerMessage.includes('consultation') || lowerMessage.includes('estimate') || lowerMessage.includes('quote') || lowerMessage.includes('appointment')) return demoResponses.consultation;
+        if (lowerMessage.includes('experience') || lowerMessage.includes('licensed') || lowerMessage.includes('insured')) return demoResponses.experience;
+        if (lowerMessage.includes('area') || lowerMessage.includes('location') || lowerMessage.includes('detroit')) return demoResponses.area;
+        if (lowerMessage.includes('floor') || lowerMessage.includes('flooring')) return "We install all types of flooring including hardwood, tile, laminate, and luxury vinyl. Flooring projects typically range from $3,000-$15,000 depending on materials and square footage. What type of flooring are you considering?";
+        if (lowerMessage.includes('whole home') || lowerMessage.includes('entire') || lowerMessage.includes('complete')) return "Whole home remodeling is our specialty! These comprehensive projects typically range from $30,000-$150,000+ and take 8-12+ weeks. We handle everything from design to completion. What areas of your home are you looking to renovate?";
 
 
         // Default response for general remodeling questions
