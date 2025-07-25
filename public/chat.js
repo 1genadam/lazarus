@@ -489,7 +489,19 @@ Our services include:
         const demoResponses = {
             kitchen: "Great choice! Kitchen remodeling is one of our specialties. We handle everything from cabinet installation and countertops to plumbing and electrical work. Kitchen projects typically range from $15,000-$50,000 and take 2-4 weeks depending on scope. Would you like to schedule a free consultation to discuss your vision?",
             
-            bathroom: "Bathroom remodeling can really transform your daily routine! We specialize in both full renovations and smaller updates. Popular options include walk-in showers, new vanities, tile work, and accessibility modifications. Bathroom projects typically range from $8,000-$25,000. What specific changes are you considering?",
+            bathroom: "Bathroom remodeling can really transform your daily routine! We specialize in both full renovations and smaller updates. Popular options include walk-in tubs, walk-in showers, new vanities, tile work, and accessibility modifications. Bathroom projects typically range from $8,000-$25,000. What specific changes are you considering?",
+            
+            walkin: "Our walk-in tubs are perfect for safe, accessible bathing! We offer two models: the Seed (52\"×30\") for compact bathrooms and the Sprout (60\"×30\") for extra comfort. Both feature 21\" wide seats, low 4\" threshold entry, and therapeutic systems including hydrotherapy, air massage, and independent foot massage. They're ADA-compliant and perfect for users up to 400+ lbs. Would you like to learn more about which model suits your space?",
+            
+            tub: "Walk-in tubs are one of our specialties! Our premium models feature therapeutic systems, safety features like grab bars and non-slip flooring, and fast 80-second drainage. Perfect for aging-in-place, mobility issues, arthritis, diabetes, and neuropathy relief. Both models accommodate users comfortably with 21\" wide seating. What's your bathroom size and any specific health needs?",
+            
+            weight: "Great question! Both our Seed and Sprout walk-in tub models easily accommodate users up to 400+ pounds with their 21\" wide seats. The sturdy construction and ADA-compliant grab bars provide excellent support. For a 200 lb user, either model will be very comfortable. The main difference is the Seed (52\") fits smaller bathrooms while the Sprout (60\") offers extra legroom. What's your bathroom size?",
+            
+            ada: "Absolutely! Our walk-in tubs are fully ADA-compliant with low 4\" threshold entry, ADA-compliant grab bars, 17\" seat height for easy wheelchair transfers, non-slip textured flooring, and 21\" wide seating. Perfect for wheelchair users, walker/cane users, and anyone with limited mobility. Both models meet all accessibility standards for aging-in-place solutions.",
+            
+            small: "For small bathrooms, our Seed model (52\"×30\") is perfect! It's specifically designed for compact spaces while still providing all the safety and therapeutic features. The 21\" wide seat comfortably accommodates most users, and the 75-gallon capacity fills in 7-10 minutes. Would you like me to help you schedule a consultation to measure your space?",
+            
+            health: "Our walk-in tubs provide therapeutic benefits for many conditions including arthritis, diabetes-related circulation issues, neuropathy, fibromyalgia, muscle tension, joint pain, and mobility challenges. The hydrotherapy jets, air massage, and independent foot massage systems can help improve circulation and reduce pain. Always consult your doctor, but many users find significant relief. What specific condition are you dealing with?",
             
             price: "Our pricing varies based on project scope, materials, and timeline. Here are typical ranges: Kitchen remodels $15,000-$50,000, Bathroom renovations $8,000-$25,000, Whole home projects $30,000-$150,000+, Flooring $3,000-$15,000. We offer free in-home consultations for accurate estimates. Would you like to schedule one?",
             
@@ -533,7 +545,13 @@ Our services include:
         
         // Home remodeling topics
         if (lowerMessage.includes('kitchen')) return demoResponses.kitchen;
-        if (lowerMessage.includes('bathroom')) return demoResponses.bathroom;
+        if (lowerMessage.includes('bathroom') && !lowerMessage.includes('walk') && !lowerMessage.includes('tub')) return demoResponses.bathroom;
+        if (lowerMessage.includes('walk-in') || lowerMessage.includes('walkin') || (lowerMessage.includes('walk') && lowerMessage.includes('tub'))) return demoResponses.walkin;
+        if (lowerMessage.includes('tub') && !lowerMessage.includes('hot')) return demoResponses.tub;
+        if (lowerMessage.includes('weight') || lowerMessage.includes('pounds') || lowerMessage.includes('lbs') || lowerMessage.includes('heavy')) return demoResponses.weight;
+        if (lowerMessage.includes('ada') || lowerMessage.includes('accessible') || lowerMessage.includes('wheelchair') || lowerMessage.includes('disability')) return demoResponses.ada;
+        if (lowerMessage.includes('small') || lowerMessage.includes('compact') || lowerMessage.includes('tight') || lowerMessage.includes('little')) return demoResponses.small;
+        if (lowerMessage.includes('arthritis') || lowerMessage.includes('diabetes') || lowerMessage.includes('neuropathy') || lowerMessage.includes('pain') || lowerMessage.includes('circulation') || lowerMessage.includes('mobility')) return demoResponses.health;
         if (lowerMessage.includes('much') || lowerMessage.includes('cost')) return demoResponses.cost;
         if (lowerMessage.includes('price') || lowerMessage.includes('pricing')) return demoResponses.price;
         if (lowerMessage.includes('budget')) return demoResponses.budget;
