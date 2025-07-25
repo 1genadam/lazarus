@@ -10,9 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
+        @font-face {
+            font-family: 'Blanka';
+            src: url('./fonts/Blanka-Regular.woff2') format('woff2'),
+                 url('./fonts/Blanka-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         body {
             font-family: 'Roboto', sans-serif;
         }
+        
         .font-orbitron {
             font-family: 'Orbitron', monospace;
         }
@@ -71,9 +81,9 @@
     <!-- Navigation -->
     <nav class="bg-red-800 p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-white text-2xl font-orbitron font-bold">
-                <a href="index.html">Lazarus Home Remodeling</a>
-            </div>
+            <a href="index.html" class="flex items-center">
+                <img src="header-logo.png" alt="Lazarus Home Remodeling" class="h-16 w-auto"/>
+            </a>
             <div class="hidden md:flex space-x-6">
                 <a href="index.html" class="text-white hover:text-yellow-400 transition-colors">Home</a>
                 <a href="about.html" class="text-white hover:text-yellow-400 transition-colors">About</a>

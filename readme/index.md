@@ -86,7 +86,7 @@ This index provides a comprehensive overview of all documentation files in the `
 
 ---
 
-## 🎨 **BRAND KIT & COLORS**
+## 🎨 **BRANDING GUIDE & COLORS**
 
 ### **Lazarus Home Remodeling Brand Colors**
 
@@ -122,19 +122,21 @@ This index provides a comprehensive overview of all documentation files in the `
 | **Light Gray** | `#F3F4F6` | `bg-gray-100` | `rgb(243, 244, 246)` | Page background |
 | **Card Gray** | `#F9FAFB` | `bg-gray-50` | `rgb(249, 250, 251)` | Service cards, testimonials |
 
-#### **📝 Typography & Fonts**
+#### **📝 Typography & Fonts** (Updated from Production Site)
 | Font Usage | Font Family | Weight | Source | Usage Context |
 |------------|-------------|---------|--------|---------------|
-| **Primary Font** | `Roboto` | 400, 700 | Google Fonts | Body text, general content |
-| **Display Font** | `Orbitron` | 400, 700, 900 | Google Fonts | Headers, technical elements |
-| **Custom Brand Font** | `Blanka` | 400 | Local files (.woff2, .woff) | Special branding elements |
+| **Primary Body Font** | `Roboto` | 400, 700 | Google Fonts | Body text, general content, paragraphs |
+| **Header Font** | `Orbitron` | 400, 700, 900 | Google Fonts | Main headings, technical elements |
+| **Brand Logo Font** | `Blanka` | 400 | Local files (.woff2, .woff) | Logo and special branding elements only |
 
-#### **🔤 Font Implementation**
+#### **🔤 Font Implementation** (Verified from index.html)
+```html
+<!-- Google Fonts Link (Required in <head>) -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+```
+
 ```css
-/* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
-
-/* Custom Font Definition */
+/* Custom Brand Font Definition */
 @font-face {
     font-family: 'Blanka';
     src: url('./fonts/Blanka-Regular.woff2') format('woff2'),
@@ -144,9 +146,14 @@ This index provides a comprehensive overview of all documentation files in the `
     font-display: swap;
 }
 
-/* Body Text */
+/* Primary Body Font */
 body {
     font-family: 'Roboto', sans-serif;
+}
+
+/* Header Font Classes */
+.font-orbitron {
+    font-family: 'Orbitron', monospace;
 }
 ```
 
