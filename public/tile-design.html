@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Tile Design Consultation - Lazarus Home Remodeling</title>
+    <meta name="description" content="Get expert tile design consultation from Lazarus professionals. Free in-home visits, AR visualization, and custom design plans for your perfect tile project.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .font-orbitron {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        /* Custom scrollbar for carousel */
+        .carousel-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .carousel-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .carousel-container::-webkit-scrollbar-thumb {
+            background: #FACC15;
+            border-radius: 4px;
+        }
+        .carousel-container::-webkit-scrollbar-thumb:hover {
+            background: #EAB308;
+        }
+        
+        /* Room selector active state */
+        .room-btn.active {
+            background-color: #FACC15;
+            color: #991B1B;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(250, 204, 21, 0.3);
+        }
+        
+        /* Smooth animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Chat widget styling */
+        .chat-widget {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* AR Viewer placeholder */
+        .ar-placeholder {
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            background-size: 20px 20px;
+            background-image: 
+                linear-gradient(45deg, transparent 35%, rgba(255,255,255,.5) 35%, rgba(255,255,255,.5) 65%, transparent 65%, transparent),
+                linear-gradient(-45deg, transparent 35%, rgba(0,0,0,.1) 35%, rgba(0,0,0,.1) 65%, transparent 65%, transparent);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-red-800 p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-white text-2xl font-orbitron font-bold">
+                <a href="index.html">Lazarus Home Remodeling</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-white hover:text-yellow-400 transition-colors">Home</a>
+                <a href="about.html" class="text-white hover:text-yellow-400 transition-colors">About</a>
+                <a href="walk-in-tubs.html" class="text-white hover:text-yellow-400 transition-colors">Walk-in Tubs</a>
+                <a href="tile-design.html" class="text-yellow-400 font-medium">Tile Design</a>
+                <a href="services.html" class="text-white hover:text-yellow-400 transition-colors">Services</a>
+                <a href="contact.html" class="text-white hover:text-yellow-400 transition-colors">Contact</a>
+            </div>
+            <button class="md:hidden text-white text-xl" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-red-900 rounded-lg p-4">
+            <a href="index.html" class="block text-white py-2 hover:text-yellow-400">Home</a>
+            <a href="about.html" class="block text-white py-2 hover:text-yellow-400">About</a>
+            <a href="walk-in-tubs.html" class="block text-white py-2 hover:text-yellow-400">Walk-in Tubs</a>
+            <a href="tile-design.html" class="block text-yellow-400 py-2 font-medium">Tile Design</a>
+            <a href="services.html" class="block text-white py-2 hover:text-yellow-400">Services</a>
+            <a href="contact.html" class="block text-white py-2 hover:text-yellow-400">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-red-800 to-red-900 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-orbitron font-bold mb-6 fade-in">
+                Professional Tile Design Consultation
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-red-200 fade-in">
+                Overwhelmed by tile choices? Our designers make it simple.
+            </p>
+            <p class="text-lg mb-8 text-red-100 max-w-3xl mx-auto fade-in">
+                Get expert guidance from Lazarus designers who've transformed 1000+ homes. 
+                Free consultations, custom design plans, and professional installation.
+            </p>
+            
+            <!-- Primary CTA -->
+            <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center fade-in">
+                <button onclick="openBookingModal()" class="bg-yellow-400 text-red-800 px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-500 transform hover:scale-105 transition-all shadow-lg">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    Book Free Design Consultation
+                </button>
+                <button onclick="openChat()" class="bg-transparent border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-400 hover:text-red-800 transition-all">
+                    <i class="fas fa-comments mr-2"></i>
+                    Chat with Design Expert
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Selector & Carousel -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <!-- Room Type Selector -->
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-orbitron font-bold text-red-800 mb-6">Choose Your Space</h2>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="showRoom('bathroom')" class="room-btn active px-6 py-3 rounded-full border-2 border-red-800 text-red-800 font-medium hover:bg-red-800 hover:text-white transition-all transform hover:scale-105">
+                        <i class="fas fa-bath mr-2"></i>Bathroom
+                    </button>
+                    <button onclick="showRoom('kitchen')" class="room-btn px-6 py-3 rounded-full border-2 border-red-800 text-red-800 font-medium hover:bg-red-800 hover:text-white transition-all transform hover:scale-105">
+                        <i class="fas fa-utensils mr-2"></i>Kitchen
+                    </button>
+                    <button onclick="showRoom('laundry')" class="room-btn px-6 py-3 rounded-full border-2 border-red-800 text-red-800 font-medium hover:bg-red-800 hover:text-white transition-all transform hover:scale-105">
+                        <i class="fas fa-tshirt mr-2"></i>Laundry
+                    </button>
+                    <button onclick="showRoom('living')" class="room-btn px-6 py-3 rounded-full border-2 border-red-800 text-red-800 font-medium hover:bg-red-800 hover:text-white transition-all transform hover:scale-105">
+                        <i class="fas fa-couch mr-2"></i>Living
+                    </button>
+                    <button onclick="showRoom('outdoor')" class="room-btn px-6 py-3 rounded-full border-2 border-red-800 text-red-800 font-medium hover:bg-red-800 hover:text-white transition-all transform hover:scale-105">
+                        <i class="fas fa-tree mr-2"></i>Outdoor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Image Carousel -->
+            <div class="relative">
+                <div id="carousel-container" class="carousel-container overflow-x-auto">
+                    <div id="image-carousel" class="flex space-x-6 pb-4">
+                        <!-- Bathroom images (default) -->
+                        <div class="room-images bathroom-images flex space-x-6">
+                            <div class="flex-shrink-0 w-80 h-60 bg-gray-200 rounded-lg relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                                <div class="absolute bottom-4 left-4 text-white z-20">
+                                    <h3 class="font-bold text-lg">Walk-in Tub Surround</h3>
+                                    <p class="text-sm">Accessible & Beautiful</p>
+                                </div>
+                                <div class="w-full h-full bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-bath text-6xl text-blue-300"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex-shrink-0 w-80 h-60 bg-gray-200 rounded-lg relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                                <div class="absolute bottom-4 left-4 text-white z-20">
+                                    <h3 class="font-bold text-lg">Shower Wall Tiles</h3>
+                                    <p class="text-sm">Modern & Waterproof</p>
+                                </div>
+                                <div class="w-full h-full bg-teal-100 flex items-center justify-center">
+                                    <i class="fas fa-shower text-6xl text-teal-300"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex-shrink-0 w-80 h-60 bg-gray-200 rounded-lg relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                                <div class="absolute bottom-4 left-4 text-white z-20">
+                                    <h3 class="font-bold text-lg">Floor Patterns</h3>
+                                    <p class="text-sm">Slip-Resistant Design</p>
+                                </div>
+                                <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                    <i class="fas fa-th-large text-6xl text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lead Generation Overlay -->
+                <div class="mt-6 text-center">
+                    <p class="text-gray-600 mb-4">Inspired by these designs? Our experts can create something similar for your space.</p>
+                    <button onclick="openBookingModal()" class="bg-red-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-900 transition-colors">
+                        Get My Custom Design Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-orbitron font-bold text-red-800 mb-4">How Lazarus Design Consultations Work</h2>
+                <p class="text-xl text-gray-600">From concept to completion, we guide you every step</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-2xl text-red-800"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-2">1. Free Phone Consultation</h3>
+                    <p class="text-gray-600">15-minute discovery call to understand your vision and needs</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-home text-2xl text-red-800"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-2">2. In-Home Design Visit</h3>
+                    <p class="text-gray-600">60-minute on-site consultation with measurements and design ideas</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-drafting-compass text-2xl text-red-800"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-2">3. Custom Design Plan</h3>
+                    <p class="text-gray-600">Detailed proposal with 3D renderings and accurate estimates</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hammer text-2xl text-red-800"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-2">4. Professional Installation</h3>
+                    <p class="text-gray-600">Licensed experts handle everything from prep to final cleanup</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button onclick="openBookingModal()" class="bg-yellow-400 text-red-800 px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-500 transform hover:scale-105 transition-all">
+                    Start My Design Journey
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Tools Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-orbitron font-bold text-red-800 mb-4">Design Tools & Consultation</h2>
+                <p class="text-xl text-gray-600">Explore your options with our professional-grade tools</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Chat Consultant -->
+                <div class="bg-gray-50 rounded-xl p-6 chat-widget">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-comments text-red-800 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-red-800">AI Tile Consultant</h3>
+                            <p class="text-gray-600">Get expert advice instantly</p>
+                        </div>
+                    </div>
+                    
+                    <div id="chat-container" class="bg-white rounded-lg p-4 h-64 overflow-y-auto border">
+                        <div class="text-center text-gray-500 mt-20">
+                            <i class="fas fa-comments text-4xl mb-4"></i>
+                            <p>Click "Start Consultation" to chat with our tile design expert</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openChat()" class="w-full mt-4 bg-red-800 text-white py-3 rounded-lg font-medium hover:bg-red-900 transition-colors">
+                        Start Tile Design Consultation
+                    </button>
+                </div>
+                
+                <!-- Tools Grid -->
+                <div class="space-y-6">
+                    <!-- Calculator Tool -->
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-calculator text-red-800 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-red-800">Smart Tile Calculator</h3>
+                                <p class="text-gray-600">Estimate materials & costs</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Get accurate estimates for your tile project including materials, labor, and timeline.</p>
+                        <button onclick="openCalculator()" class="bg-yellow-400 text-red-800 px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Calculate Project Cost
+                        </button>
+                    </div>
+                    
+                    <!-- Photo Upload Tool -->
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-camera text-red-800 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-red-800">Visual Tile Recognition</h3>
+                                <p class="text-gray-600">Find similar tiles from photos</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Upload a photo of tiles you like and our AI will find similar options and suggest improvements.</p>
+                        <button onclick="openPhotoUpload()" class="bg-yellow-400 text-red-800 px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Upload Tile Photo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AR Visualizer -->
+            <div class="mt-8 bg-gray-50 rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-cube text-red-800 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-red-800">AR Room Visualizer</h3>
+                        <p class="text-gray-600">See tiles in your actual space</p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-gray-600 mb-4">Use your device camera to preview different tile options in your actual room. Try various patterns, colors, and sizes before making decisions.</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Real-time camera overlay
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Multiple tile patterns
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Save & share designs
+                            </div>
+                        </div>
+                        <button onclick="openARViewer()" class="mt-4 bg-yellow-400 text-red-800 px-6 py-3 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Launch AR Visualizer
+                        </button>
+                    </div>
+                    
+                    <div class="ar-placeholder h-48 rounded-lg flex items-center justify-center">
+                        <div class="text-center text-gray-500">
+                            <i class="fas fa-mobile-alt text-4xl mb-2"></i>
+                            <p class="font-medium">AR Visualizer Preview</p>
+                            <p class="text-sm">See tiles in your room</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-16 bg-red-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-orbitron font-bold mb-4">Why Choose Lazarus Design Experts</h2>
+                <p class="text-xl text-red-200">Trusted by homeowners across Michigan</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-yellow-400 mb-2">1000+</div>
+                    <div class="text-xl font-medium mb-2">Projects Completed</div>
+                    <div class="text-red-200">Bathrooms, kitchens, and more</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-yellow-400 mb-2">15+</div>
+                    <div class="text-xl font-medium mb-2">Years Experience</div>
+                    <div class="text-red-200">Licensed & insured professionals</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-yellow-400 mb-2">100%</div>
+                    <div class="text-xl font-medium mb-2">Satisfaction Rate</div>
+                    <div class="text-red-200">Complete project guarantee</div>
+                </div>
+            </div>
+            
+            <!-- Testimonial -->
+            <div class="mt-12 max-w-4xl mx-auto text-center">
+                <div class="text-5xl text-yellow-400 mb-4">"</div>
+                <blockquote class="text-xl italic mb-4">
+                    "Lazarus designers helped us choose the perfect tile for our bathroom renovation. Their expertise saved us from costly mistakes, and the final result exceeded our expectations. The consultation was free, but the value was priceless."
+                </blockquote>
+                <div class="font-medium">— Sarah & Mike Johnson</div>
+                <div class="text-red-200">Birmingham, MI</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Resources -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-orbitron font-bold text-red-800 mb-4">Tile Design Resources</h2>
+                <p class="text-xl text-gray-600">Professional insights to help you make informed decisions</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-red-800 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Installation Guides</h3>
+                    <p class="text-gray-600 mb-4">Step-by-step professional installation procedures and best practices for lasting results.</p>
+                    <a href="#" class="text-red-800 font-medium hover:text-red-900">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-palette text-red-800 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Style Selection</h3>
+                    <p class="text-gray-600 mb-4">Expert guidance on choosing tiles that complement your home's architecture and personal style.</p>
+                    <a href="#" class="text-red-800 font-medium hover:text-red-900">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-tools text-red-800 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Maintenance Tips</h3>
+                    <p class="text-gray-600 mb-4">Professional maintenance advice to keep your tiles looking beautiful for decades.</p>
+                    <a href="#" class="text-red-800 font-medium hover:text-red-900">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-16 bg-yellow-400">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-orbitron font-bold text-red-800 mb-4">Ready for Your Perfect Tile Design?</h2>
+            <p class="text-xl text-red-700 mb-8 max-w-3xl mx-auto">
+                Stop second-guessing your tile choices. Get expert guidance from Lazarus designers who've transformed over 1000 homes. 
+                <strong>Free consultations available this week!</strong>
+            </p>
+            
+            <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+                <button onclick="openBookingModal()" class="bg-red-800 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-red-900 transform hover:scale-105 transition-all shadow-lg">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    Book Free Consultation
+                </button>
+                <button onclick="openChat()" class="bg-transparent border-2 border-red-800 text-red-800 px-8 py-4 rounded-lg text-xl font-bold hover:bg-red-800 hover:text-white transition-all">
+                    <i class="fas fa-phone mr-2"></i>
+                    Call (586) 248-8888
+                </button>
+            </div>
+            
+            <p class="text-red-600 mt-4 text-sm">⚡ Limited availability - Only 3 consultation spots left this week</p>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-red-800">Book Your Free Design Consultation</h3>
+                <button onclick="closeBookingModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="booking-form" onsubmit="submitBooking(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <input type="tel" name="phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Project Type</label>
+                        <select name="projectType" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option value="">Select project type...</option>
+                            <option value="Bathroom Tile Design">Bathroom Tile Design</option>
+                            <option value="Kitchen Backsplash">Kitchen Backsplash</option>
+                            <option value="Floor Tiling">Floor Tiling</option>
+                            <option value="Shower/Tub Surround">Shower/Tub Surround</option>
+                            <option value="Laundry Room">Laundry Room</option>
+                            <option value="Outdoor/Patio">Outdoor/Patio</option>
+                            <option value="Multiple Rooms">Multiple Rooms</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Project Timeline</label>
+                        <select name="timeline" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option value="">Select timeline...</option>
+                            <option value="now">Now</option>
+                            <option value="1-2-weeks">1-2 weeks</option>
+                            <option value="2-4-weeks">2-4 weeks</option>
+                            <option value="1-3-months">1-3 months</option>
+                            <option value="3-months-plus">3+ months</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Consultation Preference</label>
+                        <select name="consultationType" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option value="">Select consultation type...</option>
+                            <option value="In-Home Visit">In-Home Design Visit (Recommended)</option>
+                            <option value="Virtual Consultation">Virtual Consultation</option>
+                            <option value="Phone Consultation">Phone Consultation</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-yellow-400 text-red-800 py-3 rounded-lg font-bold hover:bg-yellow-500 transition-colors">
+                        Book My Free Consultation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white font-orbitron font-bold text-xl mb-4">Lazarus Home Remodeling</h3>
+                    <p class="mb-4">Professional tile design and installation services across Michigan.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-yellow-400 hover:text-yellow-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-yellow-400 hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-yellow-400 hover:text-yellow-300"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Tile Design Consultation</a></li>
+                        <li><a href="#" class="hover:text-white">Kitchen Backsplashes</a></li>
+                        <li><a href="#" class="hover:text-white">Bathroom Renovations</a></li>
+                        <li><a href="#" class="hover:text-white">Floor Installation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Installation Guides</a></li>
+                        <li><a href="#" class="hover:text-white">Style Gallery</a></li>
+                        <li><a href="#" class="hover:text-white">Maintenance Tips</a></li>
+                        <li><a href="#" class="hover:text-white">Design Trends</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-4">Contact</h4>
+                    <div class="space-y-2">
+                        <div><i class="fas fa-phone mr-2"></i>(586) 248-8888</div>
+                        <div><i class="fas fa-envelope mr-2"></i>info@lazarushomeremodeling.com</div>
+                        <div><i class="fas fa-map-marker-alt mr-2"></i>Serving all of Michigan</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2025 Lazarus Home Remodeling. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Room selection functionality
+        function showRoom(roomType) {
+            // Update active button
+            document.querySelectorAll('.room-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update carousel content based on room type
+            const carousel = document.getElementById('image-carousel');
+            
+            const roomContent = {
+                bathroom: [
+                    { title: 'Walk-in Tub Surround', subtitle: 'Accessible & Beautiful', icon: 'fas fa-bath', color: 'blue' },
+                    { title: 'Shower Wall Tiles', subtitle: 'Modern & Waterproof', icon: 'fas fa-shower', color: 'teal' },
+                    { title: 'Floor Patterns', subtitle: 'Slip-Resistant Design', icon: 'fas fa-th-large', color: 'gray' }
+                ],
+                kitchen: [
+                    { title: 'Backsplash Designs', subtitle: 'Heat & Stain Resistant', icon: 'fas fa-utensils', color: 'orange' },
+                    { title: 'Island Surrounds', subtitle: 'Statement Pieces', icon: 'fas fa-square', color: 'green' },
+                    { title: 'Counter Edges', subtitle: 'Seamless Integration', icon: 'fas fa-border-all', color: 'purple' }
+                ],
+                laundry: [
+                    { title: 'Utility Walls', subtitle: 'Water & Chemical Resistant', icon: 'fas fa-tshirt', color: 'indigo' },
+                    { title: 'Floor Options', subtitle: 'Easy Clean Surfaces', icon: 'fas fa-th', color: 'pink' },
+                    { title: 'Splash Guards', subtitle: 'Functional Beauty', icon: 'fas fa-shield-alt', color: 'red' }
+                ],
+                living: [
+                    { title: 'Feature Walls', subtitle: 'Dramatic Focal Points', icon: 'fas fa-couch', color: 'yellow' },
+                    { title: 'Fireplace Surrounds', subtitle: 'Heat-Resistant Elegance', icon: 'fas fa-fire', color: 'red' },
+                    { title: 'Entertainment Centers', subtitle: 'Modern Media Walls', icon: 'fas fa-tv', color: 'gray' }
+                ],
+                outdoor: [
+                    { title: 'Pool Areas', subtitle: 'Slip-Resistant & Stylish', icon: 'fas fa-swimming-pool', color: 'blue' },
+                    { title: 'Patio Designs', subtitle: 'Weather-Resistant Beauty', icon: 'fas fa-tree', color: 'green' },
+                    { title: 'Exterior Walls', subtitle: 'Curb Appeal Enhancement', icon: 'fas fa-home', color: 'brown' }
+                ]
+            };
+            
+            const content = roomContent[roomType] || roomContent.bathroom;
+            
+            carousel.innerHTML = `
+                <div class="room-images ${roomType}-images flex space-x-6">
+                    ${content.map(item => `
+                        <div class="flex-shrink-0 w-80 h-60 bg-gray-200 rounded-lg relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                            <div class="absolute bottom-4 left-4 text-white z-20">
+                                <h3 class="font-bold text-lg">${item.title}</h3>
+                                <p class="text-sm">${item.subtitle}</p>
+                            </div>
+                            <div class="w-full h-full bg-${item.color}-100 flex items-center justify-center">
+                                <i class="${item.icon} text-6xl text-${item.color}-300"></i>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Modal functions
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+            document.getElementById('booking-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+            document.getElementById('booking-modal').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Booking form submission
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const bookingData = {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                projectType: formData.get('projectType'),
+                timeline: formData.get('timeline'),
+                consultationType: formData.get('consultationType'),
+                sessionId: 'tile-design-' + Date.now(),
+                source: 'tile_design_page'
+            };
+            
+            // Submit to existing booking endpoint
+            fetch('/api/chat/booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookingData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('🎉 Consultation booked successfully! Our design team will contact you within 24 hours.');
+                    closeBookingModal();
+                    document.getElementById('booking-form').reset();
+                } else {
+                    alert('Sorry, there was an error booking your consultation. Please call (586) 248-8888 directly.');
+                }
+            })
+            .catch(error => {
+                console.error('Booking error:', error);
+                alert('Sorry, there was an error booking your consultation. Please call (586) 248-8888 directly.');
+            });
+        }
+
+        // Tool functions (placeholders for future integration)
+        function openChat() {
+            alert('🤖 Tile Design Chat coming soon! For now, please call (586) 248-8888 for expert consultation.');
+        }
+
+        function openCalculator() {
+            alert('📐 Smart Calculator coming soon! For accurate estimates, book a free consultation.');
+        }
+
+        function openPhotoUpload() {
+            alert('📸 Photo Recognition coming soon! Upload tile photos during your consultation for expert analysis.');
+        }
+
+        function openARViewer() {
+            alert('🏠 AR Visualizer coming soon! Experience tiles in your space with our in-home consultation service.');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('booking-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-scroll carousel on load
+            const carousel = document.getElementById('carousel-container');
+            if (carousel) {
+                carousel.scrollLeft = 0;
+            }
+        });
+    </script>
+</body>
+</html>

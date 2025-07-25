@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS chat_bookings (
     customer_phone VARCHAR(20) NOT NULL,
     customer_email VARCHAR(255) NOT NULL,
     project_type VARCHAR(50),
+    project_timeline VARCHAR(50), -- 'now', '1-2-weeks', '2-4-weeks', '1-3-months', '3-months-plus'
     appointment_preference JSONB, -- Store preferred dates/times
     booking_status VARCHAR(50) DEFAULT 'pending' CHECK (booking_status IN ('pending', 'confirmed', 'completed', 'cancelled', 'no_show')),
     admin_notified BOOLEAN DEFAULT false,

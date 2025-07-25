@@ -419,8 +419,8 @@ class LazarusDatabase {
                 INSERT INTO chat_bookings (
                     session_id, customer_id, project_id, customer_name,
                     customer_phone, customer_email, project_type,
-                    appointment_preference
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                    appointment_preference, project_timeline
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                 RETURNING booking_id;
             `;
 
@@ -432,7 +432,8 @@ class LazarusDatabase {
                 bookingData.phone,
                 bookingData.email,
                 bookingData.projectType,
-                JSON.stringify(bookingData.appointment_preference || {})
+                JSON.stringify(bookingData.appointment_preference || {}),
+                bookingData.timeline || null
             ]);
 
             // Update session as booking completed
