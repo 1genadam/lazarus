@@ -6,6 +6,7 @@
 !server.js
 !public/
 !api/
+!database/
 !.env
 !nginx.conf
 
