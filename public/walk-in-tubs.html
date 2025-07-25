@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Walk-In Tubs - Lazarus Home Remodeling</title>
+<meta name="description" content="Reclaim your independence with Lazarus premium walk-in tubs. Safe, therapeutic bathing solutions for aging-in-place with professional installation."/>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<script src="admin-auth.js"></script>
+<script src="analytics-tracker.js"></script>
+<script src="form-tracker.js"></script>
+<style type="text/tailwindcss">
+        @font-face {
+            font-family: 'Blanka';
+            src: url('./fonts/Blanka-Regular.woff2') format('woff2'),
+                 url('./fonts/Blanka-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .star {
+            color: #FFD700;
+        }
+        .trinity-dots-container {
+            position: relative;
+            width: 100px;height: 50px;}
+        .trinity-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .trinity-dot-1 {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .trinity-dot-2 {
+            bottom: 0;
+            left: 0;
+        }
+        .trinity-dot-3 {
+            bottom: 0;
+            right: 0;
+        }
+        .trinity-line {
+            position: absolute;
+            background-color: white;
+            height: 1px;
+            transform-origin: left;
+        }
+        .date-input-yellow::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(100%);
+            cursor: pointer;
+        }
+        .date-input-yellow::-webkit-calendar-picker-indicator:hover {
+            filter: invert(1) brightness(90%);
+        }
+        select {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .therapy-icon {
+            background: linear-gradient(135deg, #991B1B, #B91C1C);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .model-comparison {
+            background: linear-gradient(135deg, #F9FAFB, #F3F4F6);
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .model-comparison:hover {
+            border-color: #FACC15;
+            box-shadow: 0 8px 25px rgba(250, 204, 21, 0.15);
+        }
+        
+        .model-featured {
+            border-color: #991B1B;
+            background: linear-gradient(135deg, #FEF3F2, #FDF2F8);
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .faq-button {
+            transition: all 0.3s ease;
+        }
+        
+        .faq-button:hover {
+            background-color: #F9FAFB;
+        }
+        
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-content.open {
+            max-height: 500px;
+        }
+        
+        .sizing-calculator {
+            background: linear-gradient(135deg, #991B1B, #7F1D1D);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .progress-indicator {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #FACC15;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+<header class="bg-red-800 text-white shadow-md">
+<div class="bg-red-900/50 text-yellow-400 py-1">
+<div class="container mx-auto px-4 flex justify-center md:justify-end items-center space-x-6 text-sm">
+<a class="flex items-center hover:text-white transition-colors duration-300" href="tel:(586) 248-8888">
+<i class="fas fa-phone-alt mr-2"></i>
+<span class="hidden sm:inline">(586) 248-8888</span>
+</a>
+</div>
+</div>
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-center py-4">
+<a class="flex flex-col items-center" href="/">
+<img src="header-logo.png" alt="Lazarus Home Remodeling" class="h-16 w-auto"/>
+</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="/">Home</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="services.html">Services</a>
+<a class="text-yellow-400 font-medium" href="walk-in-tubs.html">Walk-In Tubs</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="about.html">About</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="blog.html">Blog</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="gallery.html">Gallery</a>
+<a class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium" href="contact.html">Contact</a>
+</nav>
+<div class="md:hidden">
+<button class="text-white focus:outline-none" id="menu-btn">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="hidden md:hidden bg-red-900" id="mobile-menu">
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="/">Home</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="services.html">Services</a>
+<a class="block py-2 px-4 text-sm text-yellow-400 bg-red-800" href="walk-in-tubs.html">Walk-In Tubs</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="about.html">About</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="blog.html">Blog</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="gallery.html">Gallery</a>
+<a class="block py-2 px-4 text-sm text-white hover:bg-red-800" href="contact.html">Contact</a>
+</div>
+</header>
+
+<!-- Hero Section -->
+<section class="bg-red-800 text-white py-12 md:py-20 relative">
+<div class="absolute top-4 right-4">
+<div class="relative w-10 h-10">
+<span class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rounded-full"></span>
+<span class="absolute bottom-0 left-0 w-2 h-2 bg-white rounded-full"></span>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-white rounded-full"></span>
+<svg class="absolute w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<line class="stroke-current text-white" stroke-width="2" x1="50" x2="10" y1="10" y2="90"></line>
+<line class="stroke-current text-white" stroke-width="2" x1="50" x2="90" y1="10" y2="90"></line>
+<line class="stroke-current text-white" stroke-width="2" x1="10" x2="90" y1="90" y2="90"></line>
+</svg>
+</div>
+</div>
+<div class="container mx-auto px-4 text-center">
+<h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Reclaim Your Independence</h1>
+<h2 class="text-2xl md:text-3xl font-semibold text-yellow-400 mb-4">with Lazarus Walk-In Tubs</h2>
+<p class="text-lg md:text-xl text-red-200 mb-8 max-w-4xl mx-auto">Empowering the aging-in-place lifestyle through safe, high-quality walk-in tubs that foster independence and preserve dignity.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+<div class="flex items-center text-yellow-400">
+<i class="fas fa-shield-alt mr-2"></i>
+<span class="font-semibold">Safety</span>
+</div>
+<div class="flex items-center text-yellow-400">
+<i class="fas fa-user-check mr-2"></i>
+<span class="font-semibold">Independence</span>
+</div>
+<div class="flex items-center text-yellow-400">
+<i class="fas fa-heart mr-2"></i>
+<span class="font-semibold">Peace of Mind</span>
+</div>
+</div>
+<a href="#consultation" class="inline-block bg-yellow-400 text-red-800 font-bold py-4 px-8 rounded-lg text-lg hover:bg-yellow-500 transition-colors duration-300 shadow-lg">
+Schedule Free In-Home Consultation
+</a>
+</div>
+</section>
+
+<!-- Model Comparison Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-red-800 mb-4">Choose Your Perfect Walk-In Tub</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">We offer two premium models designed to meet different space requirements and user preferences, both featuring our proprietary therapeutic systems.</p>
+</div>
+
+<div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+<!-- Seed Model -->
+<div class="model-comparison p-8">
+<div class="text-center mb-6">
+<h3 class="text-2xl font-bold text-red-800 mb-2">Seed Model</h3>
+<p class="text-gray-600">Compact Design for Smaller Bathrooms</p>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Dimensions:</span>
+<span class="text-red-800 font-semibold">52"W × 30"D × 40"H</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Weight:</span>
+<span class="text-red-800 font-semibold">215 lbs</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Capacity:</span>
+<span class="text-red-800 font-semibold">75 gallons</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Seat Width:</span>
+<span class="text-red-800 font-semibold">21"</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Fill Time:</span>
+<span class="text-red-800 font-semibold">7-10 minutes</span>
+</div>
+</div>
+<div class="text-center">
+<button class="w-full bg-yellow-400 text-red-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300" onclick="showSeedDetails()">
+View Detailed Specifications
+</button>
+</div>
+</div>
+
+<!-- Sprout Model -->
+<div class="model-comparison model-featured p-8">
+<div class="text-center mb-6">
+<div class="inline-block bg-red-800 text-white px-3 py-1 rounded-full text-sm font-semibold mb-2">MOST POPULAR</div>
+<h3 class="text-2xl font-bold text-red-800 mb-2">Sprout Model</h3>
+<p class="text-gray-600">Spacious Design for Enhanced Comfort</p>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Dimensions:</span>
+<span class="text-red-800 font-semibold">60"W × 30"D × 40"H</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Weight:</span>
+<span class="text-red-800 font-semibold">240 lbs</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Capacity:</span>
+<span class="text-red-800 font-semibold">85 gallons</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Seat Width:</span>
+<span class="text-red-800 font-semibold">21"</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-medium text-gray-700">Fill Time:</span>
+<span class="text-red-800 font-semibold">8-12 minutes</span>
+</div>
+</div>
+<div class="text-center">
+<button class="w-full bg-red-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-300" onclick="showSproutDetails()">
+View Detailed Specifications
+</button>
+</div>
+</div>
+</div>
+
+<!-- Interactive Sizing Calculator -->
+<div class="sizing-calculator text-white mt-12">
+<div class="text-center mb-6">
+<h3 class="text-2xl font-bold mb-2">Personal Sizing Assessment</h3>
+<p class="text-red-200">Enter your measurements to find your perfect fit</p>
+</div>
+<div class="grid md:grid-cols-3 gap-6">
+<div>
+<label class="block text-sm font-medium mb-2">Hip Width (inches)</label>
+<input type="number" id="hipWidth" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70" placeholder="Enter width">
+</div>
+<div>
+<label class="block text-sm font-medium mb-2">Shoulder Width (inches)</label>
+<input type="number" id="shoulderWidth" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70" placeholder="Enter width">
+</div>
+<div>
+<label class="block text-sm font-medium mb-2">Height (inches)</label>
+<input type="number" id="userHeight" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70" placeholder="Enter height">
+</div>
+</div>
+<div class="text-center mt-6">
+<button onclick="calculateRecommendation()" class="bg-yellow-400 text-red-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors duration-300">
+Get My Recommendation
+</button>
+</div>
+<div id="sizingResult" class="mt-6 p-4 bg-white/10 rounded-lg hidden">
+<h4 class="font-bold text-yellow-400 mb-2">Your Recommendation:</h4>
+<p id="recommendationText"></p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Therapeutic Benefits Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-red-800 mb-4">Premium Therapeutic Features</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">Experience professional-grade therapy systems designed to improve circulation, reduce pain, and enhance overall wellness.</p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Hydrotherapy -->
+<div class="feature-card bg-white p-6 rounded-lg shadow-md">
+<div class="therapy-icon">
+<i class="fas fa-water text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-bold text-red-800 mb-3 text-center">Hydrotherapy System</h3>
+<ul class="text-gray-600 space-y-2 mb-4">
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>9 strategically positioned jets</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>1HP motor with intensity control</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Built-in 650W water heater</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Reduces arthritis and joint pain</li>
+</ul>
+<div class="text-center">
+<button class="text-red-800 font-semibold hover:text-red-700" onclick="showTherapyDetails('hydro')">Learn More →</button>
+</div>
+</div>
+
+<!-- Air Therapy -->
+<div class="feature-card bg-white p-6 rounded-lg shadow-md">
+<div class="therapy-icon">
+<i class="fas fa-wind text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-bold text-red-800 mb-3 text-center">Air Massage Therapy</h3>
+<ul class="text-gray-600 space-y-2 mb-4">
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>13 air jets for full-body coverage</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>3-speed variable control</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Auto-purge self-cleaning</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Gentle massage for mobility aid users</li>
+</ul>
+<div class="text-center">
+<button class="text-red-800 font-semibold hover:text-red-700" onclick="showTherapyDetails('air')">Learn More →</button>
+</div>
+</div>
+
+<!-- Independent Foot Massage -->
+<div class="feature-card bg-white p-6 rounded-lg shadow-md">
+<div class="therapy-icon">
+<i class="fas fa-shoe-prints text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-bold text-red-800 mb-3 text-center">Independent Foot Massage</h3>
+<ul class="text-gray-600 space-y-2 mb-4">
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>6 dedicated foot and calf jets</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Separate 0.75HP motor system</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>No need to fill entire tub</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Ideal for diabetes and circulation</li>
+</ul>
+<div class="text-center">
+<button class="text-red-800 font-semibold hover:text-red-700" onclick="showTherapyDetails('foot')">Learn More →</button>
+</div>
+</div>
+
+<!-- Safety Features -->
+<div class="feature-card bg-white p-6 rounded-lg shadow-md">
+<div class="therapy-icon">
+<i class="fas fa-shield-alt text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-bold text-red-800 mb-3 text-center">Safety & Accessibility</h3>
+<ul class="text-gray-600 space-y-2 mb-4">
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Low 4-inch threshold entry</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>ADA-compliant grab bars</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Non-slip textured flooring</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Internal door locking system</li>
+</ul>
+<div class="text-center">
+<button class="text-red-800 font-semibold hover:text-red-700" onclick="showTherapyDetails('safety')">Learn More →</button>
+</div>
+</div>
+
+<!-- Dual Drain Technology -->
+<div class="feature-card bg-white p-6 rounded-lg shadow-md">
+<div class="therapy-icon">
+<i class="fas fa-tint text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-bold text-red-800 mb-3 text-center">Dual Drain Technology</h3>
+<ul class="text-gray-600 space-y-2 mb-4">
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Proprietary gravity-driven system</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>80-second drainage time</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Four 2" drain ports</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Essential safety backup</li>
+</ul>
+<div class="text-center">
+<button class="text-red-800 font-semibold hover:text-red-700" onclick="showTherapyDetails('drain')">Learn More →</button>
+</div>
+</div>
+
+<!-- Premium Add-ons -->
+<div class="feature-card bg-white p-6 rounded-lg shadow-md">
+<div class="therapy-icon">
+<i class="fas fa-spa text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-bold text-red-800 mb-3 text-center">Premium Spa Features</h3>
+<ul class="text-gray-600 space-y-2 mb-4">
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>LED Chromotherapy lighting</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Heated seat and backrest</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Aromatherapy system</li>
+<li class="flex items-start"><i class="fas fa-check text-yellow-400 mr-2 mt-1"></i>Ozone sterilization</li>
+</ul>
+<div class="text-center">
+<button class="text-red-800 font-semibold hover:text-red-700" onclick="showTherapyDetails('premium')">Learn More →</button>
+</div>
+</div>
+</div>
+
+<!-- Therapy Combinations -->
+<div class="mt-12 bg-white p-8 rounded-lg shadow-md">
+<h3 class="text-2xl font-bold text-red-800 mb-6 text-center">Most Popular Therapy Combinations</h3>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="text-center p-4 border border-gray-200 rounded-lg">
+<h4 class="font-bold text-red-800 mb-2">Complete Therapy</h4>
+<p class="text-gray-600 text-sm mb-3">Hydro + Air + Independent Foot Massage</p>
+<div class="text-yellow-400 font-semibold">Most Comprehensive</div>
+</div>
+<div class="text-center p-4 border border-gray-200 rounded-lg bg-yellow-50">
+<h4 class="font-bold text-red-800 mb-2">Circulation Focus</h4>
+<p class="text-gray-600 text-sm mb-3">Hydro + Independent Foot Massage</p>
+<div class="text-yellow-400 font-semibold">Ideal for Diabetes</div>
+</div>
+<div class="text-center p-4 border border-gray-200 rounded-lg">
+<h4 class="font-bold text-red-800 mb-2">Gentle Therapy</h4>
+<p class="text-gray-600 text-sm mb-3">Air Massage + Heated Seat</p>
+<div class="text-yellow-400 font-semibold">Perfect for Seniors</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Health Conditions Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-red-800 mb-4">Health Conditions That May Benefit</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">Our therapeutic walk-in tubs may provide relief for various health conditions. Always consult your doctor before using therapeutic features.</p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-gray-50 p-6 rounded-lg">
+<h3 class="font-bold text-red-800 mb-4">Joint & Mobility</h3>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• Arthritis (Rheumatoid & Osteoarthritis)</li>
+<li>• Hip pain and joint replacements</li>
+<li>• Multiple Sclerosis (MS)</li>
+<li>• Parkinson's Disease</li>
+<li>• Scoliosis and back pain</li>
+</ul>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg">
+<h3 class="font-bold text-red-800 mb-4">Circulation & Vascular</h3>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• Diabetes-related circulation</li>
+<li>• Hypertension management</li>
+<li>• Edema reduction</li>
+<li>• Post-amputation therapy</li>
+<li>• Poor circulation</li>
+</ul>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg">
+<h3 class="font-bold text-red-800 mb-4">Muscle & Pain</h3>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• Fibromyalgia symptoms</li>
+<li>• Muscle tension and soreness</li>
+<li>• Sports injury recovery</li>
+<li>• Chronic pain management</li>
+<li>• Stress-related tension</li>
+</ul>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg">
+<h3 class="font-bold text-red-800 mb-4">Mobility Aid Users</h3>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• Wheelchair users</li>
+<li>• Walker and cane users</li>
+<li>• Limited mobility individuals</li>
+<li>• Post-stroke recovery</li>
+<li>• Fall injury rehabilitation</li>
+</ul>
+</div>
+</div>
+
+<div class="mt-8 text-center">
+<div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 max-w-4xl mx-auto">
+<p class="text-sm text-gray-700"><strong>Medical Disclaimer:</strong> These statements have not been evaluated by the FDA. Always consult your doctor before using therapeutic features for medical conditions.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Installation Process Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-red-800 mb-4">Professional Installation Process</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">Our certified professionals ensure a seamless installation with minimal disruption to your daily routine.</p>
+</div>
+
+<div class="grid md:grid-cols-4 gap-6">
+<div class="text-center">
+<div class="bg-red-800 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+<h3 class="font-bold text-red-800 mb-2">Free Consultation</h3>
+<p class="text-gray-600 text-sm">In-home assessment of your bathroom, measurements, and needs evaluation</p>
+</div>
+<div class="text-center">
+<div class="bg-red-800 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+<h3 class="font-bold text-red-800 mb-2">Professional Installation</h3>
+<p class="text-gray-600 text-sm">Licensed electricians and plumbers complete installation in 1-2 days</p>
+</div>
+<div class="text-center">
+<div class="bg-red-800 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+<h3 class="font-bold text-red-800 mb-2">System Testing</h3>
+<p class="text-gray-600 text-sm">Complete functionality check of all therapeutic systems and safety features</p>
+</div>
+<div class="text-center">
+<div class="bg-red-800 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">4</div>
+<h3 class="font-bold text-red-800 mb-2">Training & Support</h3>
+<p class="text-gray-600 text-sm">User education and lifetime technical support for your investment</p>
+</div>
+</div>
+
+<div class="mt-12 bg-white p-8 rounded-lg shadow-md">
+<h3 class="text-2xl font-bold text-red-800 mb-6">Technical Requirements</h3>
+<div class="grid md:grid-cols-3 gap-6">
+<div>
+<h4 class="font-bold text-red-800 mb-3">Electrical</h4>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• Dedicated GFCI-protected circuit</li>
+<li>• Licensed electrician installation</li>
+<li>• Local code compliance</li>
+<li>• Breaker sized for tub configuration</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-red-800 mb-3">Plumbing</h4>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• ¾" water supply lines recommended</li>
+<li>• Accessible shut-off valves</li>
+<li>• 2" drain connection capability</li>
+<li>• Professional plumbing assessment</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-red-800 mb-3">Water Heater</h4>
+<ul class="text-gray-600 space-y-2 text-sm">
+<li>• 75+ gallon tank recommended</li>
+<li>• Tankless: 11+ GPM minimum</li>
+<li>• Professional sizing assessment</li>
+<li>• Gas preferred for higher flow rates</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-red-800 mb-4">Frequently Asked Questions</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">Get answers to the most common questions about our walk-in tubs.</p>
+</div>
+
+<div class="max-w-4xl mx-auto">
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq1')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">How do I know which model fits my body type?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq1-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq1">
+<div class="px-6 pb-6">
+<p class="text-gray-600">Our 21" wide seats accommodate most users comfortably. Measure your relaxed hip and shoulder width - the seat should be larger than these measurements. Use our sizing calculator above or schedule a consultation for personalized recommendations.</p>
+</div>
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq2')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">How long does installation take?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq2-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq2">
+<div class="px-6 pb-6">
+<p class="text-gray-600">Professional installation typically takes 1-2 days with minimal disruption to your daily routine. Our licensed electricians and plumbers handle all technical requirements including electrical work and plumbing connections.</p>
+</div>
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq3')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">Will I have enough hot water?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq3-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq3">
+<div class="px-6 pb-6">
+<p class="text-gray-600">We recommend a 75+ gallon water heater for optimal performance. Our consultation includes professional assessment of your current water heater capacity. The built-in 650W inline heater helps maintain temperature during therapy sessions.</p>
+</div>
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq4')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">How fast does the tub drain?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq4-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq4">
+<div class="px-6 pb-6">
+<p class="text-gray-600">Our proprietary dual drain technology empties the tub in approximately 80 seconds under ideal conditions. The gravity-driven system with four 2" drain ports provides reliable, fast drainage without electrical components that could fail.</p>
+</div>
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq5')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">Is it safe for people with mobility issues?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq5-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq5">
+<div class="px-6 pb-6">
+<p class="text-gray-600">Absolutely. Our tubs feature low 4-inch threshold entry, ADA-compliant grab bars, non-slip textured flooring, and internal door locking. The 17" seat height and 21" width accommodate wheelchair transfers and mobility aid users.</p>
+</div>
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq6')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">What maintenance is required?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq6-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq6">
+<div class="px-6 pb-6">
+<p class="text-gray-600">Monthly deep cleaning with water and white vinegar (run systems for 10-15 minutes). Daily maintenance is not required. The ozone sterilization and auto-purge systems keep the tub clean automatically. Use non-abrasive cleaners and avoid bath bombs.</p>
+</div>
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-button w-full text-left p-6 focus:outline-none" onclick="toggleFAQ('faq7')">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-red-800">What's covered under warranty?</h3>
+<i class="fas fa-chevron-down text-red-800 transform transition-transform" id="faq7-icon"></i>
+</div>
+</button>
+<div class="faq-content" id="faq7">
+<div class="px-6 pb-6">
+<p class="text-gray-600">We provide a limited lifetime warranty on parts with lifetime technical support. Our commitment to quality means you can rely on your investment for years to come with ongoing support from our technical team.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Dealer Partnership Section -->
+<section class="py-16 bg-red-800 text-white">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Partner with Lazarus</h2>
+<p class="text-lg text-red-200 mb-6 max-w-3xl mx-auto">We proudly support our dealer network with exceptional service, transparent partnerships, and products defined by honesty, integrity, and enduring performance.</p>
+<div class="grid md:grid-cols-3 gap-6 mb-8">
+<div class="text-center">
+<i class="fas fa-handshake text-yellow-400 text-3xl mb-3"></i>
+<h3 class="font-bold text-yellow-400 mb-2">Transparent Partnerships</h3>
+<p class="text-red-200 text-sm">Honest relationships built on mutual success</p>
+</div>
+<div class="text-center">
+<i class="fas fa-tools text-yellow-400 text-3xl mb-3"></i>
+<h3 class="font-bold text-yellow-400 mb-2">Exceptional Service</h3>
+<p class="text-red-200 text-sm">Ongoing technical support and training</p>
+</div>
+<div class="text-center">
+<i class="fas fa-award text-yellow-400 text-3xl mb-3"></i>
+<h3 class="font-bold text-yellow-400 mb-2">Quality Products</h3>
+<p class="text-red-200 text-sm">Premium walk-in tubs with lifetime warranties</p>
+</div>
+</div>
+<a href="contact.html" class="inline-block bg-yellow-400 text-red-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors duration-300">
+Apply to Become a Dealer
+</a>
+</div>
+</section>
+
+<!-- Consultation Form Section -->
+<section id="consultation" class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-8">
+<h2 class="text-3xl md:text-4xl font-bold text-red-800 mb-4">Schedule Your Free In-Home Consultation</h2>
+<p class="text-lg text-gray-600">Get a personalized assessment of your needs and space requirements from our certified professionals.</p>
+</div>
+
+<div class="bg-white rounded-lg shadow-lg p-8">
+<!-- Progress Indicator -->
+<div class="mb-8">
+<div class="flex justify-between items-center mb-4">
+<div class="text-center">
+<div class="w-10 h-10 bg-yellow-400 text-red-800 rounded-full flex items-center justify-center font-bold mb-2" id="step1-indicator">1</div>
+<div class="text-sm font-medium text-red-800">Contact Info</div>
+</div>
+<div class="flex-1 mx-4">
+<div class="progress-indicator">
+<div class="progress-bar" id="progress1" style="width: 100%"></div>
+</div>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold mb-2" id="step2-indicator">2</div>
+<div class="text-sm font-medium text-gray-600">Health & Mobility</div>
+</div>
+<div class="flex-1 mx-4">
+<div class="progress-indicator">
+<div class="progress-bar" id="progress2" style="width: 0%"></div>
+</div>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold mb-2" id="step3-indicator">3</div>
+<div class="text-sm font-medium text-gray-600">Bathroom & Installation</div>
+</div>
+<div class="flex-1 mx-4">
+<div class="progress-indicator">
+<div class="progress-bar" id="progress3" style="width: 0%"></div>
+</div>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold mb-2" id="step4-indicator">4</div>
+<div class="text-sm font-medium text-gray-600">Appointment</div>
+</div>
+</div>
+</div>
+
+<form id="consultation-form">
+<!-- Step 1: Contact Information -->
+<div id="step1" class="form-step">
+<h3 class="text-xl font-bold text-red-800 mb-6">Contact Information</h3>
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+<input type="text" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+<input type="tel" name="phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+<input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+<input type="text" name="address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+</div>
+</div>
+<div class="flex justify-end mt-8">
+<button type="button" onclick="nextStep(1)" class="bg-yellow-400 text-red-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors duration-300">
+Next Step →
+</button>
+</div>
+</div>
+
+<!-- Step 2: Health & Mobility -->
+<div id="step2" class="form-step hidden">
+<h3 class="text-xl font-bold text-red-800 mb-6">Health & Mobility Needs</h3>
+<div class="space-y-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-3">Current Health Conditions (Select all that apply)</label>
+<div class="grid md:grid-cols-2 gap-3">
+<label class="flex items-center"><input type="checkbox" name="conditions" value="arthritis" class="mr-2"> Arthritis</label>
+<label class="flex items-center"><input type="checkbox" name="conditions" value="diabetes" class="mr-2"> Diabetes</label>
+<label class="flex items-center"><input type="checkbox" name="conditions" value="mobility-issues" class="mr-2"> Mobility Issues</label>
+<label class="flex items-center"><input type="checkbox" name="conditions" value="circulation" class="mr-2"> Poor Circulation</label>
+<label class="flex items-center"><input type="checkbox" name="conditions" value="joint-pain" class="mr-2"> Joint Pain</label>
+<label class="flex items-center"><input type="checkbox" name="conditions" value="fibromyalgia" class="mr-2"> Fibromyalgia</label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-3">Mobility Aids Used</label>
+<div class="grid md:grid-cols-3 gap-3">
+<label class="flex items-center"><input type="checkbox" name="mobility-aids" value="wheelchair" class="mr-2"> Wheelchair</label>
+<label class="flex items-center"><input type="checkbox" name="mobility-aids" value="walker" class="mr-2"> Walker</label>
+<label class="flex items-center"><input type="checkbox" name="mobility-aids" value="cane" class="mr-2"> Cane</label>
+<label class="flex items-center"><input type="checkbox" name="mobility-aids" value="none" class="mr-2"> None</label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Therapeutic Features of Interest</label>
+<div class="grid md:grid-cols-2 gap-3">
+<label class="flex items-center"><input type="checkbox" name="therapy" value="hydrotherapy" class="mr-2"> Hydrotherapy Massage</label>
+<label class="flex items-center"><input type="checkbox" name="therapy" value="air-therapy" class="mr-2"> Air Massage</label>
+<label class="flex items-center"><input type="checkbox" name="therapy" value="foot-massage" class="mr-2"> Independent Foot Massage</label>
+<label class="flex items-center"><input type="checkbox" name="therapy" value="heated-seat" class="mr-2"> Heated Seat</label>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-8">
+<button type="button" onclick="prevStep(2)" class="bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-lg hover:bg-gray-400 transition-colors duration-300">
+← Previous
+</button>
+<button type="button" onclick="nextStep(2)" class="bg-yellow-400 text-red-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors duration-300">
+Next Step →
+</button>
+</div>
+</div>
+
+<!-- Step 3: Bathroom & Installation -->
+<div id="step3" class="form-step hidden">
+<h3 class="text-xl font-bold text-red-800 mb-6">Bathroom & Installation Details</h3>
+<div class="space-y-6">
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Current Bathtub Dimensions (if known)</label>
+<input type="text" name="current-tub-size" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="e.g., 60x30">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Bathroom Layout</label>
+<select name="bathroom-layout" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+<option value="">Select layout...</option>
+<option value="alcove">3-wall alcove</option>
+<option value="corner">Corner installation</option>
+<option value="freestanding">Freestanding</option>
+<option value="unsure">Not sure</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Preferred Model (based on space)</label>
+<div class="grid md:grid-cols-2 gap-4">
+<label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-yellow-400">
+<input type="radio" name="preferred-model" value="seed" class="mr-3">
+<div>
+<div class="font-medium">Seed Model (52"×30")</div>
+<div class="text-sm text-gray-600">Compact, 75 gallons</div>
+</div>
+</label>
+<label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-yellow-400">
+<input type="radio" name="preferred-model" value="sprout" class="mr-3">
+<div>
+<div class="font-medium">Sprout Model (60"×30")</div>
+<div class="text-sm text-gray-600">Spacious, 85 gallons</div>
+</div>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Installation Timeline</label>
+<select name="timeline" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+<option value="">Select timeline...</option>
+<option value="asap">As soon as possible</option>
+<option value="1-month">Within 1 month</option>
+<option value="3-months">Within 3 months</option>
+<option value="planning">Just planning ahead</option>
+</select>
+</div>
+</div>
+<div class="flex justify-between mt-8">
+<button type="button" onclick="prevStep(3)" class="bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-lg hover:bg-gray-400 transition-colors duration-300">
+← Previous
+</button>
+<button type="button" onclick="nextStep(3)" class="bg-yellow-400 text-red-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors duration-300">
+Next Step →
+</button>
+</div>
+</div>
+
+<!-- Step 4: Appointment -->
+<div id="step4" class="form-step hidden">
+<h3 class="text-xl font-bold text-red-800 mb-6">Schedule Your Consultation</h3>
+<div class="space-y-6">
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+<input type="date" name="preferred-date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+<select name="preferred-time" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+<option value="">Select time...</option>
+<option value="morning">Morning (8AM-12PM)</option>
+<option value="afternoon">Afternoon (12PM-5PM)</option>
+<option value="evening">Evening (5PM-7PM)</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes or Questions</label>
+<textarea name="notes" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="Any specific concerns, questions, or requirements..."></textarea>
+</div>
+</div>
+<div class="flex justify-between mt-8">
+<button type="button" onclick="prevStep(4)" class="bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-lg hover:bg-gray-400 transition-colors duration-300">
+← Previous
+</button>
+<button type="submit" class="bg-red-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors duration-300">
+Schedule Free Consultation
+</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="bg-gray-800 text-white mt-10">
+<div class="container mx-auto py-8 px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+<div>
+<h3 class="text-lg font-bold mb-4">LAZARUS HOME REMODELING</h3>
+<p class="text-gray-400">Revive. Restore. Remarkable.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Contact Us</h3>
+<ul class="text-gray-400 space-y-2">
+<li><i class="fas fa-phone-alt mr-2 text-red-500"></i> (586) 248-8888</li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">Walk-In Tub Services</h3>
+<ul class="text-gray-400 space-y-2">
+<li>Free In-Home Consultations</li>
+<li>Professional Installation</li>
+<li>Lifetime Technical Support</li>
+<li>ADA-Compliant Solutions</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+<p>© 2025 Lazarus Home Remodeling. All Rights Reserved.</p>
+<p class="mt-2">
+<a href="#" onclick="adminAccess()" class="text-gray-600 hover:text-gray-400 text-xs">System</a>
+</p>
+</div>
+</div>
+</footer>
+
+<!-- Chat Widget -->
+<div class="fixed bottom-4 right-4 z-50">
+<button class="bg-yellow-400 text-red-800 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition-colors duration-300" id="chat-widget-button">
+<i class="fas fa-comments text-2xl"></i>
+</button>
+<div class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200" id="chat-widget">
+<div class="bg-red-800 text-white p-4 rounded-t-lg flex justify-between items-center">
+<h3 class="font-bold text-lg">Walk-In Tub Questions?</h3>
+<button class="text-white hover:text-yellow-400" id="close-chat-widget">
+<i class="fas fa-chevron-down"></i>
+</button>
+</div>
+<div class="p-4 h-64 overflow-y-auto" id="chat-messages">
+<div class="flex mb-4">
+<div class="bg-gray-200 p-3 rounded-lg max-w-xs">
+<p class="text-sm">Hello! I'm here to help with your walk-in tub questions. What would you like to know about our Seed and Sprout models?</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-200">
+<div class="flex items-center">
+<input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Ask about our walk-in tubs..." type="text" id="chat-input"/>
+<button type="button" class="ml-3 bg-yellow-400 text-red-800 p-2 rounded-full hover:bg-yellow-500" id="send-chat-message">
+<i class="fas fa-paper-plane"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// Menu toggle
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+menuBtn?.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});
+
+// Sizing Calculator
+function calculateRecommendation() {
+    const hipWidth = parseFloat(document.getElementById('hipWidth').value);
+    const shoulderWidth = parseFloat(document.getElementById('shoulderWidth').value);
+    const height = parseFloat(document.getElementById('userHeight').value);
+    
+    const resultDiv = document.getElementById('sizingResult');
+    const textDiv = document.getElementById('recommendationText');
+    
+    if (!hipWidth || !shoulderWidth || !height) {
+        alert('Please enter all measurements for an accurate recommendation.');
+        return;
+    }
+    
+    let recommendation = '';
+    const maxWidth = Math.max(hipWidth, shoulderWidth);
+    
+    if (maxWidth > 20) {
+        recommendation = 'Based on your measurements, both models will accommodate you comfortably with our 21" wide seating. The Sprout model (60") provides extra legroom for taller individuals.';
+    } else if (height > 72) {
+        recommendation = 'The Sprout model (60") is recommended for your height, providing additional legroom and soaking depth for optimal comfort.';
+    } else {
+        recommendation = 'Both models will work well for your measurements. The Seed model (52") is perfect for compact bathrooms, while the Sprout (60") offers extra space and comfort.';
+    }
+    
+    textDiv.textContent = recommendation;
+    resultDiv.classList.remove('hidden');
+}
+
+// FAQ Toggle
+function toggleFAQ(faqId) {
+    const content = document.getElementById(faqId);
+    const icon = document.getElementById(faqId + '-icon');
+    
+    if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        // Close all other FAQs
+        document.querySelectorAll('.faq-content').forEach(item => {
+            item.classList.remove('open');
+        });
+        document.querySelectorAll('[id$="-icon"]').forEach(icon => {
+            icon.style.transform = 'rotate(0deg)';
+        });
+        
+        // Open current FAQ
+        content.classList.add('open');
+        icon.style.transform = 'rotate(180deg)';
+    }
+}
+
+// Multi-step Form
+let currentStep = 1;
+
+function nextStep(step) {
+    // Validate current step
+    const currentForm = document.getElementById(`step${step}`);
+    const requiredFields = currentForm.querySelectorAll('[required]');
+    
+    for (let field of requiredFields) {
+        if (!field.value.trim()) {
+            field.focus();
+            alert('Please fill in all required fields.');
+            return;
+        }
+    }
+    
+    // Hide current step
+    document.getElementById(`step${step}`).classList.add('hidden');
+    
+    // Show next step
+    const nextStepNum = step + 1;
+    document.getElementById(`step${nextStepNum}`).classList.remove('hidden');
+    
+    // Update progress indicators
+    updateProgress(nextStepNum);
+    currentStep = nextStepNum;
+}
+
+function prevStep(step) {
+    document.getElementById(`step${step}`).classList.add('hidden');
+    const prevStepNum = step - 1;
+    document.getElementById(`step${prevStepNum}`).classList.remove('hidden');
+    updateProgress(prevStepNum);
+    currentStep = prevStepNum;
+}
+
+function updateProgress(step) {
+    // Update indicators
+    for (let i = 1; i <= 4; i++) {
+        const indicator = document.getElementById(`step${i}-indicator`);
+        const progress = document.getElementById(`progress${i}`);
+        
+        if (i < step) {
+            indicator.className = 'w-10 h-10 bg-yellow-400 text-red-800 rounded-full flex items-center justify-center font-bold mb-2';
+            if (progress) progress.style.width = '100%';
+        } else if (i === step) {
+            indicator.className = 'w-10 h-10 bg-yellow-400 text-red-800 rounded-full flex items-center justify-center font-bold mb-2';
+            if (progress) progress.style.width = '0%';
+        } else {
+            indicator.className = 'w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold mb-2';
+            if (progress) progress.style.width = '0%';
+        }
+    }
+}
+
+// Form submission
+document.getElementById('consultation-form')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = {};
+    
+    // Convert FormData to object
+    for (let [key, value] of formData.entries()) {
+        if (data[key]) {
+            if (Array.isArray(data[key])) {
+                data[key].push(value);
+            } else {
+                data[key] = [data[key], value];
+            }
+        } else {
+            data[key] = value;
+        }
+    }
+    
+    console.log('Walk-in tub consultation request:', data);
+    
+    // Show success message
+    alert('Thank you for your interest in our walk-in tubs! We will contact you within 24 hours to schedule your free consultation.');
+    
+    // Reset form
+    this.reset();
+    document.getElementById('step1').classList.remove('hidden');
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step4').classList.add('hidden');
+    updateProgress(1);
+});
+
+// Admin access
+async function adminAccess() {
+    const password = prompt('Enter admin password:');
+    if (password === null) return;
+    
+    const result = await window.adminAuth.authenticate(password);
+    
+    if (result.success) {
+        window.location.href = 'admin-dashboard.html';
+    } else {
+        alert(result.message || 'Access denied');
+    }
+}
+</script>
+<script src="chat.js"></script>
+</body></html>

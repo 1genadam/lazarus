@@ -86,6 +86,80 @@ This index provides a comprehensive overview of all documentation files in the `
 
 ---
 
+## 🎨 **BRAND KIT & COLORS**
+
+### **Lazarus Home Remodeling Brand Colors**
+
+#### **🔴 Red Color Palette**
+| Color Usage | Hex Code | CSS Class | RGB | Usage Context |
+|-------------|----------|-----------|-----|---------------|
+| **Primary Red** | `#991B1B` | `bg-red-800` | `rgb(153, 27, 27)` | Header background, hero section |
+| **Secondary Red** | `#7F1D1D` | `bg-red-900` | `rgb(127, 29, 29)` | Mobile menu, accent sections |
+| **Text Red** | `#991B1B` | `text-red-800` | `rgb(153, 27, 27)` | Headings, button text |
+| **Hover Red** | `#B91C1C` | `hover:bg-red-700` | `rgb(185, 28, 28)` | Interactive elements |
+| **Light Red** | `#FCA5A5` | `text-red-200` | `rgb(252, 165, 165)` | Subtle text, form labels |
+
+#### **🟡 Yellow Color Palette** 
+| Color Usage | Hex Code | CSS Class | RGB | Usage Context |
+|-------------|----------|-----------|-----|---------------|
+| **Primary Yellow** | `#FACC15` | `bg-yellow-400` | `rgb(250, 204, 21)` | CTA buttons, progress indicators |
+| **Hover Yellow** | `#EAB308` | `hover:bg-yellow-500` | `rgb(234, 179, 8)` | Button hover states |
+| **Text Yellow** | `#FACC15` | `text-yellow-400` | `rgb(250, 204, 21)` | Navigation hover, accents |
+| **Star Yellow** | `#FFD700` | Custom `.star` | `rgb(255, 215, 0)` | Review stars |
+
+#### **⚫ Footer & Dark Colors**
+| Color Usage | Hex Code | CSS Class | RGB | Usage Context |
+|-------------|----------|-----------|-----|---------------|
+| **Footer Background** | `#1F2937` | `bg-gray-800` | `rgb(31, 41, 55)` | Footer primary background |
+| **Footer Text** | `#9CA3AF` | `text-gray-400` | `rgb(156, 163, 175)` | Footer secondary text |
+| **Footer Border** | `#374151` | `border-gray-700` | `rgb(55, 65, 81)` | Footer section dividers |
+| **Footer Subtle** | `#6B7280` | `text-gray-500` | `rgb(107, 114, 128)` | Copyright text |
+
+#### **🤍 Supporting Colors**
+| Color Usage | Hex Code | CSS Class | RGB | Usage Context |
+|-------------|----------|-----------|-----|---------------|
+| **Pure White** | `#FFFFFF` | `bg-white` | `rgb(255, 255, 255)` | Content backgrounds, text |
+| **Light Gray** | `#F3F4F6` | `bg-gray-100` | `rgb(243, 244, 246)` | Page background |
+| **Card Gray** | `#F9FAFB` | `bg-gray-50` | `rgb(249, 250, 251)` | Service cards, testimonials |
+
+#### **📝 Typography & Fonts**
+| Font Usage | Font Family | Weight | Source | Usage Context |
+|------------|-------------|---------|--------|---------------|
+| **Primary Font** | `Roboto` | 400, 700 | Google Fonts | Body text, general content |
+| **Display Font** | `Orbitron` | 400, 700, 900 | Google Fonts | Headers, technical elements |
+| **Custom Brand Font** | `Blanka` | 400 | Local files (.woff2, .woff) | Special branding elements |
+
+#### **🔤 Font Implementation**
+```css
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+
+/* Custom Font Definition */
+@font-face {
+    font-family: 'Blanka';
+    src: url('./fonts/Blanka-Regular.woff2') format('woff2'),
+         url('./fonts/Blanka-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Body Text */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+```
+
+### **🎨 Brand Usage Guidelines**
+- **Primary Brand Colors**: Red (`#991B1B`) and Yellow (`#FACC15`)
+- **Main Brand Combination**: Red header with yellow accents
+- **Interactive Elements**: Yellow buttons with red text
+- **Footer Styling**: Dark gray (`#1F2937`) with light gray text
+- **Typography**: Roboto for body text, Orbitron for headers, Blanka for special branding
+- **Accessibility**: High contrast ratios maintained across all color combinations
+
+---
+
 ## 🏗️ **WEBSITE ARCHITECTURE & FEATURES**
 
 ### **Website Documentation**
